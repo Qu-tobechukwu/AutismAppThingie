@@ -1,111 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Social Ease — Calm Corner</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body[data-page="calm"] { overflow: hidden; }
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 15s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) translateX(0) rotate(0deg);}
+      100% { transform: translateY(-50vh) translateX(100px) rotate(360deg);}
+    }
+  </style>
 </head>
 <body data-page="calm">
-  <header>
-    <h1>Calm Corner 🫧</h1>
-    <p>Watch soft bubbles float and breathe with them.</p>
-    <nav>
+
+<header class="site-header">
+  <div class="header-row">
+    <div class="brand">
+      <a href="index.html" class="logo-link" aria-label="Social Ease home">
+        <img src="assets/logo.svg" alt="Social Ease logo" class="site-logo" />
+      </a>
+    </div>
+
+    <nav class="main-nav" role="navigation" aria-label="Main">
       <a href="index.html" class="nav-link">Home</a>
       <a href="challenges.html" class="nav-link">Challenges</a>
+      <a href="cues.html" class="nav-link">Social Cues</a>
       <a href="calm.html" class="nav-link">Calm Corner</a>
       <a href="reflection.html" class="nav-link">Reflections</a>
+      <a href="progress.html" class="nav-link">Progress</a>
+      <a href="about.html" class="nav-link">About</a>
     </nav>
-    <button id="low-stim-toggle" class="small-toggle">🌓 Low-Stimulation</button>
-  </header>
 
-  <main>
-    <section class="card">
-      <div class="calm-area">
-        <div id="bubble-stage" class="bubble-stage" aria-hidden="true"></div>
-        <div class="calm-text">
-          <p>Breathe in slowly for 4... hold 2... breathe out for 6.</p>
-          <p class="affirm">Affirmation: I am safe. I can pause. I can connect.</p>
-          <div class="calm-controls">
-            <button id="pause-btn" class="action-btn subtle">Pause Animation</button>
-            <button id="resume-btn" class="action-btn subtle">Resume Animation</button>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+    <div class="header-controls">
+      <button id="low-stim-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle low stimulation mode">🌓</button>
+      <button id="voice-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle voice hints">🔈</button>
+      <a href="settings.html" class="small-toggle" aria-label="Settings">⚙️</a>
+    </div>
+  </div>
+</header>
 
-  <script src="common.js"></script>
-  <script>
-    // Calm page: create animated bubbles with blue/green pastel colors
-    const stage = document.getElementById('bubble-stage');
-    const pauseBtn = document.getElementById('pause-btn');
-    const resumeBtn = document.getElementById('resume-btn');
+<main>
+  <h2 class="centered">Calm Corner 🌿</h2>
+  <p class="centered">Click the button below for a gentle affirmation.</p>
+  <div class="centered">
+    <button id="play-affirmation" class="pill-btn">Play Affirmation 🔈</button>
+  </div>
+</main>
 
-    const bubbleColors = [
-      'rgba(160, 210, 235, 0.35)', // pastel blue
-      'rgba(173, 222, 201, 0.35)', // pastel mint
-      'rgba(200, 220, 240, 0.30)', // pale blue
-      'rgba(205, 190, 230, 0.28)'  // soft lilac (subtle)
-    ];
+<script src="common.js"></script>
+<script>
+const NUM_CIRCLES = 12;
+for(let i=0;i<NUM_CIRCLES;i++){
+  const c = document.createElement('div');
+  c.className='circle';
+  const size = 50+Math.random()*100;
+  c.style.width = size+'px';
+  c.style.height = size+'px';
+  c.style.background = `rgba(${162+Math.random()*50},${217+Math.random()*20},${206+Math.random()*20},0.3)`;
+  c.style.left = Math.random()*window.innerWidth+'px';
+  c.style.top = Math.random()*window.innerHeight+'px';
+  c.style.animationDuration = (10+Math.random()*10)+'s';
+  document.body.appendChild(c);
+}
 
-    function createBubbles(count = 12) {
-      stage.innerHTML = '';
-      for (let i = 0; i < count; i++) {
-        const b = document.createElement('div');
-        b.className = 'bubble';
-        const size = 24 + Math.random() * 70;
-        b.style.width = `${size}px`;
-        b.style.height = `${size}px`;
-        b.style.left = `${Math.random() * 100}%`;
-        b.style.bottom = `${-Math.random() * 40}px`;
-        b.style.background = bubbleColors[Math.floor(Math.random() * bubbleColors.length)];
-        b.style.opacity = 0.45 + Math.random() * 0.25;
-        b.style.animationDuration = `${8 + Math.random() * 8}s`;
-        b.style.animationDelay = `${Math.random() * 4}s`;
-        stage.appendChild(b);
-      }
-    }
-
-    // Pause/Resume by toggling animation-play-state or hiding
-    function pauseBubbles() {
-      stage.querySelectorAll('.bubble').forEach(b => {
-        b.style.animationPlayState = 'paused';
-        b.style.opacity = '0.25';
-      });
-    }
-    function resumeBubbles() {
-      stage.querySelectorAll('.bubble').forEach(b => {
-        b.style.animationPlayState = 'running';
-        b.style.opacity = '';
-      });
-    }
-
-    pauseBtn.addEventListener('click', pauseBubbles);
-    resumeBtn.addEventListener('click', resumeBubbles);
-
-    // Create bubbles initially
-    createBubbles(14);
-
-    // If low-stim mode active, hide or pause animation
-    if (document.body.classList.contains('low-stim')) {
-      pauseBubbles();
-      stage.style.visibility = 'hidden';
-    }
-
-    // Also respond to low-stim changes fired by common.js (it toggles class on body)
-    window.addEventListener('storage', (e) => {
-      if (e.key === 'low-stim') {
-        if (localStorage.getItem('low-stim') === 'true') {
-          pauseBubbles();
-          stage.style.visibility = 'hidden';
-        } else {
-          stage.style.visibility = '';
-          resumeBubbles();
-        }
-      }
-    });
-  </script>
-</body>
-</html>
+document.getElementById('play-affirmation').addEventListener('click', ()=>{
+  if(window.voiceHint) window.voiceHint.calmAffirm();
+});
+</script>
