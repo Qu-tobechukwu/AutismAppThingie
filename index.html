@@ -1,39 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Social Ease — Home</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <header>
-    <h1>Social Ease 🌿</h1>
-    <p>Your gentle guide to enjoying social spaces.</p>
-    <nav>
+<body data-page="home">
+
+<header class="site-header">
+  <div class="header-row">
+    <div class="brand">
+      <a href="index.html" class="logo-link" aria-label="Social Ease home">
+        <img src="assets/logo.svg" alt="Social Ease logo" class="site-logo" />
+      </a>
+    </div>
+
+    <nav class="main-nav" role="navigation" aria-label="Main">
       <a href="index.html" class="nav-link">Home</a>
       <a href="challenges.html" class="nav-link">Challenges</a>
+      <a href="cues.html" class="nav-link">Social Cues</a>
       <a href="calm.html" class="nav-link">Calm Corner</a>
       <a href="reflection.html" class="nav-link">Reflections</a>
+      <a href="progress.html" class="nav-link">Progress</a>
+      <a href="about.html" class="nav-link">About</a>
     </nav>
-  </header>
 
-  <main>
-    <section class="card centered">
-      <h2>Welcome</h2>
-      <p>Choose a page to get started — each page is its own simple screen so it's predictable and low-stim.</p>
+    <div class="header-controls">
+      <button id="low-stim-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle low stimulation mode">🌓</button>
+      <button id="voice-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle voice hints">🔈</button>
+      <a href="settings.html" class="small-toggle" aria-label="Settings">⚙️</a>
+    </div>
+  </div>
+</header>
 
-      <div class="home-buttons">
-        <a class="large-btn" href="challenges.html">Go to Challenges</a>
-        <a class="large-btn" href="calm.html">Open Calm Corner</a>
-        <a class="large-btn" href="reflection.html">Write a Reflection</a>
-      </div>
+<main class="centered">
+  <section class="card">
+    <h1>Welcome to Social Ease 🌸</h1>
+    <p>Your personal companion for calm, guided social experiences.</p>
+    <p>Choose an option from the menu above to begin exploring.</p>
+  </section>
+</main>
 
-      <p class="small">Tip: Use the "Low-Stimulation Mode" on any page (top-right) to simplify visuals and stop animations.</p>
-    </section>
-  </main>
-
-  <script src="common.js"></script>
+<script src="common.js"></script>
 </body>
 </html>
