@@ -13,39 +13,45 @@
   </header>
 
   <main>
+    <!-- Low-Stimulation Toggle -->
+    <button id="low-stim-toggle" class="rounded-btn">🌓 Low-Stimulation Mode</button>
+
     <!-- Event Selection -->
     <section id="event-selection">
       <h2>Select Your Event</h2>
-      <button class="event-btn" data-event="party">🥳 Party</button>
-      <button class="event-btn" data-event="coffee">☕ Coffee Meetup</button>
-      <button class="event-btn" data-event="networking">🏫 Networking Event</button>
-      <button class="event-btn" data-event="dinner">🍽️ Dinner with Friends</button>
+      <button class="event-btn rounded-btn" data-event="party">🥳 Party</button>
+      <button class="event-btn rounded-btn" data-event="coffee">☕ Coffee Meetup</button>
+      <button class="event-btn rounded-btn" data-event="networking">🏫 Networking Event</button>
+      <button class="event-btn rounded-btn" data-event="dinner">🍽️ Dinner with Friends</button>
     </section>
 
     <!-- Challenges -->
     <section id="challenges" class="hidden">
       <h2 id="event-title"></h2>
       <ul id="challenge-list"></ul>
-      <button id="back-btn">⬅ Back to Events</button>
-      <button id="calm-btn">🧘 Calm Corner</button>
-      <button id="reflect-btn">📝 Reflection Log</button>
+      <button id="back-btn" class="rounded-btn">⬅ Back to Events</button>
+      <button id="calm-btn" class="rounded-btn">🧘 Calm Corner</button>
+      <button id="reflect-btn" class="rounded-btn">📝 Reflection Log</button>
     </section>
 
     <!-- Calm Corner -->
     <section id="calm-corner" class="hidden">
       <h2>Calm Corner</h2>
+      <div id="calm-circles"></div>
       <p>Breathe in slowly... hold... and breathe out. 🌸</p>
       <p>Affirmation: “I am safe, I am capable, I can connect.”</p>
-      <button id="exit-calm">Exit Calm Corner</button>
+      <button id="exit-calm" class="rounded-btn">Exit Calm Corner</button>
     </section>
 
     <!-- Reflection Log -->
     <section id="reflection" class="hidden">
       <h2>Reflection Log</h2>
       <textarea id="reflection-text" placeholder="Write down your thoughts..."></textarea>
-      <button id="save-reflection">Save</button>
-      <button id="exit-reflection">Exit Reflection</button>
+      <button id="save-reflection" class="rounded-btn">Save</button>
+      <button id="exit-reflection" class="rounded-btn">Exit Reflection</button>
       <div id="reflection-saved" class="hidden">Reflection saved! ✅</div>
+      <h3>Previous Reflections:</h3>
+      <ul id="reflection-list"></ul>
     </section>
   </main>
 
