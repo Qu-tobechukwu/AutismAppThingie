@@ -1,88 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Social Ease — Reflections</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body data-page="reflection">
-  <header>
-    <h1>Reflections ✍️</h1>
-    <p>Save multiple notes — you can revisit progress and feelings later.</p>
-    <nav>
+
+<header class="site-header">
+  <div class="header-row">
+    <div class="brand">
+      <a href="index.html" class="logo-link" aria-label="Social Ease home">
+        <img src="assets/logo.svg" alt="Social Ease logo" class="site-logo" />
+      </a>
+    </div>
+
+    <nav class="main-nav" role="navigation" aria-label="Main">
       <a href="index.html" class="nav-link">Home</a>
       <a href="challenges.html" class="nav-link">Challenges</a>
+      <a href="cues.html" class="nav-link">Social Cues</a>
       <a href="calm.html" class="nav-link">Calm Corner</a>
       <a href="reflection.html" class="nav-link">Reflections</a>
+      <a href="progress.html" class="nav-link">Progress</a>
+      <a href="about.html" class="nav-link">About</a>
     </nav>
-    <button id="low-stim-toggle" class="small-toggle">🌓 Low-Stimulation</button>
-  </header>
 
-  <main>
-    <section class="card">
-      <h2>Write a Reflection</h2>
-      <textarea id="note-input" placeholder="What happened? What felt good? What would you try next time?"></textarea>
-      <div class="controls-row">
-        <button id="save-note" class="action-btn">Save</button>
-        <button id="clear-notes" class="action-btn subtle">Clear All</button>
-      </div>
+    <div class="header-controls">
+      <button id="low-stim-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle low stimulation mode">🌓</button>
+      <button id="voice-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle voice hints">🔈</button>
+      <a href="settings.html" class="small-toggle" aria-label="Settings">⚙️</a>
+    </div>
+  </div>
+</header>
 
-      <h3>Saved Notes</h3>
-      <ul id="notes-list" class="list"></ul>
-    </section>
-  </main>
+<main class="centered">
+  <section class="card">
+    <h2>Reflection Journal 📝</h2>
+    <textarea id="reflection-text" rows="6" placeholder="Write your thoughts here..."></textarea>
+    <button id="save-reflection" class="pill-btn">Save Reflection 💾</button>
+    <ul id="reflection-list"></ul>
+  </section>
+</main>
 
-  <script src="common.js"></script>
-  <script>
-    // Reflection page logic
-    const noteInput = document.getElementById('note-input');
-    const saveNoteBtn = document.getElementById('save-note');
-    const clearNotesBtn = document.getElementById('clear-notes');
-    const notesList = document.getElementById('notes-list');
+<script src="common.js"></script>
+<script>
+const textArea = document.getElementById('reflection-text');
+const saveBtn = document.getElementById('save-reflection');
+const list = document.getElementById('reflection-list');
 
-    function loadNotes() {
-      const notes = JSON.parse(localStorage.getItem('reflections') || '[]');
-      notesList.innerHTML = '';
-      notes.forEach((n, idx) => {
-        const li = document.createElement('li');
-        li.className = 'note-item';
-        li.textContent = n;
-        // action: delete single note on click+confirm
-        const del = document.createElement('button');
-        del.textContent = 'Delete';
-        del.className = 'tiny-subtle';
-        del.addEventListener('click', () => {
-          if (confirm('Delete this note?')) {
-            notes.splice(idx, 1);
-            localStorage.setItem('reflections', JSON.stringify(notes));
-            loadNotes();
-          }
-        });
-        li.appendChild(del);
-        notesList.appendChild(li);
-      });
-    }
-
-    saveNoteBtn.addEventListener('click', () => {
-      const val = noteInput.value.trim();
-      if (!val) return;
-      const notes = JSON.parse(localStorage.getItem('reflections') || '[]');
-      notes.push(val);
-      localStorage.setItem('reflections', JSON.stringify(notes));
-      noteInput.value = '';
-      loadNotes();
-    });
-
-    clearNotesBtn.addEventListener('click', () => {
-      if (confirm('Clear all saved reflections?')) {
-        localStorage.removeItem('reflections');
-        loadNotes();
-      }
-    });
-
-    loadNotes();
-  </script>
-</body>
-</html>
+function loadReflections(){
+  list.innerHTML = '';
+  const notes = JSON.parse(localStorage.getItem('reflections')||'[]');
+  notes.forEach((n,i)=>{
+    const li = document.createElement('li');
+    li.textContent = n;
+    list.appendChild(li);
+  });
+}
+saveBtn.addEventListener('click', ()=>{
+  const notes = JSON.parse(localStorage.getItem('reflections')||'[]');
+  if(textArea.value.trim()!==''){
+    notes.push(textArea.value.trim());
+    localStorage.setItem('reflections', JSON.stringify(notes));
+    textArea.value='';
+    loadReflections();
+    if(window.voiceHint) window.voiceHint.reflectionSaved();
+  }
+});
+loadReflections();
+</script>
