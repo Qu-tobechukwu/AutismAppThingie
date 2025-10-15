@@ -8,12 +8,28 @@ const backBtn = document.getElementById('back-btn');
 const calmBtn = document.getElementById('calm-btn');
 const calmCorner = document.getElementById('calm-corner');
 const exitCalm = document.getElementById('exit-calm');
+const calmCircles = document.getElementById('calm-circles');
+
 const reflectBtn = document.getElementById('reflect-btn');
 const reflection = document.getElementById('reflection');
 const exitReflection = document.getElementById('exit-reflection');
 const saveReflection = document.getElementById('save-reflection');
 const reflectionText = document.getElementById('reflection-text');
 const reflectionSaved = document.getElementById('reflection-saved');
+const reflectionList = document.getElementById('reflection-list');
+
+const lowStimToggle = document.getElementById('low-stim-toggle');
+
+// Load previous Low-Stimulation mode
+if (localStorage.getItem('low-stim') === 'true') {
+  document.body.classList.add('low-stim');
+}
+
+// Low-Stimulation Toggle
+lowStimToggle.addEventListener('click', () => {
+  document.body.classList.toggle('low-stim');
+  localStorage.setItem('low-stim', document.body.classList.contains('low-stim'));
+});
 
 // Challenges Data
 const challengesData = {
@@ -58,18 +74,20 @@ backBtn.addEventListener('click', () => {
 calmBtn.addEventListener('click', () => {
   challengesSection.classList.add('hidden');
   calmCorner.classList.remove('hidden');
+  createCalmCircles();
 });
 
 exitCalm.addEventListener('click', () => {
   calmCorner.classList.add('hidden');
   challengesSection.classList.remove('hidden');
+  calmCircles.innerHTML = '';
 });
 
 // Reflection Log
 reflectBtn.addEventListener('click', () => {
   challengesSection.classList.add('hidden');
   reflection.classList.remove('hidden');
-  loadReflection();
+  loadReflections();
 });
 
 exitReflection.addEventListener('click', () => {
@@ -79,8 +97,14 @@ exitReflection.addEventListener('click', () => {
 });
 
 saveReflection.addEventListener('click', () => {
-  localStorage.setItem('reflection', reflectionText.value);
-  reflectionSaved.classList.remove('hidden');
+  let notes = JSON.parse(localStorage.getItem('reflections')) || [];
+  if (reflectionText.value.trim() !== '') {
+    notes.push(reflectionText.value.trim());
+    localStorage.setItem('reflections', JSON.stringify(notes));
+    reflectionText.value = '';
+    reflectionSaved.classList.remove('hidden');
+    loadReflections();
+  }
 });
 
 // Show Challenges with LocalStorage Progress
@@ -117,11 +141,39 @@ function updateProgress(event) {
   localStorage.setItem(`completed-${event}`, JSON.stringify(completed));
 }
 
-// Load Reflection
-function loadReflection() {
-  reflectionText.value = localStorage.getItem('reflection') || '';
+// Reflection System
+function loadReflections() {
+  reflectionList.innerHTML = '';
+  let notes = JSON.parse(localStorage.getItem('reflections')) || [];
+  notes.forEach((note, idx) => {
+    const li = document.createElement('li');
+    li.textContent = note;
+    li.style.backgroundColor = '#D0E6F8';
+    li.style.borderRadius = '50px';
+    li.style.padding = '0.5rem';
+    li.style.marginBottom = '0.3rem';
+    reflectionList.appendChild(li);
+  });
 }
 
+// Calm Corner Circles Animation
+function createCalmCircles() {
+  for (let i = 0; i < 15; i++) {
+    const circle = document.createElement('div');
+    circle.classList.add('circle');
+    circle.style.width = `${20 + Math.random() * 40}px`;
+    circle.style.height = circle.style.width;
+    circle.style.left = `${Math.random() * 100}%`;
+    circle.style.top = `${Math.random() * 100}%`;
+    circle.style.backgroundColor = 'rgba(255,255,255,0.3)';
+    circle.style.borderRadius = '50%';
+    circle.style.position = 'absolute';
+    circle.style.animation = `float ${5 + Math.random() * 5}s ease-in-out infinite`;
+    calmCircles.appendChild(circle);
+  }
+}
+
+// Capitalize
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
