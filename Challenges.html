@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Social Ease — Challenges</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="challenges">
+  <header>
+    <h1>Social Ease 🌿</h1>
+    <p>Choose an event and try gentle, achievable social steps.</p>
+    <nav>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="challenges.html" class="nav-link">Challenges</a>
+      <a href="calm.html" class="nav-link">Calm Corner</a>
+      <a href="reflection.html" class="nav-link">Reflections</a>
+    </nav>
+    <button id="low-stim-toggle" class="small-toggle">🌓 Low-Stimulation</button>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Pick an Event</h2>
+
+      <select id="event-select" aria-label="Select event">
+        <option value="">— Select an event —</option>
+        <option value="party">Party</option>
+        <option value="church">Church Gathering</option>
+        <option value="workshop">Workshop</option>
+        <option value="networking">Networking</option>
+        <option value="coffee">Coffee Meetup</option>
+      </select>
+
+      <div class="controls-row">
+        <button id="load-btn" class="action-btn">Load Challenges</button>
+        <button id="clear-progress" class="action-btn subtle">Clear Progress</button>
+      </div>
+
+      <ul id="challenges-list" class="list"></ul>
+
+      <p class="muted">Tap a challenge to mark it done. Progress is saved for each event.</p>
+    </section>
+  </main>
+
+  <script src="common.js"></script>
+  <script>
+    // Per-page: Challenges logic
+    const challengesData = {
+      party: [
+        "Compliment someone’s outfit",
+        "Introduce yourself to one new person",
+        "Find someone who likes the same music as you",
+        "Say one sentence about how you're feeling"
+      ],
+      church: [
+        "Smile at someone nearby",
+        "Share one nice word after service",
+        "Sit next to someone new",
+        "Thank someone for coming"
+      ],
+      workshop: [
+        "Ask one question to the speaker",
+        "Take a short walk during the break",
+        "Write one takeaway in your notebook",
+        "Share a thought with a partner"
+      ],
+      networking: [
+        "Introduce yourself to 2 people",
+        "Ask about someone’s interests",
+        "Find one thing in common",
+        "Take a break if you feel overstimulated"
+      ],
+      coffee: [
+        "Ask what they recommend",
+        "Share a small story",
+        "Compliment the space",
+        "Find one thing you both like"
+      ]
+    };
+
+    const selectEl = document.getElementById('event-select');
+    const loadBtn = document.getElementById('load-btn');
+    const listEl = document.getElementById('challenges-list');
+    const clearBtn = document.getElementById('clear-progress');
+
+    function renderChallenges(eventKey) {
+      listEl.innerHTML = '';
+      if (!eventKey || !challengesData[eventKey]) return;
+      const saved = JSON.parse(localStorage.getItem(`completed-${eventKey}`)) || [];
+      challengesData[eventKey].forEach((ch, idx) => {
+        const li = document.createElement('li');
+        li.className = 'challenge-item';
+        li.tabIndex = 0;
+        li.textContent = ch;
+        if (saved.includes(idx)) li.classList.add('done');
+        li.addEventListener('click', () => {
+          li.classList.toggle('done');
+          saveProgress(eventKey);
+        });
+        li.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            li.click();
+          }
+        });
+        listEl.appendChild(li);
+      });
+    }
+
+    function saveProgress(eventKey) {
+      const items = Array.from(document.querySelectorAll('.challenge-item'));
+      const done = items.map((el, i) => el.classList.contains('done') ? i : -1).filter(i => i !== -1);
+      localStorage.setItem(`completed-${eventKey}`, JSON.stringify(done));
+    }
+
+    loadBtn.addEventListener('click', () => {
+      const key = selectEl.value;
+      if (!key) return alert('Please select an event first.');
+      renderChallenges(key);
+    });
+
+    clearBtn.addEventListener('click', () => {
+      const key = selectEl.value;
+      if (!key) return alert('Please select an event first.');
+      localStorage.removeItem(`completed-${key}`);
+      renderChallenges(key);
+    });
+
+    // Preload if user selected last event previously
+    const lastEvent = localStorage.getItem('last-event');
+    if (lastEvent) {
+      selectEl.value = lastEvent;
+      renderChallenges(lastEvent);
+    }
+
+    selectEl.addEventListener('change', () => {
+      localStorage.setItem('last-event', selectEl.value);
+    });
+  </script>
+</body>
+</html>
