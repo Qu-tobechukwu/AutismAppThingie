@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Social Ease — Progress</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="progress">
+  <header>
+    <h1>Progress Summary 🌸</h1>
+    <p>See how gently you’ve been growing across your events.</p>
+    <nav>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="challenges.html" class="nav-link">Challenges</a>
+      <a href="calm.html" class="nav-link">Calm Corner</a>
+      <a href="reflection.html" class="nav-link">Reflections</a>
+      <a href="progress.html" class="nav-link">Progress</a>
+    </nav>
+    <button id="low-stim-toggle" class="small-toggle">🌓 Low-Stimulation</button>
+  </header>
+
+  <main>
+    <section class="card centered">
+      <h2>Your Completed Challenges</h2>
+      <div id="progress-grid" class="progress-grid"></div>
+    </section>
+  </main>
+
+  <script src="common.js"></script>
+  <script>
+    const progressGrid = document.getElementById('progress-grid');
+    const events = {
+      party: ["Compliment someone’s outfit","Introduce yourself to one new person","Find someone who likes the same music as you","Say one sentence about how you're feeling"],
+      church: ["Smile at someone nearby","Share one nice word after service","Sit next to someone new","Thank someone for coming"],
+      workshop: ["Ask one question to the speaker","Take a short walk during the break","Write one takeaway in your notebook","Share a thought with a partner"],
+      networking: ["Introduce yourself to 2 people","Ask about someone’s interests","Find one thing in common","Take a break if you feel overstimulated"],
+      coffee: ["Ask what they recommend","Share a small story","Compliment the space","Find one thing you both like"]
+    };
+
+    function renderProgress() {
+      progressGrid.innerHTML = '';
+      for (let key in events) {
+        const done = JSON.parse(localStorage.getItem(`completed-${key}`)) || [];
+        const total = events[key].length;
+        const percent = Math.round((done.length / total) * 100);
+        const div = document.createElement('div');
+        div.className = 'progress-circle';
+        div.innerHTML = `
+          <div class="circle-wrap">
+            <div class="circle-fill" style="background: conic-gradient(var(--accent) ${percent}%, rgba(255,255,255,0.7) ${percent}%);"></div>
+            <div class="circle-center">${percent}%</div>
+          </div>
+          <p class="event-name">${key.charAt(0).toUpperCase()+key.slice(1)}</p>
+        `;
+        progressGrid.appendChild(div);
+      }
+    }
+
+    renderProgress();
+  </script>
+</body>
+</html>
