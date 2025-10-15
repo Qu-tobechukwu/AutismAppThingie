@@ -1,58 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Social Ease</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Social Ease — Home</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
     <h1>Social Ease 🌿</h1>
     <p>Your gentle guide to enjoying social spaces.</p>
+    <nav>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="challenges.html" class="nav-link">Challenges</a>
+      <a href="calm.html" class="nav-link">Calm Corner</a>
+      <a href="reflection.html" class="nav-link">Reflections</a>
+    </nav>
   </header>
 
   <main>
-    <button id="low-stim-toggle">🌓 Low-Stimulation Mode</button>
+    <section class="card centered">
+      <h2>Welcome</h2>
+      <p>Choose a page to get started — each page is its own simple screen so it's predictable and low-stim.</p>
 
-    <section id="event-section" class="card">
-      <h2>Pick an Event</h2>
-      <select id="event-type">
-        <option value="">-- Select an Event --</option>
-        <option value="party">Party</option>
-        <option value="church">Church Gathering</option>
-        <option value="workshop">Workshop</option>
-        <option value="networking">Networking Event</option>
-      </select>
-      <button id="load-challenges">Show Challenges</button>
-      <ul id="challenge-list"></ul>
-    </section>
-
-    <section id="calm-corner" class="card">
-      <h2>Calm Corner 🫧</h2>
-      <p>Take a break here and watch the bubbles float...</p>
-      <div class="bubble-container">
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
+      <div class="home-buttons">
+        <a class="large-btn" href="challenges.html">Go to Challenges</a>
+        <a class="large-btn" href="calm.html">Open Calm Corner</a>
+        <a class="large-btn" href="reflection.html">Write a Reflection</a>
       </div>
-    </section>
 
-    <section id="reflection" class="card">
-      <h2>Reflect & Save Your Notes</h2>
-      <textarea id="reflection-input" placeholder="How did the event go? What did you enjoy or learn?"></textarea>
-      <button id="save-reflection">Save Reflection</button>
-      <ul id="reflection-list"></ul>
+      <p class="small">Tip: Use the "Low-Stimulation Mode" on any page (top-right) to simplify visuals and stop animations.</p>
     </section>
   </main>
 
-  <footer>
-    <p>💙 Made for connection, calm, and confidence.</p>
-  </footer>
-
-  <script src="script.js"></script>
+  <script src="common.js"></script>
 </body>
 </html>
