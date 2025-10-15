@@ -1,73 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page="reflections">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Social Ease — Reflections</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Ease - Reflections</title>
+<link rel="stylesheet" href="style.css">
+<script src="common.js" defer></script>
 </head>
-<body data-page="reflection">
-
+<body>
 <header class="site-header">
   <div class="header-row">
     <div class="brand">
-      <a href="index.html" class="logo-link" aria-label="Social Ease home">
-        <img src="assets/logo.svg" alt="Social Ease logo" class="site-logo" />
-      </a>
+      <img src="assets/logo.png" alt="Social Ease Logo" class="site-logo">
+      <div>
+        <h1>Social Ease</h1>
+        <small>Daily & professional settings — support for social ease</small>
+      </div>
     </div>
-
-    <nav class="main-nav" role="navigation" aria-label="Main">
+    <nav class="main-nav">
       <a href="index.html" class="nav-link">Home</a>
       <a href="challenges.html" class="nav-link">Challenges</a>
-      <a href="cues.html" class="nav-link">Social Cues</a>
-      <a href="calm.html" class="nav-link">Calm Corner</a>
-      <a href="reflection.html" class="nav-link">Reflections</a>
+      <a href="social-cues.html" class="nav-link">Social Cues</a>
+      <a href="calm-corner.html" class="nav-link">Calm Corner</a>
+      <a href="reflections.html" class="nav-link">Reflections</a>
       <a href="progress.html" class="nav-link">Progress</a>
-      <a href="about.html" class="nav-link">About</a>
+      <a href="settings.html" class="nav-link">Settings</a>
     </nav>
-
-    <div class="header-controls">
-      <button id="low-stim-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle low stimulation mode">🌓</button>
-      <button id="voice-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle voice hints">🔈</button>
-      <a href="settings.html" class="small-toggle" aria-label="Settings">⚙️</a>
-    </div>
   </div>
 </header>
 
 <main class="centered">
-  <section class="card">
-    <h2>Reflection Journal 📝</h2>
-    <textarea id="reflection-text" rows="6" placeholder="Write your thoughts here..."></textarea>
-    <button id="save-reflection" class="pill-btn">Save Reflection 💾</button>
-    <ul id="reflection-list"></ul>
-  </section>
+  <h2>📝 Reflections</h2>
+  <p>Write about your social experiences and save your reflections here.</p>
+  <textarea id="reflection-input" placeholder="Type your reflection here..."></textarea>
+  <button id="save-reflection" class="pill-btn">Save Reflection</button>
+
+  <h3>Saved Reflections:</h3>
+  <ul id="reflection-list"></ul>
 </main>
-
-<script src="common.js"></script>
-<script>
-const textArea = document.getElementById('reflection-text');
-const saveBtn = document.getElementById('save-reflection');
-const list = document.getElementById('reflection-list');
-
-function loadReflections(){
-  list.innerHTML = '';
-  const notes = JSON.parse(localStorage.getItem('reflections')||'[]');
-  notes.forEach((n,i)=>{
-    const li = document.createElement('li');
-    li.textContent = n;
-    list.appendChild(li);
-  });
-}
-saveBtn.addEventListener('click', ()=>{
-  const notes = JSON.parse(localStorage.getItem('reflections')||'[]');
-  if(textArea.value.trim()!==''){
-    notes.push(textArea.value.trim());
-    localStorage.setItem('reflections', JSON.stringify(notes));
-    textArea.value='';
-    loadReflections();
-    if(window.voiceHint) window.voiceHint.reflectionSaved();
-  }
-});
-loadReflections();
-</script>
+</body>
+</html>
