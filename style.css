@@ -1,167 +1,81 @@
-/* === BASE STYLES === */
-body {
-  font-family: 'Quicksand', sans-serif;
-  background: linear-gradient(to bottom right, #d1f3e0, #cde7fa);
-  color: #333;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  transition: all 0.5s ease;
+// Elements
+const lowStimToggle = document.getElementById('low-stim-toggle');
+const loadChallengesBtn = document.getElementById('load-challenges');
+const challengeList = document.getElementById('challenge-list');
+const reflectionInput = document.getElementById('reflection-input');
+const saveReflectionBtn = document.getElementById('save-reflection');
+const reflectionList = document.getElementById('reflection-list');
+
+// === Low-Stimulation Mode ===
+if (localStorage.getItem('low-stim') === 'true') {
+  document.body.classList.add('low-stim');
 }
 
-header {
-  background: linear-gradient(to right, #a0e3c2, #a0d2eb);
-  color: #03414d;
-  padding: 1.5rem;
-  border-radius: 0 0 40% 40%;
-}
+lowStimToggle.addEventListener('click', () => {
+  document.body.classList.toggle('low-stim');
+  localStorage.setItem('low-stim', document.body.classList.contains('low-stim'));
+});
 
-h1 {
-  font-size: 2.2rem;
-  margin-bottom: 0.5rem;
-}
+// === Challenges Data ===
+const challenges = {
+  party: [
+    "Compliment someone’s outfit 👗",
+    "Find a quiet spot and take 3 deep breaths 🌬️",
+    "Say hi to one new person 👋",
+    "Notice 3 things you like about the environment 🌈"
+  ],
+  church: [
+    "Smile at someone nearby 🙏",
+    "Share one nice word after service 💬",
+    "Sit next to someone new 🪑",
+    "Thank someone for coming 💙"
+  ],
+  workshop: [
+    "Ask one question to the speaker ✋",
+    "Take a short walk during the break 🚶‍♀️",
+    "Write one takeaway in your notebook 📝",
+    "Share a thought with a partner 🤝"
+  ],
+  networking: [
+    "Introduce yourself to 2 people 💼",
+    "Ask about someone’s interests 👂",
+    "Find one thing in common 🌍",
+    "Take a break if you feel overstimulated 🕊️"
+  ]
+};
 
-main {
-  padding: 2rem;
-}
-
-.card {
-  background: #ffffffaa;
-  margin: 1.5rem auto;
-  padding: 1.5rem;
-  border-radius: 2rem;
-  max-width: 500px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-select, textarea, button {
-  font-family: inherit;
-  border: none;
-  border-radius: 2rem;
-  padding: 0.7rem 1rem;
-  margin: 0.5rem 0;
-  width: 80%;
-  font-size: 1rem;
-  outline: none;
-}
-
-textarea {
-  min-height: 80px;
-  resize: none;
-  background: #f9fdfc;
-}
-
-button {
-  background: #a0d2eb;
-  color: #03414d;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #82c6e6;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  background: #e6f5ef;
-  margin: 0.5rem auto;
-  padding: 0.7rem;
-  border-radius: 50px;
-  max-width: 80%;
-}
-
-/* === BUBBLE ANIMATION === */
-.bubble-container {
-  position: relative;
-  width: 100%;
-  height: 150px;
-  overflow: hidden;
-}
-
-.bubble {
-  position: absolute;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  animation: float 10s infinite ease-in;
-}
-
-.bubble:nth-child(1) {
-  width: 40px;
-  height: 40px;
-  left: 20%;
-  animation-delay: 0s;
-}
-.bubble:nth-child(2) {
-  width: 60px;
-  height: 60px;
-  left: 50%;
-  animation-delay: 2s;
-}
-.bubble:nth-child(3) {
-  width: 30px;
-  height: 30px;
-  left: 70%;
-  animation-delay: 4s;
-}
-.bubble:nth-child(4) {
-  width: 20px;
-  height: 20px;
-  left: 40%;
-  animation-delay: 6s;
-}
-.bubble:nth-child(5) {
-  width: 50px;
-  height: 50px;
-  left: 10%;
-  animation-delay: 8s;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0.6;
+// === Load Challenges ===
+loadChallengesBtn.addEventListener('click', () => {
+  const type = document.getElementById('event-type').value;
+  challengeList.innerHTML = "";
+  if (challenges[type]) {
+    challenges[type].forEach(ch => {
+      const li = document.createElement('li');
+      li.textContent = ch;
+      challengeList.appendChild(li);
+    });
   }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-180px) scale(1.2);
-    opacity: 0;
-  }
+});
+
+// === Reflection Notes ===
+function loadReflections() {
+  const saved = JSON.parse(localStorage.getItem('reflections') || '[]');
+  reflectionList.innerHTML = "";
+  saved.forEach(note => {
+    const li = document.createElement('li');
+    li.textContent = note;
+    reflectionList.appendChild(li);
+  });
 }
 
-/* === LOW-STIMULATION MODE === */
-body.low-stim {
-  background: #f0f4f5;
-  color: #222;
-}
+saveReflectionBtn.addEventListener('click', () => {
+  const text = reflectionInput.value.trim();
+  if (!text) return;
+  const saved = JSON.parse(localStorage.getItem('reflections') || '[]');
+  saved.push(text);
+  localStorage.setItem('reflections', JSON.stringify(saved));
+  reflectionInput.value = "";
+  loadReflections();
+});
 
-body.low-stim header {
-  background: #cbdad8;
-  color: #333;
-}
-
-body.low-stim .bubble {
-  display: none; /* stops animation */
-}
-
-body.low-stim button {
-  background: #b0c9c4;
-  color: #333;
-}
-
-body.low-stim button:hover {
-  background: #a0bdb8;
-}
-
-footer {
-  padding: 1rem;
-  color: #555;
-}
+loadReflections();
