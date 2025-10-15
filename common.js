@@ -1,47 +1,36 @@
-/* common.js — now with low-stim & voice hints */
+// Initialize Low-Stim and Voice
+document.addEventListener('DOMContentLoaded', ()=>{
+  const lowBtn = document.getElementById('low-stim-toggle');
+  const voiceBtn = document.getElementById('voice-toggle');
 
-document.addEventListener('DOMContentLoaded', () => {
-  const toggles = document.querySelectorAll('#low-stim-toggle');
-  toggles.forEach(t => {
-    t.addEventListener('click', () => {
-      const isOn = document.body.classList.toggle('low-stim');
-      localStorage.setItem('low-stim', isOn ? 'true' : 'false');
-      window.dispatchEvent(new Event('storage'));
-      speak(isOn ? "Low stimulation mode activated." : "Low stimulation mode off.");
-    });
+  // Apply stored settings
+  if(localStorage.getItem('low-stim')==='true') document.body.classList.add('low-stim');
+  if(localStorage.getItem('voice-enabled')!=='true') window.voiceEnabled=false;
+  else window.voiceEnabled=true;
+
+  // Button listeners
+  if(lowBtn) lowBtn.addEventListener('click', ()=>{
+    document.body.classList.toggle('low-stim');
+    const state = document.body.classList.contains('low-stim');
+    localStorage.setItem('low-stim', state?'true':'false');
+    if(window.voiceHint) window.voiceHint.info(state?"Low stimulation ON":"Low stimulation OFF");
   });
-
-  // Apply saved low-stim mode
-  if (localStorage.getItem('low-stim') === 'true') {
-    document.body.classList.add('low-stim');
-  }
-
-  window.addEventListener('storage', (ev) => {
-    if (ev.key === 'low-stim') {
-      if (localStorage.getItem('low-stim') === 'true') document.body.classList.add('low-stim');
-      else document.body.classList.remove('low-stim');
-    }
+  if(voiceBtn) voiceBtn.addEventListener('click', ()=>{
+    window.voiceEnabled = !window.voiceEnabled;
+    localStorage.setItem('voice-enabled', window.voiceEnabled?'true':'false');
+    if(window.voiceHint) window.voiceHint.info(window.voiceEnabled?"Voice hints ON":"Voice hints OFF");
   });
 });
 
-/* === Accessible Voice Feedback === */
-function speak(text) {
-  try {
-    const synth = window.speechSynthesis;
-    if (!synth) return;
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.rate = 0.9;
-    utter.pitch = 1;
-    utter.volume = 0.6;
-    synth.speak(utter);
-  } catch(e) {
-    console.warn("Speech not supported:", e);
-  }
-}
-
-/* Helper functions to call on events elsewhere */
+// Voice Hint Functions (stub for accessibility)
 window.voiceHint = {
-  challengeDone: () => speak("Nice job. Challenge completed."),
-  reflectionSaved: () => speak("Reflection saved successfully."),
-  calmAffirm: () => speak("Take a slow breath. You are safe."),
+  info: function(msg){
+    if(window.voiceEnabled) {
+      const utter = new SpeechSynthesisUtterance(msg);
+      speechSynthesis.speak(utter);
+    }
+  },
+  challengeDone: function(){ this.info("Challenge completed!"); },
+  reflectionSaved: function(){ this.info("Reflection saved."); },
+  calmAffirm: function(){ this.info("Take a deep breath and relax."); }
 };
