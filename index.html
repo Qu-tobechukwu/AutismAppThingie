@@ -1,48 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page="home">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Social Ease — Home</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Ease - Home</title>
+<link rel="stylesheet" href="style.css">
+<script src="common.js" defer></script>
 </head>
-<body data-page="home">
-
+<body>
 <header class="site-header">
   <div class="header-row">
     <div class="brand">
-      <a href="index.html" class="logo-link" aria-label="Social Ease home">
-        <img src="assets/logo.svg" alt="Social Ease logo" class="site-logo" />
-      </a>
+      <img src="assets/logo.png" alt="Social Ease Logo" class="site-logo">
+      <div>
+        <h1>Social Ease</h1>
+        <small>Daily & professional settings — support for social ease</small>
+      </div>
     </div>
-
-    <nav class="main-nav" role="navigation" aria-label="Main">
+    <button id="nav-toggle" class="small-toggle" aria-label="Toggle navigation">☰</button>
+    <nav class="main-nav">
       <a href="index.html" class="nav-link">Home</a>
       <a href="challenges.html" class="nav-link">Challenges</a>
-      <a href="cues.html" class="nav-link">Social Cues</a>
-      <a href="calm.html" class="nav-link">Calm Corner</a>
-      <a href="reflection.html" class="nav-link">Reflections</a>
+      <a href="social-cues.html" class="nav-link">Social Cues</a>
+      <a href="calm-corner.html" class="nav-link">Calm Corner</a>
+      <a href="reflections.html" class="nav-link">Reflections</a>
       <a href="progress.html" class="nav-link">Progress</a>
-      <a href="about.html" class="nav-link">About</a>
+      <a href="settings.html" class="nav-link">Settings</a>
     </nav>
-
     <div class="header-controls">
-      <button id="low-stim-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle low stimulation mode">🌓</button>
-      <button id="voice-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle voice hints">🔈</button>
-      <a href="settings.html" class="small-toggle" aria-label="Settings">⚙️</a>
+      <button id="low-stim-toggle" class="pill-btn">Low-Stim Mode</button>
+      <button id="voice-toggle" class="pill-btn">Voice Hints</button>
     </div>
   </div>
 </header>
 
 <main class="centered">
-  <section class="card">
-    <h1>Welcome to Social Ease 🌸</h1>
-    <p>Your personal companion for calm, guided social experiences.</p>
-    <p>Choose an option from the menu above to begin exploring.</p>
-  </section>
+  <h2>🏠 Home Page</h2>
+  <p>Welcome to Social Ease! This is the home page. From here, you can:</p>
+  <ul>
+    <li>Access challenges for different social events</li>
+    <li>Learn and practice social cues</li>
+    <li>Relax in Calm Corner</li>
+    <li>Save your reflections</li>
+    <li>Track your progress</li>
+    <li>Adjust settings for low-stim mode and voice hints</li>
+  </ul>
+  <p>Click any page above to begin your journey to social ease!</p>
 </main>
 
-<script src="common.js"></script>
 </body>
 </html>
