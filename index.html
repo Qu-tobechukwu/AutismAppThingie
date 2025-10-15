@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Steps</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Social Steps</h1>
+    <p>Structure for Safe, Fun Connections</p>
+  </header>
+
+  <main>
+    <section id="event-selection">
+      <h2>Select Your Event</h2>
+      <button class="event-btn" data-event="party">🥳 Party</button>
+      <button class="event-btn" data-event="coffee">☕ Coffee Meetup</button>
+      <button class="event-btn" data-event="networking">🏫 Networking Event</button>
+      <button class="event-btn" data-event="dinner">🍽️ Dinner with Friends</button>
+    </section>
+
+    <section id="challenges" class="hidden">
+      <h2 id="event-title"></h2>
+      <ul id="challenge-list"></ul>
+      <button id="back-btn">⬅ Back to Events</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
