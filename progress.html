@@ -1,60 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page="progress">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Social Ease — Progress</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Ease - Progress</title>
+<link rel="stylesheet" href="style.css">
+<script src="common.js" defer></script>
 </head>
-<body data-page="progress">
-
+<body>
 <header class="site-header">
   <div class="header-row">
     <div class="brand">
-      <a href="index.html" class="logo-link" aria-label="Social Ease home">
-        <img src="assets/logo.svg" alt="Social Ease logo" class="site-logo" />
-      </a>
+      <img src="assets/logo.png" alt="Social Ease Logo" class="site-logo">
+      <div>
+        <h1>Social Ease</h1>
+        <small>Daily & professional settings — support for social ease</small>
+      </div>
     </div>
-
-    <nav class="main-nav" role="navigation" aria-label="Main">
+    <nav class="main-nav">
       <a href="index.html" class="nav-link">Home</a>
       <a href="challenges.html" class="nav-link">Challenges</a>
-      <a href="cues.html" class="nav-link">Social Cues</a>
-      <a href="calm.html" class="nav-link">Calm Corner</a>
-      <a href="reflection.html" class="nav-link">Reflections</a>
+      <a href="social-cues.html" class="nav-link">Social Cues</a>
+      <a href="calm-corner.html" class="nav-link">Calm Corner</a>
+      <a href="reflections.html" class="nav-link">Reflections</a>
       <a href="progress.html" class="nav-link">Progress</a>
-      <a href="about.html" class="nav-link">About</a>
+      <a href="settings.html" class="nav-link">Settings</a>
     </nav>
-
-    <div class="header-controls">
-      <button id="low-stim-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle low stimulation mode">🌓</button>
-      <button id="voice-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle voice hints">🔈</button>
-      <a href="settings.html" class="small-toggle" aria-label="Settings">⚙️</a>
-    </div>
   </div>
 </header>
 
 <main class="centered">
-  <section class="card">
-    <h2>Progress Summary 📊</h2>
-    <ul id="progress-list"></ul>
-  </section>
+  <h2>📊 Progress Summary</h2>
+  <p>Track how many challenges you completed per event:</p>
+  <ul id="progress-list">
+    <li>Work / Office: 0 / 3 completed</li>
+    <li>Family Gatherings: 0 / 2 completed</li>
+    <li>Parties / Social Events: 0 / 2 completed</li>
+    <li>Public Places: 0 / 2 completed</li>
+    <li>New / Stressful Environments: 0 / 2 completed</li>
+  </ul>
 </main>
-
-<script src="common.js"></script>
-<script>
-const progressList = document.getElementById('progress-list');
-const events = ['party','church','workshop','networking','coffee'];
-
-function loadProgress(){
-  progressList.innerHTML = '';
-  events.forEach(e=>{
-    const done = JSON.parse(localStorage.getItem(`completed-${e}`)||'[]');
-    const li = document.createElement('li');
-    li.textContent = `${e.charAt(0).toUpperCase()+e.slice(1)}: ${done.length}/${done.length+events[e]?.length || 4} challenges completed`;
-    progressList.appendChild(li);
-  });
-}
-loadProgress();
-</script>
+</body>
+</html>
