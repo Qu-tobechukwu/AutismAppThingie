@@ -1,85 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page="challenges">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Social Ease — Challenges</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Ease - Challenges</title>
+<link rel="stylesheet" href="style.css">
+<script src="common.js" defer></script>
 </head>
-<body data-page="challenges">
-
+<body>
 <header class="site-header">
   <div class="header-row">
     <div class="brand">
-      <a href="index.html" class="logo-link" aria-label="Social Ease home">
-        <img src="assets/logo.svg" alt="Social Ease logo" class="site-logo" />
-      </a>
+      <img src="assets/logo.png" alt="Social Ease Logo" class="site-logo">
+      <div>
+        <h1>Social Ease</h1>
+        <small>Daily & professional settings — support for social ease</small>
+      </div>
     </div>
-
-    <nav class="main-nav" role="navigation" aria-label="Main">
+    <button id="nav-toggle" class="small-toggle" aria-label="Toggle navigation">☰</button>
+    <nav class="main-nav">
       <a href="index.html" class="nav-link">Home</a>
       <a href="challenges.html" class="nav-link">Challenges</a>
-      <a href="cues.html" class="nav-link">Social Cues</a>
-      <a href="calm.html" class="nav-link">Calm Corner</a>
-      <a href="reflection.html" class="nav-link">Reflections</a>
+      <a href="social-cues.html" class="nav-link">Social Cues</a>
+      <a href="calm-corner.html" class="nav-link">Calm Corner</a>
+      <a href="reflections.html" class="nav-link">Reflections</a>
       <a href="progress.html" class="nav-link">Progress</a>
-      <a href="about.html" class="nav-link">About</a>
+      <a href="settings.html" class="nav-link">Settings</a>
     </nav>
-
     <div class="header-controls">
-      <button id="low-stim-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle low stimulation mode">🌓</button>
-      <button id="voice-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle voice hints">🔈</button>
-      <a href="settings.html" class="small-toggle" aria-label="Settings">⚙️</a>
+      <button id="low-stim-toggle" class="pill-btn">Low-Stim Mode</button>
+      <button id="voice-toggle" class="pill-btn">Voice Hints</button>
     </div>
   </div>
 </header>
 
 <main class="centered">
-  <section class="card">
-    <h2>Choose an Event</h2>
-    <div id="event-list" class="event-list">
-      <button class="event-btn" data-event="party">Party</button>
-      <button class="event-btn" data-event="church">Church</button>
-      <button class="event-btn" data-event="workshop">Workshop</button>
-      <button class="event-btn" data-event="networking">Networking</button>
-      <button class="event-btn" data-event="coffee">Coffee Meetup</button>
-    </div>
-    <ul id="challenge-list"></ul>
-  </section>
+  <h2>🎯 Challenges Page</h2>
+  <p>Select an event type below to view challenges and sensory tips:</p>
+
+  <div class="card">
+    <h3>Work / Office</h3>
+    <ul>
+      <li><span>Greet colleagues with a smile & wave</span> <img src="assets/icons/hand-wave.png" alt="wave icon" width="24"></li>
+      <li><span>Take 5-min breaks when overwhelmed</span> <img src="assets/icons/clock.png" alt="clock icon" width="24"></li>
+      <li><span>Use noise-cancelling headphones if the office is noisy</span> <img src="assets/icons/headphones.png" alt="headphones icon" width="24"></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Family Gatherings</h3>
+    <ul>
+      <li><span>Ask about others’ interests instead of sharing first</span> <img src="assets/icons/speech.png" alt="speech icon" width="24"></li>
+      <li><span>Find a quiet corner if feeling overwhelmed</span> <img src="assets/icons/quiet.png" alt="quiet icon" width="24"></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Parties / Social Events</h3>
+    <ul>
+      <li><span>Arrive with a friend for support</span> <img src="assets/icons/friend.png" alt="friend icon" width="24"></li>
+      <li><span>Take short breaks outside</span> <img src="assets/icons/exit.png" alt="exit icon" width="24"></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Public Places</h3>
+    <ul>
+      <li><span>Plan a quiet route to avoid crowds</span> <img src="assets/icons/map.png" alt="map icon" width="24"></li>
+      <li><span>Bring sensory tools (earplugs, fidget)</span> <img src="assets/icons/fidget.png" alt="fidget icon" width="24"></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>New / Stressful Environments</h3>
+    <ul>
+      <li><span>Observe first before interacting</span> <img src="assets/icons/observe.png" alt="observe icon" width="24"></li>
+      <li><span>Have an exit plan in mind</span> <img src="assets/icons/exit.png" alt="exit icon" width="24"></li>
+    </ul>
+  </div>
 </main>
-
-<script src="common.js"></script>
-<script>
-const events = {
-  party: ["Compliment someone’s outfit","Introduce yourself to one new person","Find someone who likes the same music","Say one sentence about how you're feeling"],
-  church: ["Smile at someone nearby","Share one nice word after service","Sit next to someone new","Thank someone for coming"],
-  workshop: ["Ask one question to the speaker","Take a short walk during the break","Write one takeaway in your notebook","Share a thought with a partner"],
-  networking: ["Introduce yourself to 2 people","Ask about someone’s interests","Find one thing in common","Take a break if you feel overstimulated"],
-  coffee: ["Ask what they recommend","Share a small story","Compliment the space","Find one thing you both like"]
-};
-
-const eventList = document.getElementById('event-list');
-const challengeList = document.getElementById('challenge-list');
-
-function loadChallenges(eventKey) {
-  challengeList.innerHTML = '';
-  const done = JSON.parse(localStorage.getItem(`completed-${eventKey}`)) || [];
-  events[eventKey].forEach((ch, idx) => {
-    const li = document.createElement('li');
-    li.className = done.includes(idx) ? 'challenge-item done' : 'challenge-item';
-    li.textContent = ch;
-    li.addEventListener('click', () => {
-      if (!done.includes(idx)) done.push(idx);
-      localStorage.setItem(`completed-${eventKey}`, JSON.stringify(done));
-      li.classList.add('done');
-      if(window.voiceHint) window.voiceHint.challengeDone();
-    });
-    challengeList.appendChild(li);
-  });
-}
-
-eventList.querySelectorAll('.event-btn').forEach(btn => {
-  btn.addEventListener('click', () => loadChallenges(btn.dataset.event));
-});
-</script>
+</body>
+</html>
