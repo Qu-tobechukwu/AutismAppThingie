@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Social Ease — Settings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .switch {
+      position: relative; display: inline-block; width: 50px; height: 24px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; cursor: pointer;
+      top:0; left:0; right:0; bottom:0;
+      background-color: #ccc; border-radius: 34px;
+      transition: .4s;
+    }
+    .slider:before {
+      position: absolute; content:"";
+      height: 18px; width: 18px;
+      left: 3px; bottom: 3px;
+      background-color: white; border-radius: 50%;
+      transition: .4s;
+    }
+    input:checked + .slider { background-color: #A2D9CE; }
+    input:checked + .slider:before { transform: translateX(26px); }
+  </style>
+</head>
+<body data-page="settings">
+
+<header class="site-header">
+  <div class="header-row">
+    <div class="brand">
+      <a href="index.html" class="logo-link" aria-label="Social Ease home">
+        <img src="assets/logo.svg" alt="Social Ease logo" class="site-logo" />
+      </a>
+    </div>
+
+    <nav class="main-nav" role="navigation" aria-label="Main">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="challenges.html" class="nav-link">Challenges</a>
+      <a href="cues.html" class="nav-link">Social Cues</a>
+      <a href="calm.html" class="nav-link">Calm Corner</a>
+      <a href="reflection.html" class="nav-link">Reflections</a>
+      <a href="progress.html" class="nav-link">Progress</a>
+      <a href="about.html" class="nav-link">About</a>
+    </nav>
+
+    <div class="header-controls">
+      <button id="low-stim-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle low stimulation mode">🌓</button>
+      <button id="voice-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle voice hints">🔈</button>
+      <a href="settings.html" class="small-toggle" aria-label="Settings">⚙️</a>
+    </div>
+  </div>
+</header>
+
+<main class="centered">
+  <section class="card">
+    <h2>Settings ⚙️</h2>
+
+    <div class="setting-item">
+      <label>Low-Stimulation Mode
+        <label class="switch">
+          <input type="checkbox" id="switch-low-stim">
+          <span class="slider"></span>
+        </label>
+      </label>
+    </div>
+
+    <div class="setting-item">
+      <label>Voice Hints
+        <label class="switch">
+          <input type="checkbox" id="switch-voice">
+          <span class="slider"></span>
+        </label>
+      </label>
+    </div>
+
+    <div class="setting-item">
+      <button id="reset-progress" class="pill-btn">Reset All Progress 🗑️</button>
+    </div>
+  </section>
+</main>
+
+<script src="common.js"></script>
+<script>
+const switchLow = document.getElementById('switch-low-stim');
+const switchVoice = document.getElementById('switch-voice');
+const resetBtn = document.getElementById('reset-progress');
+
+switchLow.checked = localStorage.getItem('low-stim')==='true';
+switchVoice.checked = localStorage.getItem('voice-enabled')==='true';
+
+switchLow.addEventListener('change', ()=>{
+  const val = switchLow.checked;
+  localStorage.setItem('low-stim', val?'true':'false');
+  document.body.classList.toggle('low-stim', val);
+  if(window.voiceHint) window.voiceHint.info(val?"Low stimulation ON":"Low stimulation OFF");
+});
+
+switchVoice.addEventListener('change', ()=>{
+  const val = switchVoice.checked;
+  localStorage.setItem('voice-enabled', val?'true':'false');
+  if(window.voiceHint) window.voiceHint.info(val?"Voice hints ON":"Voice hints OFF");
+});
+
+resetBtn.addEventListener('click', ()=>{
+  if(confirm("Are you sure you want to reset all progress and reflections?")){
+    Object.keys(localStorage).forEach(k=>{
+      if(k.startsWith('completed-') || k==='reflections') localStorage.removeItem(k);
+    });
+    alert("All progress reset.");
+  }
+});
+</script>
