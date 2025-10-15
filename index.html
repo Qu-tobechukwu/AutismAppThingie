@@ -13,6 +13,7 @@
   </header>
 
   <main>
+    <!-- Event Selection -->
     <section id="event-selection">
       <h2>Select Your Event</h2>
       <button class="event-btn" data-event="party">🥳 Party</button>
@@ -21,10 +22,30 @@
       <button class="event-btn" data-event="dinner">🍽️ Dinner with Friends</button>
     </section>
 
+    <!-- Challenges -->
     <section id="challenges" class="hidden">
       <h2 id="event-title"></h2>
       <ul id="challenge-list"></ul>
       <button id="back-btn">⬅ Back to Events</button>
+      <button id="calm-btn">🧘 Calm Corner</button>
+      <button id="reflect-btn">📝 Reflection Log</button>
+    </section>
+
+    <!-- Calm Corner -->
+    <section id="calm-corner" class="hidden">
+      <h2>Calm Corner</h2>
+      <p>Breathe in slowly... hold... and breathe out. 🌸</p>
+      <p>Affirmation: “I am safe, I am capable, I can connect.”</p>
+      <button id="exit-calm">Exit Calm Corner</button>
+    </section>
+
+    <!-- Reflection Log -->
+    <section id="reflection" class="hidden">
+      <h2>Reflection Log</h2>
+      <textarea id="reflection-text" placeholder="Write down your thoughts..."></textarea>
+      <button id="save-reflection">Save</button>
+      <button id="exit-reflection">Exit Reflection</button>
+      <div id="reflection-saved" class="hidden">Reflection saved! ✅</div>
     </section>
   </main>
 
