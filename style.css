@@ -1,10 +1,11 @@
-/* General */
+/* General Styling */
 body {
   font-family: Arial, sans-serif;
   background-color: #E6F0FA; /* soft blue */
   color: #333;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 header {
@@ -23,8 +24,8 @@ main {
 }
 
 h1, h2 {
-  margin-bottom: 1rem;
   text-align: center;
+  margin-bottom: 1rem;
 }
 
 /* Buttons */
@@ -59,11 +60,11 @@ ul {
 li {
   padding: 0.5rem 0;
   font-size: 1rem;
-  cursor: pointer;
   border-radius: 50px;
   margin-bottom: 0.3rem;
   padding-left: 1rem;
   background-color: #D0E6F8;
+  transition: 0.3s;
 }
 
 li.completed {
@@ -85,6 +86,8 @@ li.completed {
 #calm-corner p {
   font-size: 1.2rem;
   margin-bottom: 1rem;
+  z-index: 2;
+  position: relative;
 }
 
 #calm-circles {
@@ -93,10 +96,33 @@ li.completed {
   left: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   pointer-events: none;
+  z-index: 1;
 }
 
-/* Reflection */
+/* Animated Circles */
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: float 10s ease-in-out infinite, colorShift 12s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-30px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes colorShift {
+  0% { background-color: rgba(255, 182, 193, 0.4); }  /* pink */
+  33% { background-color: rgba(173, 216, 230, 0.4); } /* blue */
+  66% { background-color: rgba(221, 160, 221, 0.4); } /* lilac */
+  100% { background-color: rgba(152, 251, 152, 0.4); } /* mint */
+}
+
+/* Reflection Section */
 #reflection textarea {
   width: 100%;
   height: 150px;
@@ -135,4 +161,9 @@ body.low-stim button:hover {
 body.low-stim li {
   font-size: 1.2rem;
   cursor: default;
+}
+
+/* Hidden Utility */
+.hidden {
+  display: none;
 }
