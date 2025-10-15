@@ -25,7 +25,7 @@ if (localStorage.getItem('low-stim') === 'true') {
   document.body.classList.add('low-stim');
 }
 
-// Low-Stimulation Toggle
+// Toggle Low-Stimulation Mode
 lowStimToggle.addEventListener('click', () => {
   document.body.classList.toggle('low-stim');
   localStorage.setItem('low-stim', document.body.classList.contains('low-stim'));
@@ -107,23 +107,23 @@ saveReflection.addEventListener('click', () => {
   }
 });
 
-// Show Challenges with LocalStorage Progress
+// Show Challenges
 function showChallenges(event) {
   eventTitle.textContent = `Challenges for ${capitalize(event)}`;
   challengeList.innerHTML = '';
-  
+
   let completed = JSON.parse(localStorage.getItem(`completed-${event}`)) || [];
 
   challengesData[event].forEach((challenge, index) => {
     const li = document.createElement('li');
     li.textContent = challenge;
     if (completed.includes(index)) li.classList.add('completed');
-    
+
     li.addEventListener('click', () => {
       li.classList.toggle('completed');
       updateProgress(event);
     });
-    
+
     challengeList.appendChild(li);
   });
 
@@ -131,7 +131,7 @@ function showChallenges(event) {
   challengesSection.classList.remove('hidden');
 }
 
-// Update LocalStorage Progress
+// Update Progress
 function updateProgress(event) {
   const lis = challengeList.querySelectorAll('li');
   let completed = [];
@@ -141,39 +141,34 @@ function updateProgress(event) {
   localStorage.setItem(`completed-${event}`, JSON.stringify(completed));
 }
 
-// Reflection System
+// Load Reflections
 function loadReflections() {
   reflectionList.innerHTML = '';
   let notes = JSON.parse(localStorage.getItem('reflections')) || [];
-  notes.forEach((note, idx) => {
+  notes.forEach((note) => {
     const li = document.createElement('li');
     li.textContent = note;
-    li.style.backgroundColor = '#D0E6F8';
-    li.style.borderRadius = '50px';
-    li.style.padding = '0.5rem';
-    li.style.marginBottom = '0.3rem';
     reflectionList.appendChild(li);
   });
 }
 
-// Calm Corner Circles Animation
+// Calm Circles Animation
 function createCalmCircles() {
+  calmCircles.innerHTML = '';
   for (let i = 0; i < 15; i++) {
     const circle = document.createElement('div');
     circle.classList.add('circle');
-    circle.style.width = `${20 + Math.random() * 40}px`;
-    circle.style.height = circle.style.width;
+    const size = 20 + Math.random() * 50;
+    circle.style.width = `${size}px`;
+    circle.style.height = `${size}px`;
     circle.style.left = `${Math.random() * 100}%`;
     circle.style.top = `${Math.random() * 100}%`;
-    circle.style.backgroundColor = 'rgba(255,255,255,0.3)';
-    circle.style.borderRadius = '50%';
-    circle.style.position = 'absolute';
-    circle.style.animation = `float ${5 + Math.random() * 5}s ease-in-out infinite`;
+    circle.style.animationDuration = `${8 + Math.random() * 6}s`;
     calmCircles.appendChild(circle);
   }
 }
 
-// Capitalize
+// Capitalize Function
 function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
