@@ -1,16 +1,19 @@
+/* General */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  color: #222;
+  background-color: #E6F0FA; /* soft blue */
+  color: #333;
   margin: 0;
   padding: 0;
 }
 
 header {
   text-align: center;
-  background-color: #8B0000; /* wine red */
-  color: white;
+  background-color: #A0D2EB; /* pastel blue */
+  color: #fff;
   padding: 1rem;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
 }
 
 main {
@@ -21,8 +24,10 @@ main {
 
 h1, h2 {
   margin-bottom: 1rem;
+  text-align: center;
 }
 
+/* Buttons */
 button {
   display: block;
   width: 100%;
@@ -30,21 +35,22 @@ button {
   margin-bottom: 1rem;
   font-size: 1rem;
   border: none;
-  border-radius: 8px;
-  background-color: #B22222;
-  color: white;
+  border-radius: 50px;
+  background-color: #A0D2EB;
+  color: #333;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.3s;
 }
 
 button:hover {
-  background-color: #8B0000;
+  background-color: #7AB8E1;
 }
 
-.hidden {
-  display: none;
+.rounded-btn {
+  border-radius: 50px;
 }
 
+/* Lists */
 ul {
   list-style: none;
   padding: 0;
@@ -54,24 +60,40 @@ li {
   padding: 0.5rem 0;
   font-size: 1rem;
   cursor: pointer;
+  border-radius: 50px;
+  margin-bottom: 0.3rem;
+  padding-left: 1rem;
+  background-color: #D0E6F8;
 }
 
 li.completed {
   text-decoration: line-through;
   opacity: 0.6;
+  background-color: #BDE0F5;
 }
 
 /* Calm Corner */
 #calm-corner {
   text-align: center;
-  background-color: #e0f7fa;
+  background-color: #E6F0FA;
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
 }
 
 #calm-corner p {
   font-size: 1.2rem;
   margin-bottom: 1rem;
+}
+
+#calm-circles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 /* Reflection */
@@ -80,7 +102,7 @@ li.completed {
   height: 150px;
   padding: 1rem;
   font-size: 1rem;
-  border-radius: 8px;
+  border-radius: 20px;
   border: 1px solid #ccc;
   margin-bottom: 1rem;
 }
@@ -88,4 +110,29 @@ li.completed {
 #reflection-saved {
   color: green;
   margin-top: 1rem;
+}
+
+/* Low-Stimulation Mode */
+body.low-stim {
+  background-color: #F0F4F8;
+  color: #333;
+}
+
+body.low-stim header {
+  background-color: #B0C4D9;
+  color: #333;
+}
+
+body.low-stim button {
+  background-color: #C3D7EB;
+  color: #333;
+}
+
+body.low-stim button:hover {
+  background-color: #A7C7E0;
+}
+
+body.low-stim li {
+  font-size: 1.2rem;
+  cursor: default;
 }
