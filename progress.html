@@ -18,8 +18,6 @@ header {
   text-align:center;
   background:#A7D9C2;
   padding:10px;
-  position:relative;
-  z-index:10;
 }
 .logo { width:80px; height:80px; }
 h1 { margin:0; color:white; }
@@ -33,30 +31,47 @@ nav {
 nav a {
   margin:5px 10px;
   text-decoration:none;
-  color:#333;
+  color:white;
   font-weight:bold;
   padding:8px 15px;
   border-radius:15px;
   background:#A7D9C2;
-  color:white;
 }
 nav a:hover { background:#6FB8A3; }
 main { padding:20px; text-align:center; }
-.card {
-  background:#CDEEDD;
+.progress-container {
+  background:#B2E2D0;
   border-radius:15px;
-  padding:15px;
-  margin:10px auto;
-  max-width:400px;
+  padding:10px;
+  margin:15px auto;
+  width:90%;
   text-align:left;
+}
+.progress-bar {
+  background:#6FB8A3;
+  height:20px;
+  border-radius:15px;
+  width:0%;
+  transition: width 0.5s;
+  text-align:right;
+  color:white;
+  padding-right:5px;
+  font-size:12px;
 }
 </style>
 </head>
 <body>
 
+<script>
+// Desktop redirect
+if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+    window.location.href = 'desktop.html';
+}
+</script>
+
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Social Ease – Progress</h1>
+  <h1>Progress</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
@@ -66,44 +81,56 @@ main { padding:20px; text-align:center; }
   <a href="social-cues.html">Social Cues</a>
   <a href="calm-corner.html">Calm Corner</a>
   <a href="notes.html">Notes</a>
+  <a href="progress.html">Progress</a>
   <a href="settings.html">Settings</a>
 </nav>
 
 <main>
-  <h2>Your Progress</h2>
-  <p>See how many challenges you have completed for each event type:</p>
-
-  <div class="card">
-    <h3>Daily Life Challenges</h3>
-    <p id="dailyProgress">0 / 3 completed</p>
+  <p>This is the Progress page. See how many challenges you have completed per event.</p>
+  
+  <div class="progress-container">
+    <h2>Daily Events</h2>
+    <div class="progress-bar" id="dailyBar">0%</div>
   </div>
 
-  <div class="card">
-    <h3>Professional Challenges</h3>
-    <p id="professionalProgress">0 / 3 completed</p>
+  <div class="progress-container">
+    <h2>Professional Events</h2>
+    <div class="progress-bar" id="professionalBar">0%</div>
   </div>
 
-  <div class="card">
-    <h3>Social Gatherings Challenges</h3>
-    <p id="socialProgress">0 / 3 completed</p>
+  <div class="progress-container">
+    <h2>Social Events</h2>
+    <div class="progress-bar" id="socialBar">0%</div>
   </div>
 </main>
 
 <script src="script.js"></script>
 <script>
-voiceHint("Welcome to the Progress Page. Track your completed challenges.");
+// Voice hint
+voiceHint("This is your Progress page. Track your completed challenges here.");
 
-// Update progress from localStorage
-function updateProgress(){
-  document.getElementById('dailyProgress').innerText =
-    (localStorage.getItem('dailyCompleted') || 0) + " / 3 completed";
-  document.getElementById('professionalProgress').innerText =
-    (localStorage.getItem('professionalCompleted') || 0) + " / 3 completed";
-  document.getElementById('socialProgress').innerText =
-    (localStorage.getItem('socialCompleted') || 0) + " / 3 completed";
+// Example: Load progress from local storage
+const dailyBar = document.getElementById('dailyBar');
+const professionalBar = document.getElementById('professionalBar');
+const socialBar = document.getElementById('socialBar');
+
+function loadProgress(){
+  const progress = JSON.parse(localStorage.getItem('progress') || '{}');
+  const daily = progress.daily || 0;
+  const professional = progress.professional || 0;
+  const social = progress.social || 0;
+
+  dailyBar.style.width = daily + '%';
+  dailyBar.textContent = daily + '%';
+
+  professionalBar.style.width = professional + '%';
+  professionalBar.textContent = professional + '%';
+
+  socialBar.style.width = social + '%';
+  socialBar.textContent = social + '%';
 }
-
-window.onload = updateProgress;
+loadProgress();
 </script>
+
 </body>
 </html>
