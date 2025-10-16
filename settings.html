@@ -1,70 +1,84 @@
-<!doctype html>
-<html lang="en" data-page="settings">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Social Ease — Settings</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="common.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Ease – Settings</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<style>
+/* Settings page specific styles */
+.settings-container { padding:20px; }
+.setting-item { display:flex; justify-content:space-between; align-items:center; background:#DFF6F0; padding:15px; border-radius:15px; margin-bottom:15px; }
+.switch { position: relative; display:inline-block; width:50px; height:28px; }
+.switch input { opacity:0; width:0; height:0; }
+.slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#BFE3C0; border-radius:34px; transition:.4s; }
+.slider:before { position:absolute; content:""; height:22px; width:22px; left:3px; bottom:3px; background:white; border-radius:50%; transition:.4s; }
+input:checked + .slider { background:#A7D9C2; }
+input:checked + .slider:before { transform: translateX(22px); }
+</style>
 </head>
 <body>
-<div class="app">
-<header class="site-header">
-  <div class="brand">
-    <img src="assets/logo.svg" class="site-logo big-logo" alt="Social Ease">
-    <div class="brand-text"><h1>Social Ease</h1><div class="tagline">App settings</div></div>
-  </div>
-  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
-  <nav class="main-nav" role="navigation">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="challenges.html" class="nav-link">Challenges</a>
-    <a href="social-cues.html" class="nav-link">Social Cues</a>
-    <a href="calm-corner.html" class="nav-link">Calm Corner</a>
-    <a href="reflections.html" class="nav-link">Reflections</a>
-    <a href="progress.html" class="nav-link">Progress</a>
-    <a href="settings.html" class="nav-link">Settings</a>
-  </nav>
-  <div class="header-controls">
-    <button id="low-stim-toggle" class="icon-btn">🌓</button>
-    <button id="voice-toggle" class="icon-btn">🔈</button>
-    <a href="settings.html" class="icon-btn">⚙️</a>
-  </div>
+<header>
+  <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
+  <h1>Social Ease</h1>
+  <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
-<main class="centered">
-  <section class="card">
-    <h2>⚙️ Settings</h2>
-    <p class="muted">Instruction: Toggle the switches to change app behaviour. They save automatically.</p>
+<main class="settings-container">
+  <h2>Settings</h2>
+  <p>Customize your app experience with the toggles below:</p>
 
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
-      <div>
-        <div style="font-weight:700">Low-Stimulation Mode</div>
-        <div class="muted">Reduce visual clutter & animations</div>
-      </div>
-      <label class="switch"><input id="switch-low" type="checkbox"><span class="slider"></span></label>
-    </div>
+  <div class="setting-item">
+    <span>Low Stim Mode</span>
+    <label class="switch">
+      <input type="checkbox" id="lowStimToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
 
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
-      <div>
-        <div style="font-weight:700">Voice Hints</div>
-        <div class="muted">Short audio cues for actions</div>
-      </div>
-      <label class="switch"><input id="switch-voice" type="checkbox"><span class="slider"></span></label>
-    </div>
-
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px">
-      <div>
-        <div style="font-weight:700">Calm Corner Animations</div>
-        <div class="muted">Turn off animations if you prefer</div>
-      </div>
-      <label class="switch"><input id="switch-anim" type="checkbox"><span class="slider"></span></label>
-    </div>
-
-    <div style="margin-top:12px">
-      <button class="pill-btn" id="reset-data">Reset progress & reflections</button>
-    </div>
-  </section>
+  <div class="setting-item">
+    <span>Voice Hints</span>
+    <label class="switch">
+      <input type="checkbox" id="voiceHintsToggle" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
 </main>
+
+<!-- Install App Modal -->
+<div id="installModal" class="modal">
+  <div class="modal-content">
+    <span id="closeModal" class="close">&times;</span>
+    <h2>Install Social Ease</h2>
+    <p>Add the app to your home screen for quick access!</p>
+    <button id="confirmInstall">Install</button>
+  </div>
 </div>
+
+<script src="script.js"></script>
+<script>
+// Load settings from localStorage
+function loadSettings() {
+  const lowStim = JSON.parse(localStorage.getItem('lowStim') || 'false');
+  const voiceHints = JSON.parse(localStorage.getItem('voiceHints') || 'true');
+  document.getElementById('lowStimToggle').checked = lowStim;
+  document.getElementById('voiceHintsToggle').checked = voiceHints;
+}
+
+// Save settings when toggled
+document.getElementById('lowStimToggle').addEventListener('change', () => {
+  const value = document.getElementById('lowStimToggle').checked;
+  localStorage.setItem('lowStim', value);
+});
+
+document.getElementById('voiceHintsToggle').addEventListener('change', () => {
+  const value = document.getElementById('voiceHintsToggle').checked;
+  localStorage.setItem('voiceHints', value);
+});
+
+// Initial load
+loadSettings();
+</script>
 </body>
 </html>
