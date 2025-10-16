@@ -5,83 +5,97 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Social Ease – Progress</title>
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#A7D9C2">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <style>
-/* Progress page specific styles */
-.progress-container { padding:20px; }
-.progress-item { background:#DFF6F0; margin-bottom:15px; padding:15px; border-radius:15px; }
-.progress-item h3 { margin:0 0 5px 0; }
-.progress-bar { height:20px; background:#A7D9C2; border-radius:10px; width:0; transition: width 0.5s; }
+body {
+  margin:0;
+  font-family:'Helvetica Neue', Arial, sans-serif;
+  background:#E0F7F4;
+}
+header {
+  text-align:center;
+  background:#A7D9C2;
+  padding:10px;
+  position:relative;
+  z-index:10;
+}
+.logo { width:80px; height:80px; }
+h1 { margin:0; color:white; }
+main {
+  padding:20px;
+  text-align:center;
+}
+.progress-item {
+  background:#CDEEDD;
+  margin:10px auto;
+  padding:15px;
+  border-radius:15px;
+  max-width:500px;
+  text-align:left;
+}
+button {
+  padding:10px 20px;
+  margin:10px 5px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  background:#A7D9C2;
+  color:white;
+  font-size:1em;
+}
 </style>
 </head>
 <body>
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Social Ease</h1>
+  <h1>Social Ease – Progress</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
-<main class="progress-container">
-  <h2>Progress Summary</h2>
-  <p>This page shows how many challenges you have completed per event type.</p>
-
+<main>
+  <h2>Challenge Progress Summary</h2>
+  <p>This is the Progress Page. View how many challenges you’ve completed per event type.</p>
+  
   <div class="progress-item">
-    <h3>Workplace</h3>
-    <div class="progress-bar" id="workplaceBar"></div>
-    <p id="workplaceText"></p>
+    <strong>Daily Events:</strong> <span id="dailyCompleted">0</span> completed
+  </div>
+  <div class="progress-item">
+    <strong>Professional Events:</strong> <span id="professionalCompleted">0</span> completed
   </div>
 
-  <div class="progress-item">
-    <h3>Daily Activities</h3>
-    <div class="progress-bar" id="dailyBar"></div>
-    <p id="dailyText"></p>
-  </div>
-
-  <div class="progress-item">
-    <h3>Professional Events</h3>
-    <div class="progress-bar" id="professionalBar"></div>
-    <p id="professionalText"></p>
-  </div>
+  <button onclick="resetProgress()">Reset Progress</button>
 </main>
-
-<!-- Install App Modal -->
-<div id="installModal" class="modal">
-  <div class="modal-content">
-    <span id="closeModal" class="close">&times;</span>
-    <h2>Install Social Ease</h2>
-    <p>Add the app to your home screen for quick access!</p>
-    <button id="confirmInstall">Install</button>
-  </div>
-</div>
 
 <script src="script.js"></script>
 <script>
-// Dummy progress example (replace with real data or save in localStorage)
-const progressData = {
-  workplace: 2,
-  daily: 1,
-  professional: 0,
-  totalWorkplace: 3,
-  totalDaily: 3,
-  totalProfessional: 3
-};
+voiceHint("Welcome to Progress Page. See how many challenges you have completed.");
 
-function updateProgress() {
-  const workplacePercent = (progressData.workplace / progressData.totalWorkplace) * 100;
-  const dailyPercent = (progressData.daily / progressData.totalDaily) * 100;
-  const professionalPercent = (progressData.professional / progressData.totalProfessional) * 100;
-
-  document.getElementById('workplaceBar').style.width = workplacePercent + '%';
-  document.getElementById('workplaceText').textContent = `${progressData.workplace} of ${progressData.totalWorkplace} completed`;
-
-  document.getElementById('dailyBar').style.width = dailyPercent + '%';
-  document.getElementById('dailyText').textContent = `${progressData.daily} of ${progressData.totalDaily} completed`;
-
-  document.getElementById('professionalBar').style.width = professionalPercent + '%';
-  document.getElementById('professionalText').textContent = `${progressData.professional} of ${progressData.totalProfessional} completed`;
+/* ====== Progress Tracker ====== */
+function loadProgress() {
+  const daily = localStorage.getItem('dailyCompleted') || 0;
+  const professional = localStorage.getItem('professionalCompleted') || 0;
+  document.getElementById('dailyCompleted').textContent = daily;
+  document.getElementById('professionalCompleted').textContent = professional;
 }
 
-updateProgress();
+function resetProgress() {
+  if(confirm("Are you sure you want to reset all progress?")){
+    localStorage.setItem('dailyCompleted', 0);
+    localStorage.setItem('professionalCompleted', 0);
+    loadProgress();
+  }
+}
+
+// Example: function to mark a challenge complete
+function completeChallenge(type){
+  let current = parseInt(localStorage.getItem(type) || 0);
+  localStorage.setItem(type, current+1);
+  loadProgress();
+}
+
+loadProgress();
 </script>
 </body>
 </html>
