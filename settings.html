@@ -5,80 +5,127 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Social Ease – Settings</title>
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#A7D9C2">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <style>
-/* Settings page specific styles */
-.settings-container { padding:20px; }
-.setting-item { display:flex; justify-content:space-between; align-items:center; background:#DFF6F0; padding:15px; border-radius:15px; margin-bottom:15px; }
-.switch { position: relative; display:inline-block; width:50px; height:28px; }
-.switch input { opacity:0; width:0; height:0; }
-.slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#BFE3C0; border-radius:34px; transition:.4s; }
-.slider:before { position:absolute; content:""; height:22px; width:22px; left:3px; bottom:3px; background:white; border-radius:50%; transition:.4s; }
-input:checked + .slider { background:#A7D9C2; }
-input:checked + .slider:before { transform: translateX(22px); }
+body {
+  margin:0;
+  font-family:'Helvetica Neue', Arial, sans-serif;
+  background:#E0F7F4;
+}
+header {
+  text-align:center;
+  background:#A7D9C2;
+  padding:10px;
+  position:relative;
+  z-index:10;
+}
+.logo { width:80px; height:80px; }
+h1 { margin:0; color:white; }
+main {
+  padding:20px;
+  text-align:center;
+}
+.setting {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#CDEEDD;
+  border-radius:15px;
+  padding:15px;
+  margin:15px auto;
+  max-width:400px;
+}
+.toggle {
+  position: relative;
+  display: inline-block;
+  width:60px;
+  height:30px;
+}
+.toggle input {
+  opacity:0;
+  width:0;
+  height:0;
+}
+.slider {
+  position:absolute;
+  cursor:pointer;
+  top:0; left:0;
+  right:0; bottom:0;
+  background:#A7D9C2;
+  border-radius:34px;
+  transition:.4s;
+}
+.slider:before {
+  position:absolute;
+  content:"";
+  height:26px;
+  width:26px;
+  left:2px;
+  bottom:2px;
+  background:white;
+  border-radius:50%;
+  transition:.4s;
+}
+input:checked + .slider {
+  background:#6FB8A3;
+}
+input:checked + .slider:before {
+  transform:translateX(30px);
+}
 </style>
 </head>
 <body>
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Social Ease</h1>
+  <h1>Social Ease – Settings</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
-<main class="settings-container">
+<main>
   <h2>Settings</h2>
-  <p>Customize your app experience with the toggles below:</p>
+  <p>Toggle features below:</p>
 
-  <div class="setting-item">
+  <div class="setting">
     <span>Low Stim Mode</span>
-    <label class="switch">
+    <label class="toggle">
       <input type="checkbox" id="lowStimToggle">
       <span class="slider"></span>
     </label>
   </div>
 
-  <div class="setting-item">
+  <div class="setting">
     <span>Voice Hints</span>
-    <label class="switch">
-      <input type="checkbox" id="voiceHintsToggle" checked>
+    <label class="toggle">
+      <input type="checkbox" id="voiceHintsToggle">
       <span class="slider"></span>
     </label>
   </div>
-</main>
 
-<!-- Install App Modal -->
-<div id="installModal" class="modal">
-  <div class="modal-content">
-    <span id="closeModal" class="close">&times;</span>
-    <h2>Install Social Ease</h2>
-    <p>Add the app to your home screen for quick access!</p>
-    <button id="confirmInstall">Install</button>
-  </div>
-</div>
+</main>
 
 <script src="script.js"></script>
 <script>
-// Load settings from localStorage
-function loadSettings() {
-  const lowStim = JSON.parse(localStorage.getItem('lowStim') || 'false');
-  const voiceHints = JSON.parse(localStorage.getItem('voiceHints') || 'true');
-  document.getElementById('lowStimToggle').checked = lowStim;
-  document.getElementById('voiceHintsToggle').checked = voiceHints;
-}
+voiceHint("Welcome to Settings Page. Toggle Low Stim Mode or Voice Hints.");
 
-// Save settings when toggled
-document.getElementById('lowStimToggle').addEventListener('change', () => {
-  const value = document.getElementById('lowStimToggle').checked;
-  localStorage.setItem('lowStim', value);
+const lowStimToggle = document.getElementById('lowStimToggle');
+const voiceHintsToggle = document.getElementById('voiceHintsToggle');
+
+// Load saved settings
+lowStimToggle.checked = JSON.parse(localStorage.getItem('lowStim') || 'false');
+voiceHintsToggle.checked = JSON.parse(localStorage.getItem('voiceHints') || 'true');
+
+// Update settings on toggle
+lowStimToggle.addEventListener('change', () => {
+  localStorage.setItem('lowStim', lowStimToggle.checked);
+  alert("Low Stim Mode is now " + (lowStimToggle.checked ? "ON" : "OFF"));
 });
 
-document.getElementById('voiceHintsToggle').addEventListener('change', () => {
-  const value = document.getElementById('voiceHintsToggle').checked;
-  localStorage.setItem('voiceHints', value);
+voiceHintsToggle.addEventListener('change', () => {
+  localStorage.setItem('voiceHints', voiceHintsToggle.checked);
+  alert("Voice Hints are now " + (voiceHintsToggle.checked ? "ON" : "OFF"));
 });
-
-// Initial load
-loadSettings();
 </script>
 </body>
 </html>
