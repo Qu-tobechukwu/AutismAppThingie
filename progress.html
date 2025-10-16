@@ -1,23 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-page="progress">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Social Ease - Progress</title>
-<link rel="stylesheet" href="style.css">
-<script src="common.js" defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Social Ease — Progress</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="common.js" defer></script>
 </head>
 <body>
+
 <header class="site-header">
   <div class="header-row">
     <div class="brand">
-      <img src="assets/logo.png" alt="Social Ease Logo" class="site-logo">
-      <div>
-        <h1>Social Ease</h1>
-        <small>Daily & professional settings — support for social ease</small>
-      </div>
+      <img src="assets/logo.png" alt="Social Ease logo" class="site-logo">
+      <div class="brand-text"><h1>Social Ease</h1><div class="tagline">Daily & professional settings — support for social ease</div></div>
     </div>
-    <nav class="main-nav">
+
+    <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+
+    <nav class="main-nav" role="navigation" aria-label="Main menu">
       <a href="index.html" class="nav-link">Home</a>
       <a href="challenges.html" class="nav-link">Challenges</a>
       <a href="social-cues.html" class="nav-link">Social Cues</a>
@@ -26,19 +27,29 @@
       <a href="progress.html" class="nav-link">Progress</a>
       <a href="settings.html" class="nav-link">Settings</a>
     </nav>
+
+    <div class="header-controls">
+      <button id="low-stim-toggle" class="icon-btn" aria-pressed="false" title="Toggle Low-Stim">🌓</button>
+      <button id="voice-toggle" class="icon-btn" aria-pressed="false" title="Toggle Voice Hints">🔈</button>
+      <a href="settings.html" class="icon-btn" title="Settings">⚙️</a>
+    </div>
   </div>
 </header>
 
 <main class="centered">
-  <h2>📊 Progress Summary</h2>
-  <p>Track how many challenges you completed per event:</p>
-  <ul id="progress-list">
-    <li>Work / Office: 0 / 3 completed</li>
-    <li>Family Gatherings: 0 / 2 completed</li>
-    <li>Parties / Social Events: 0 / 2 completed</li>
-    <li>Public Places: 0 / 2 completed</li>
-    <li>New / Stressful Environments: 0 / 2 completed</li>
-  </ul>
+  <section class="card">
+    <h2>📊 Progress Summary</h2>
+    <p>Instruction: This page shows how many challenges you completed per event. It updates automatically when you mark challenges as done.</p>
+
+    <div id="progress-grid" class="progress-grid">
+      <!-- JS fills this -->
+    </div>
+
+    <div style="margin-top:12px">
+      <button class="pill-btn" onclick="updateProgressUI()">Refresh now</button>
+      <button class="pill-btn outline" onclick="clearAllProgress()">Clear progress</button>
+    </div>
+  </section>
 </main>
 </body>
 </html>
