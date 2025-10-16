@@ -8,62 +8,49 @@
   <script src="common.js" defer></script>
 </head>
 <body>
-
+<div class="app">
 <header class="site-header">
-  <div class="header-row">
-    <div class="brand">
-      <img src="assets/logo.png" alt="Social Ease logo" class="site-logo">
-      <div class="brand-text">
-        <h1>Social Ease</h1>
-        <div class="tagline">Daily & professional settings — support for social ease</div>
-      </div>
-    </div>
+  <div class="brand">
+    <img src="assets/logo.svg" class="site-logo" alt="Social Ease logo">
+    <div class="brand-text"><h1>Social Ease</h1><div class="tagline">Daily & Professional Settings — support for social ease</div></div>
+  </div>
 
-    <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
 
-    <nav class="main-nav" role="navigation" aria-label="Main menu">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="challenges.html" class="nav-link">Challenges</a>
-      <a href="social-cues.html" class="nav-link">Social Cues</a>
-      <a href="calm-corner.html" class="nav-link">Calm Corner</a>
-      <a href="reflections.html" class="nav-link">Reflections</a>
-      <a href="progress.html" class="nav-link">Progress</a>
-      <a href="settings.html" class="nav-link">Settings</a>
-    </nav>
+  <nav class="main-nav" role="navigation">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="challenges.html" class="nav-link">Challenges</a>
+    <a href="social-cues.html" class="nav-link">Social Cues</a>
+    <a href="calm-corner.html" class="nav-link">Calm Corner</a>
+    <a href="reflections.html" class="nav-link">Reflections</a>
+    <a href="progress.html" class="nav-link">Progress</a>
+    <a href="settings.html" class="nav-link">Settings</a>
+  </nav>
 
-    <div class="header-controls">
-      <button id="low-stim-toggle" class="icon-btn" aria-pressed="false" title="Toggle Low-Stim">🌓</button>
-      <button id="voice-toggle" class="icon-btn" aria-pressed="false" title="Toggle Voice Hints">🔈</button>
-      <a href="settings.html" class="icon-btn" title="Settings">⚙️</a>
-    </div>
+  <div class="header-controls">
+    <button id="low-stim-toggle" class="icon-btn" title="Toggle low-stim">🌓</button>
+    <button id="voice-toggle" class="icon-btn" title="Toggle voice hints">🔈</button>
+    <a href="settings.html" class="icon-btn" title="Settings">⚙️</a>
   </div>
 </header>
 
 <main class="centered">
   <section class="card">
-    <h2>🏠 Home Page — this is the home page</h2>
-    <p>This app helps you prepare for social events, practice social cues, manage sensory challenges, calm down, and reflect afterwards.</p>
-
+    <h2>🏠 Home Page — this is the Home page</h2>
+    <p>This app helps you prepare for social situations (work, social events, public places) and supports sensory and communication needs.</p>
     <ul>
-      <li><strong>Challenges:</strong> Guided actions for different event types (work, parties, public places).</li>
-      <li><strong>Social Cues:</strong> Searchable principles with clear examples and short scripts.</li>
-      <li><strong>Calm Corner:</strong> Animated calm visual + breathing guidance (only on Calm Corner page).</li>
-      <li><strong>Reflections:</strong> Save short notes about how things went.</li>
-      <li><strong>Progress:</strong> See how many challenges you completed per event.</li>
-      <li><strong>Settings:</strong> Toggle Low-Stim mode, Voice Hints, animations.</li>
+      <li><strong>Use Challenges</strong> to get step-by-step actions for events.</li>
+      <li><strong>Use Social Cues</strong> to learn simple principles and examples.</li>
+      <li><strong>Use Calm Corner</strong> to relax with soft animations.</li>
+      <li><strong>Reflections</strong> to write short notes and track what helped.</li>
     </ul>
-
-    <div class="home-actions">
-      <a class="pill-btn" href="challenges.html">Go to Challenges</a>
-      <a class="pill-btn" href="social-cues.html">Open Social Cues</a>
-      <a class="pill-btn" href="calm-corner.html">Open Calm Corner</a>
-    </div>
-
-    <div style="margin-top:16px">
-      <button class="pill-btn" onclick="voiceHint('Welcome to the home page. Use the menu to jump to a section.')">🔊 Play voice hint</button>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+      <a class="pill-btn" href="challenges.html">Open Challenges</a>
+      <a class="pill-btn outline" href="calm-corner.html">Open Calm Corner</a>
+      <button class="pill-btn" onclick="voiceHint('Welcome to Social Ease. Use Challenges, Social Cues, Calm Corner, Reflections and Progress.')" >🔊 Play voice hint</button>
     </div>
   </section>
 </main>
-
+</div>
 </body>
 </html>
