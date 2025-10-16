@@ -8,51 +8,130 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#A7D9C2">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<style>
+body {
+  margin:0;
+  font-family:'Helvetica Neue', Arial, sans-serif;
+  background:#E0F7F4;
+}
+header {
+  text-align:center;
+  background:#A7D9C2;
+  padding:10px;
+  position:relative;
+  z-index:10;
+}
+.logo { width:80px; height:80px; }
+h1 { margin:0; color:white; }
+nav {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  background:#CDEEDD;
+  padding:10px;
+}
+nav a {
+  margin:5px 10px;
+  text-decoration:none;
+  color:#333;
+  font-weight:bold;
+  padding:8px 15px;
+  border-radius:15px;
+  background:#A7D9C2;
+  color:white;
+}
+nav a:hover { background:#6FB8A3; }
+main { padding:20px; text-align:center; }
+.card {
+  background:#CDEEDD;
+  border-radius:15px;
+  padding:15px;
+  margin:10px auto;
+  max-width:400px;
+  text-align:left;
+}
+input[type="text"] {
+  width:80%;
+  padding:8px;
+  border-radius:10px;
+  border:1px solid #A7D9C2;
+  margin-bottom:10px;
+}
+ul { margin-left:20px; }
+</style>
 </head>
 <body>
+
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Social Ease</h1>
+  <h1>Social Ease – Social Cues</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
+<nav>
+  <a href="index.html">Home</a>
+  <a href="challenges.html">Challenges</a>
+  <a href="calm-corner.html">Calm Corner</a>
+  <a href="notes.html">Notes</a>
+  <a href="progress.html">Progress</a>
+  <a href="settings.html">Settings</a>
+</nav>
+
 <main>
-  <h2>Social Cues</h2>
-  <p>This is the Social Cues Page. Select a situation type to see tips and examples.</p>
+  <h2>Social Cues Guide</h2>
+  <p>Use the search below to find social situations and tips:</p>
+  <input type="text" id="searchInput" placeholder="Search social cues..." onkeyup="filterCues()">
 
-  <div class="cue-section">
-    <h3>Workplace</h3>
-    <ul>
-      <li>Small Talk: Keep it short; comment on the weather or shared task. <em>Example: "Good morning! How was your weekend?"</em></li>
-      <li>Requests: Ask politely and clearly; avoid overexplaining. <em>Example: "Could you clarify the deadline for this task?"</em></li>
-      <li>Feedback: Listen actively, thank the person, avoid defensive responses.</li>
-    </ul>
+  <div id="cueContainer">
+    <div class="card" data-keywords="greeting hello handshake eye contact">
+      <h3>Greeting Someone</h3>
+      <p>Principle: Smile and use a polite greeting.</p>
+      <p>Example: "Hi, how are you?" with a gentle smile.</p>
+    </div>
+
+    <div class="card" data-keywords="conversation small talk listen">
+      <h3>Starting Small Talk</h3>
+      <p>Principle: Ask open questions and listen actively.</p>
+      <p>Example: "What hobbies do you enjoy?" and show interest in their answer.</p>
+    </div>
+
+    <div class="card" data-keywords="workplace meeting feedback">
+      <h3>Professional Meetings</h3>
+      <p>Principle: Stay polite, concise, and acknowledge others' points.</p>
+      <p>Example: "I appreciate that insight. Here’s my perspective…"</p>
+    </div>
+
+    <div class="card" data-keywords="social event party">
+      <h3>Social Gatherings</h3>
+      <p>Principle: Take breaks if overwhelmed, observe others for cues.</p>
+      <p>Example: Step aside to calm corner if feeling overstimulated.</p>
+    </div>
+
+    <div class="card" data-keywords="online chat message">
+      <h3>Online Communication</h3>
+      <p>Principle: Use clear, kind messages; avoid ambiguity.</p>
+      <p>Example: "Could you clarify this part? Thanks!"</p>
+    </div>
   </div>
-
-  <div class="cue-section">
-    <h3>Daily Life</h3>
-    <ul>
-      <li>Greeting People: Smile lightly, say hello. <em>Example: "Hi! How are you?"</em></li>
-      <li>Waiting in Line: Keep body relaxed, avoid fidgeting excessively.</li>
-      <li>Small Talk in Stores: Comment on product or environment briefly.</li>
-    </ul>
-  </div>
-
-  <div class="cue-section">
-    <h3>Events / Social Gatherings</h3>
-    <ul>
-      <li>Introductions: Offer name, handshake optional. <em>Example: "Hi, I’m [Name]. Nice to meet you."</em></li>
-      <li>Joining Conversations: Listen first, then contribute small, relevant comment.</li>
-      <li>Exiting Conversations: Use polite exit phrases. <em>Example: "Excuse me, I need to get some water."</em></li>
-    </ul>
-  </div>
-
-  <p>Click any tip for voice guidance or to practice it aloud.</p>
 </main>
 
 <script src="script.js"></script>
 <script>
-voiceHint("Welcome to Social Cues Page. Select a situation to see tips and examples.");
+voiceHint("Welcome to the Social Cues Page. Search or browse for tips on social situations.");
+
+// Filter function for searchable social cues
+function filterCues(){
+  const input = document.getElementById('searchInput').value.toLowerCase();
+  const cards = document.querySelectorAll('#cueContainer .card');
+  cards.forEach(card => {
+    const keywords = card.getAttribute('data-keywords');
+    if(keywords.includes(input)){
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
 </script>
 </body>
 </html>
