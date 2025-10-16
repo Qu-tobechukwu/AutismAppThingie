@@ -23,79 +23,87 @@ header {
 }
 .logo { width:80px; height:80px; }
 h1 { margin:0; color:white; }
-main {
-  padding:20px;
-  text-align:center;
-}
-.progress-item {
+nav {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
   background:#CDEEDD;
-  margin:10px auto;
-  padding:15px;
-  border-radius:15px;
-  max-width:500px;
-  text-align:left;
+  padding:10px;
 }
-button {
-  padding:10px 20px;
-  margin:10px 5px;
-  border:none;
-  border-radius:25px;
-  cursor:pointer;
+nav a {
+  margin:5px 10px;
+  text-decoration:none;
+  color:#333;
+  font-weight:bold;
+  padding:8px 15px;
+  border-radius:15px;
   background:#A7D9C2;
   color:white;
-  font-size:1em;
+}
+nav a:hover { background:#6FB8A3; }
+main { padding:20px; text-align:center; }
+.card {
+  background:#CDEEDD;
+  border-radius:15px;
+  padding:15px;
+  margin:10px auto;
+  max-width:400px;
+  text-align:left;
 }
 </style>
 </head>
 <body>
+
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
   <h1>Social Ease – Progress</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
+<nav>
+  <a href="index.html">Home</a>
+  <a href="challenges.html">Challenges</a>
+  <a href="social-cues.html">Social Cues</a>
+  <a href="calm-corner.html">Calm Corner</a>
+  <a href="notes.html">Notes</a>
+  <a href="settings.html">Settings</a>
+</nav>
+
 <main>
-  <h2>Challenge Progress Summary</h2>
-  <p>This is the Progress Page. View how many challenges you’ve completed per event type.</p>
-  
-  <div class="progress-item">
-    <strong>Daily Events:</strong> <span id="dailyCompleted">0</span> completed
-  </div>
-  <div class="progress-item">
-    <strong>Professional Events:</strong> <span id="professionalCompleted">0</span> completed
+  <h2>Your Progress</h2>
+  <p>See how many challenges you have completed for each event type:</p>
+
+  <div class="card">
+    <h3>Daily Life Challenges</h3>
+    <p id="dailyProgress">0 / 3 completed</p>
   </div>
 
-  <button onclick="resetProgress()">Reset Progress</button>
+  <div class="card">
+    <h3>Professional Challenges</h3>
+    <p id="professionalProgress">0 / 3 completed</p>
+  </div>
+
+  <div class="card">
+    <h3>Social Gatherings Challenges</h3>
+    <p id="socialProgress">0 / 3 completed</p>
+  </div>
 </main>
 
 <script src="script.js"></script>
 <script>
-voiceHint("Welcome to Progress Page. See how many challenges you have completed.");
+voiceHint("Welcome to the Progress Page. Track your completed challenges.");
 
-/* ====== Progress Tracker ====== */
-function loadProgress() {
-  const daily = localStorage.getItem('dailyCompleted') || 0;
-  const professional = localStorage.getItem('professionalCompleted') || 0;
-  document.getElementById('dailyCompleted').textContent = daily;
-  document.getElementById('professionalCompleted').textContent = professional;
+// Update progress from localStorage
+function updateProgress(){
+  document.getElementById('dailyProgress').innerText =
+    (localStorage.getItem('dailyCompleted') || 0) + " / 3 completed";
+  document.getElementById('professionalProgress').innerText =
+    (localStorage.getItem('professionalCompleted') || 0) + " / 3 completed";
+  document.getElementById('socialProgress').innerText =
+    (localStorage.getItem('socialCompleted') || 0) + " / 3 completed";
 }
 
-function resetProgress() {
-  if(confirm("Are you sure you want to reset all progress?")){
-    localStorage.setItem('dailyCompleted', 0);
-    localStorage.setItem('professionalCompleted', 0);
-    loadProgress();
-  }
-}
-
-// Example: function to mark a challenge complete
-function completeChallenge(type){
-  let current = parseInt(localStorage.getItem(type) || 0);
-  localStorage.setItem(type, current+1);
-  loadProgress();
-}
-
-loadProgress();
+window.onload = updateProgress;
 </script>
 </body>
 </html>
