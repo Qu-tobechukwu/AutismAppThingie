@@ -9,125 +9,90 @@
 <meta name="theme-color" content="#A7D9C2">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <style>
-body { 
-  margin:0; 
-  font-family:'Helvetica Neue', Arial, sans-serif; 
-  background:#E0F7F4; 
-  overflow:hidden; 
+body {
+  margin:0;
+  font-family:'Helvetica Neue', Arial, sans-serif;
+  background:#E0F7F4;
+  overflow-x:hidden;
 }
 header {
-  position: relative;
-  z-index: 10;
   text-align:center;
   background:#A7D9C2;
   padding:10px;
+  position:relative;
+  z-index:10;
 }
 .logo { width:80px; height:80px; }
 h1 { margin:0; color:white; }
-canvas { 
-  position:fixed; 
-  top:0; left:0; 
-  width:100%; height:100%; 
-  z-index:0; 
+nav {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  background:#CDEEDD;
+  padding:10px;
 }
-main {
-  position:relative;
-  z-index:10;
-  text-align:center;
-  padding:20px;
-}
-button {
-  padding:10px 20px;
-  margin:10px;
-  border:none;
-  border-radius:25px;
-  cursor:pointer;
+nav a {
+  margin:5px 10px;
+  text-decoration:none;
+  color:#333;
+  font-weight:bold;
+  padding:8px 15px;
+  border-radius:15px;
   background:#A7D9C2;
   color:white;
-  font-size:1em;
 }
+nav a:hover { background:#6FB8A3; }
+main { padding:20px; text-align:center; }
+canvas {
+  display:block;
+  margin:20px auto;
+  border-radius:15px;
+}
+textarea {
+  width:80%;
+  height:150px;
+  border-radius:15px;
+  border:1px solid #A7D9C2;
+  padding:10px;
+  margin:10px auto;
+  display:block;
+  font-size:1em;
+  resize:none;
+}
+button { padding:10px 20px; margin:5px; border:none; border-radius:25px; cursor:pointer; background:#A7D9C2; color:white; font-size:1em; }
 </style>
 </head>
 <body>
+
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
   <h1>Social Ease – Calm Corner</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
-<canvas id="calmCanvas"></canvas>
+<nav>
+  <a href="index.html">Home</a>
+  <a href="challenges.html">Challenges</a>
+  <a href="social-cues.html">Social Cues</a>
+  <a href="notes.html">Notes</a>
+  <a href="progress.html">Progress</a>
+  <a href="settings.html">Settings</a>
+</nav>
 
 <main>
   <h2>Relax & Reflect</h2>
-  <p>This is the Calm Corner. Watch the gentle floating circles to help you relax.</p>
-  <textarea id="reflectionNotes" placeholder="Write your reflections here..." rows="6" cols="30"></textarea>
-  <br>
+  <p>Use the animation to calm your mind. Write your reflections below:</p>
+
+  <canvas id="calmCanvas" width="350" height="350"></canvas>
+
+  <textarea id="userNotes" placeholder="Write your thoughts here..."></textarea>
   <button onclick="saveNotes()">Save Notes</button>
-  <button id="toggleLowStim">Toggle Low Stim Mode</button>
+  <button onclick="clearNotes()">Clear Notes</button>
 </main>
 
 <script src="script.js"></script>
 <script>
-voiceHint("Welcome to Calm Corner. Watch the floating circles and reflect.");
-
-/* ====== Floating Circles Animation ====== */
-const canvas = document.getElementById('calmCanvas');
-const ctx = canvas.getContext('2d');
-let circles = [];
-let lowStim = false;
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-function createCircles(num=30) {
-  circles = [];
-  for(let i=0; i<num; i++){
-    circles.push({
-      x: Math.random()*canvas.width,
-      y: Math.random()*canvas.height,
-      r: Math.random()*20 + 10,
-      dx: (Math.random()-0.5)*1.5,
-      dy: (Math.random()-0.5)*1.5,
-      color: `rgba(167,217,194,0.5)`
-    });
-  }
-}
-createCircles();
-
-function animate() {
-  if(lowStim){ ctx.clearRect(0,0,canvas.width,canvas.height); return; }
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  circles.forEach(c => {
-    c.x += c.dx;
-    c.y += c.dy;
-    if(c.x<0||c.x>canvas.width) c.dx*=-1;
-    if(c.y<0||c.y>canvas.height) c.dy*=-1;
-    ctx.beginPath();
-    ctx.arc(c.x, c.y, c.r, 0, Math.PI*2);
-    ctx.fillStyle = c.color;
-    ctx.fill();
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-
-document.getElementById('toggleLowStim').addEventListener('click', () => {
-  lowStim = !lowStim;
-});
-
-/* ====== Notes Save Function ====== */
-function saveNotes() {
-  const notes = document.getElementById('reflectionNotes').value;
-  localStorage.setItem('calmCornerNotes', notes);
-  alert("Notes saved!");
-}
-
-// Load notes if any
-document.getElementById('reflectionNotes').value = localStorage.getItem('calmCornerNotes') || "";
+voiceHint("Welcome to Calm Corner. Watch the animation and take notes to relax.");
 </script>
 </body>
 </html>
