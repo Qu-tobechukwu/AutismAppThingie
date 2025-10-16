@@ -3,28 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Challenges</title>
+<title>Social Ease – Challenges</title>
 <link rel="stylesheet" href="style.css">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 </head>
 <body>
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
   <h1>Social Ease</h1>
-  <button id="settings-btn" aria-label="Settings">⚙️</button>
+  <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
 <main>
-  <h2>Event Challenges</h2>
-  <p>Select an event type and complete small challenges to help you engage comfortably.</p>
-  <div class="challenge-list">
-    <button>Workplace</button>
-    <button>Family Gathering</button>
-    <button>Party</button>
-    <button>Shopping</button>
-    <button>Other Events</button>
-  </div>
+  <h2>Challenges</h2>
+  <p>Choose your type of event below. Click a challenge to see instructions and voice hints.</p>
+
+  <section class="event-category">
+    <h3>Workplace</h3>
+    <ul>
+      <li data-hint="Greet your coworker with a small smile and a nod.">Greet Coworkers</li>
+      <li data-hint="If asked a question, repeat back to confirm understanding.">Clarify Questions</li>
+      <li data-hint="Take short breaks to reset if feeling overwhelmed.">Manage Overwhelm</li>
+    </ul>
+  </section>
+
+  <section class="event-category">
+    <h3>Daily Activities</h3>
+    <ul>
+      <li data-hint="Practice ordering your items with clear steps.">Grocery Store Interaction</li>
+      <li data-hint="Smile gently when receiving help.">Café Interaction</li>
+      <li data-hint="Make eye contact only if comfortable.">Public Transport</li>
+    </ul>
+  </section>
+
+  <section class="event-category">
+    <h3>Professional Events</h3>
+    <ul>
+      <li data-hint="Introduce yourself briefly and clearly.">Networking Intro</li>
+      <li data-hint="Listen actively; take notes to remember points.">Active Listening</li>
+      <li data-hint="Politely excuse yourself if overwhelmed.">Exiting Socially</li>
+    </ul>
+  </section>
+
+  <p>Tap any challenge to hear a short voice hint.</p>
 </main>
 
+<!-- Install App Modal -->
+<div id="installModal" class="modal">
+  <div class="modal-content">
+    <span id="closeModal" class="close">&times;</span>
+    <h2>Install Social Ease</h2>
+    <p>Add the app to your home screen for quick access!</p>
+    <button id="confirmInstall">Install</button>
+  </div>
+</div>
+
 <script src="script.js"></script>
+<script>
+// Voice hint functionality
+document.querySelectorAll('.event-category li').forEach(item => {
+  item.addEventListener('click', () => {
+    const hint = item.dataset.hint;
+    if('speechSynthesis' in window){
+      const utter = new SpeechSynthesisUtterance(hint);
+      utter.rate = 0.9; // calm, slow pace
+      utter.pitch = 1;
+      window.speechSynthesis.speak(utter);
+    } else {
+      alert(hint);
+    }
+  });
+});
+</script>
 </body>
 </html>
