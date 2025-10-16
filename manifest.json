@@ -1,7 +1,8 @@
 {
   "name": "Social Ease",
-  "short_name": "SocialEase",
-  "start_url": "/index.html",
+  "short_name": "Social Ease",
+  "description": "Social Ease – Daily & professional social support for people with autism.",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#E0F7F4",
   "theme_color": "#A7D9C2",
