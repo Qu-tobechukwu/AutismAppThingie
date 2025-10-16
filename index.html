@@ -18,10 +18,9 @@ header {
   text-align:center;
   background:#A7D9C2;
   padding:10px;
-  position:relative;
 }
-.logo { width:80px; height:80px; }
-h1 { margin:0; color:white; }
+.logo { width:100px; height:100px; }
+h1 { margin:0; color:white; font-size:1.8em; }
 nav {
   display:flex;
   justify-content:center;
@@ -32,21 +31,31 @@ nav {
 nav a {
   margin:5px 10px;
   text-decoration:none;
-  color:#333;
+  color:white;
   font-weight:bold;
   padding:8px 15px;
   border-radius:15px;
   background:#A7D9C2;
-  color:white;
 }
 nav a:hover { background:#6FB8A3; }
 main { padding:20px; text-align:center; }
+button#installBtn {
+  margin-top:15px;
+  padding:10px 20px;
+  border:none;
+  border-radius:15px;
+  background:#6FB8A3;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+button#installBtn:hover { background:#4F8F73; }
 </style>
 </head>
 <body>
 
 <script>
-// Desktop redirect: if not mobile/tablet, redirect to desktop.html
+// Desktop redirect
 if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
     window.location.href = 'desktop.html';
 }
@@ -54,7 +63,7 @@ if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
 
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Social Ease – Home</h1>
+  <h1>Social Ease</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
@@ -70,10 +79,32 @@ if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
 
 <main>
   <h2>Welcome to Social Ease</h2>
-  <p>This is the Home Page. Use the menu to navigate the app and explore challenges, social cues, notes, and more!</p>
+  <p>This is the Home page. From here, you can navigate to challenges, social cues, calm corner, notes, progress, and settings.</p>
+  <p>The app helps people with autism navigate social events, track reflections, and manage sensory challenges.</p>
 </main>
 
 <script src="script.js"></script>
+<script>
+// Voice hint
+voiceHint("Welcome to Social Ease. This is the Home page. Use the menu to navigate to other pages.");
+
+// Install PWA
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'block';
+});
+
+installBtn.addEventListener('click', async () => {
+  installBtn.style.display = 'none';
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+});
+</script>
 
 </body>
 </html>
