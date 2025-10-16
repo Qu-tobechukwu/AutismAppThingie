@@ -1,47 +1,87 @@
-<!doctype html>
-<html lang="en" data-page="progress">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Social Ease — Progress</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="common.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Ease – Progress</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<style>
+/* Progress page specific styles */
+.progress-container { padding:20px; }
+.progress-item { background:#DFF6F0; margin-bottom:15px; padding:15px; border-radius:15px; }
+.progress-item h3 { margin:0 0 5px 0; }
+.progress-bar { height:20px; background:#A7D9C2; border-radius:10px; width:0; transition: width 0.5s; }
+</style>
 </head>
 <body>
-<div class="app">
-<header class="site-header">
-  <div class="brand">
-    <img src="assets/logo.svg" class="site-logo" alt="Social Ease logo">
-    <div class="brand-text"><h1>Social Ease</h1><div class="tagline">Progress summary</div></div>
-  </div>
-  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
-  <nav class="main-nav" role="navigation">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="challenges.html" class="nav-link">Challenges</a>
-    <a href="social-cues.html" class="nav-link">Social Cues</a>
-    <a href="calm-corner.html" class="nav-link">Calm Corner</a>
-    <a href="reflections.html" class="nav-link">Reflections</a>
-    <a href="progress.html" class="nav-link">Progress</a>
-    <a href="settings.html" class="nav-link">Settings</a>
-  </nav>
-  <div class="header-controls">
-    <button id="low-stim-toggle" class="icon-btn">🌓</button>
-    <button id="voice-toggle" class="icon-btn">🔈</button>
-    <a href="settings.html" class="icon-btn">⚙️</a>
-  </div>
+<header>
+  <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
+  <h1>Social Ease</h1>
+  <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
-<main class="centered">
-  <section class="card">
-    <h2>📊 Progress Summary</h2>
-    <p class="muted">Instruction: This page updates when you mark challenges done. Tap Refresh if you want to update now.</p>
-    <div id="progress-grid" class="progress-grid" style="margin-top:12px"></div>
-    <div style="margin-top:12px;display:flex;gap:8px">
-      <button class="pill-btn" onclick="updateProgressUI()">Refresh now</button>
-      <button class="pill-btn outline" onclick="clearAllProgress()">Clear progress</button>
-    </div>
-  </section>
+<main class="progress-container">
+  <h2>Progress Summary</h2>
+  <p>This page shows how many challenges you have completed per event type.</p>
+
+  <div class="progress-item">
+    <h3>Workplace</h3>
+    <div class="progress-bar" id="workplaceBar"></div>
+    <p id="workplaceText"></p>
+  </div>
+
+  <div class="progress-item">
+    <h3>Daily Activities</h3>
+    <div class="progress-bar" id="dailyBar"></div>
+    <p id="dailyText"></p>
+  </div>
+
+  <div class="progress-item">
+    <h3>Professional Events</h3>
+    <div class="progress-bar" id="professionalBar"></div>
+    <p id="professionalText"></p>
+  </div>
 </main>
+
+<!-- Install App Modal -->
+<div id="installModal" class="modal">
+  <div class="modal-content">
+    <span id="closeModal" class="close">&times;</span>
+    <h2>Install Social Ease</h2>
+    <p>Add the app to your home screen for quick access!</p>
+    <button id="confirmInstall">Install</button>
+  </div>
 </div>
+
+<script src="script.js"></script>
+<script>
+// Dummy progress example (replace with real data or save in localStorage)
+const progressData = {
+  workplace: 2,
+  daily: 1,
+  professional: 0,
+  totalWorkplace: 3,
+  totalDaily: 3,
+  totalProfessional: 3
+};
+
+function updateProgress() {
+  const workplacePercent = (progressData.workplace / progressData.totalWorkplace) * 100;
+  const dailyPercent = (progressData.daily / progressData.totalDaily) * 100;
+  const professionalPercent = (progressData.professional / progressData.totalProfessional) * 100;
+
+  document.getElementById('workplaceBar').style.width = workplacePercent + '%';
+  document.getElementById('workplaceText').textContent = `${progressData.workplace} of ${progressData.totalWorkplace} completed`;
+
+  document.getElementById('dailyBar').style.width = dailyPercent + '%';
+  document.getElementById('dailyText').textContent = `${progressData.daily} of ${progressData.totalDaily} completed`;
+
+  document.getElementById('professionalBar').style.width = professionalPercent + '%';
+  document.getElementById('professionalText').textContent = `${progressData.professional} of ${progressData.totalProfessional} completed`;
+}
+
+updateProgress();
+</script>
 </body>
 </html>
