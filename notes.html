@@ -3,74 +3,131 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Social Ease – Notes</title>
+<title>Social Ease – Calm Corner</title>
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#A7D9C2">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 <style>
-/* Notes page specific styles */
-.notes-container { padding: 20px; }
-textarea { width: 100%; height: 200px; padding: 10px; border-radius:10px; border:1px solid #BFE3C0; font-size:1em; }
-button.save-btn { margin-top:10px; padding:10px 20px; border:none; border-radius:25px; background:#A7D9C2; font-size:1em; }
-.notes-list { margin-top:20px; }
-.note-item { background:#DFF6F0; padding:10px; border-radius:15px; margin-bottom:10px; }
+body { 
+  margin:0; 
+  font-family:'Helvetica Neue', Arial, sans-serif; 
+  background:#E0F7F4; 
+  overflow:hidden; 
+}
+header {
+  position: relative;
+  z-index: 10;
+  text-align:center;
+  background:#A7D9C2;
+  padding:10px;
+}
+.logo { width:80px; height:80px; }
+h1 { margin:0; color:white; }
+canvas { 
+  position:fixed; 
+  top:0; left:0; 
+  width:100%; height:100%; 
+  z-index:0; 
+}
+main {
+  position:relative;
+  z-index:10;
+  text-align:center;
+  padding:20px;
+}
+button {
+  padding:10px 20px;
+  margin:10px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  background:#A7D9C2;
+  color:white;
+  font-size:1em;
+}
 </style>
 </head>
 <body>
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Social Ease</h1>
+  <h1>Social Ease – Calm Corner</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
-<main class="notes-container">
-  <h2>Notes</h2>
-  <p>Write down your thoughts and reflections. Tap "Save" to keep them.</p>
-  <textarea id="noteInput" placeholder="Write your note here..."></textarea>
-  <button class="save-btn" id="saveNoteBtn">Save</button>
+<canvas id="calmCanvas"></canvas>
 
-  <div class="notes-list" id="notesList"></div>
+<main>
+  <h2>Relax & Reflect</h2>
+  <p>This is the Calm Corner. Watch the gentle floating circles to help you relax.</p>
+  <textarea id="reflectionNotes" placeholder="Write your reflections here..." rows="6" cols="30"></textarea>
+  <br>
+  <button onclick="saveNotes()">Save Notes</button>
+  <button id="toggleLowStim">Toggle Low Stim Mode</button>
 </main>
-
-<!-- Install App Modal -->
-<div id="installModal" class="modal">
-  <div class="modal-content">
-    <span id="closeModal" class="close">&times;</span>
-    <h2>Install Social Ease</h2>
-    <p>Add the app to your home screen for quick access!</p>
-    <button id="confirmInstall">Install</button>
-  </div>
-</div>
 
 <script src="script.js"></script>
 <script>
-// Load notes from localStorage
-function loadNotes() {
-  const notesList = document.getElementById('notesList');
-  notesList.innerHTML = '';
-  const notes = JSON.parse(localStorage.getItem('socialEaseNotes') || '[]');
-  notes.forEach((note, index) => {
-    const div = document.createElement('div');
-    div.className = 'note-item';
-    div.textContent = note;
-    notesList.appendChild(div);
-  });
-}
+voiceHint("Welcome to Calm Corner. Watch the floating circles and reflect.");
 
-// Save note to localStorage
-document.getElementById('saveNoteBtn').addEventListener('click', () => {
-  const noteInput = document.getElementById('noteInput');
-  const note = noteInput.value.trim();
-  if(note){
-    const notes = JSON.parse(localStorage.getItem('socialEaseNotes') || '[]');
-    notes.push(note);
-    localStorage.setItem('socialEaseNotes', JSON.stringify(notes));
-    noteInput.value = '';
-    loadNotes();
+/* ====== Floating Circles Animation ====== */
+const canvas = document.getElementById('calmCanvas');
+const ctx = canvas.getContext('2d');
+let circles = [];
+let lowStim = false;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+function createCircles(num=30) {
+  circles = [];
+  for(let i=0; i<num; i++){
+    circles.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      r: Math.random()*20 + 10,
+      dx: (Math.random()-0.5)*1.5,
+      dy: (Math.random()-0.5)*1.5,
+      color: `rgba(167,217,194,0.5)`
+    });
   }
+}
+createCircles();
+
+function animate() {
+  if(lowStim){ ctx.clearRect(0,0,canvas.width,canvas.height); return; }
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  circles.forEach(c => {
+    c.x += c.dx;
+    c.y += c.dy;
+    if(c.x<0||c.x>canvas.width) c.dx*=-1;
+    if(c.y<0||c.y>canvas.height) c.dy*=-1;
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, c.r, 0, Math.PI*2);
+    ctx.fillStyle = c.color;
+    ctx.fill();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+document.getElementById('toggleLowStim').addEventListener('click', () => {
+  lowStim = !lowStim;
 });
 
-// Initial load
-loadNotes();
+/* ====== Notes Save Function ====== */
+function saveNotes() {
+  const notes = document.getElementById('reflectionNotes').value;
+  localStorage.setItem('calmCornerNotes', notes);
+  alert("Notes saved!");
+}
+
+// Load notes if any
+document.getElementById('reflectionNotes').value = localStorage.getItem('calmCornerNotes') || "";
 </script>
 </body>
 </html>
