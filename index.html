@@ -8,31 +8,76 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#A7D9C2">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<style>
+body {
+  margin:0;
+  font-family:'Helvetica Neue', Arial, sans-serif;
+  background:#E0F7F4;
+}
+header {
+  text-align:center;
+  background:#A7D9C2;
+  padding:10px;
+  position:relative;
+  z-index:10;
+}
+.logo { width:80px; height:80px; }
+h1 { margin:0; color:white; }
+nav {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  background:#CDEEDD;
+  padding:10px;
+}
+nav a {
+  margin:5px 10px;
+  text-decoration:none;
+  color:#333;
+  font-weight:bold;
+  padding:8px 15px;
+  border-radius:15px;
+  background:#A7D9C2;
+  color:white;
+}
+nav a:hover { background:#6FB8A3; }
+main { padding:20px; text-align:center; }
+button { padding:10px 20px; margin:10px 5px; border:none; border-radius:25px; cursor:pointer; background:#A7D9C2; color:white; font-size:1em; }
+</style>
 </head>
 <body>
+
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Social Ease</h1>
+  <h1>Social Ease – Home</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
+<nav>
+  <a href="challenges.html">Challenges</a>
+  <a href="social-cues.html">Social Cues</a>
+  <a href="calm-corner.html">Calm Corner</a>
+  <a href="notes.html">Notes</a>
+  <a href="progress.html">Progress</a>
+  <a href="settings.html">Settings</a>
+</nav>
+
 <main>
-  <h2>Welcome to Social Ease</h2>
-  <p>This is the Home Page. Use the navigation to access:</p>
-  <ul>
-    <li><a href="challenges.html">Challenges</a></li>
-    <li><a href="social-cues.html">Social Cues</a></li>
-    <li><a href="calm-corner.html">Calm Corner</a></li>
-    <li><a href="notes.html">Notes</a></li>
-    <li><a href="progress.html">Progress</a></li>
-    <li><a href="settings.html">Settings</a></li>
+  <h2>Welcome to Social Ease!</h2>
+  <p>This is the Home Page. Use the navigation above to access different features:</p>
+  <ul style="text-align:left; max-width:400px; margin:auto;">
+    <li>Challenges – Practice daily or professional events</li>
+    <li>Social Cues – Learn and practice social interactions</li>
+    <li>Calm Corner – Relax with visual animations and notes</li>
+    <li>Notes – Save your reflections</li>
+    <li>Progress – Track your completed challenges</li>
+    <li>Settings – Adjust Low Stim Mode & Voice Hints</li>
   </ul>
-  <p>Voice hints and low-stim mode are configurable in Settings.</p>
 </main>
 
 <script src="script.js"></script>
 <script>
-voiceHint("Welcome to Social Ease Home page.");
+voiceHint("Welcome to Social Ease Home Page. Use the navigation to explore the app.");
 </script>
 </body>
 </html>
