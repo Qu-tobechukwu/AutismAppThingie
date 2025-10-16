@@ -8,42 +8,105 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#A7D9C2">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<style>
+body {
+  margin:0;
+  font-family:'Helvetica Neue', Arial, sans-serif;
+  background:#E0F7F4;
+}
+header {
+  text-align:center;
+  background:#A7D9C2;
+  padding:10px;
+  position:relative;
+  z-index:10;
+}
+.logo { width:80px; height:80px; }
+h1 { margin:0; color:white; }
+nav {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  background:#CDEEDD;
+  padding:10px;
+}
+nav a {
+  margin:5px 10px;
+  text-decoration:none;
+  color:#333;
+  font-weight:bold;
+  padding:8px 15px;
+  border-radius:15px;
+  background:#A7D9C2;
+  color:white;
+}
+nav a:hover { background:#6FB8A3; }
+main { padding:20px; text-align:center; }
+.card {
+  background:#CDEEDD;
+  border-radius:15px;
+  padding:15px;
+  margin:10px auto;
+  max-width:400px;
+  text-align:left;
+}
+button { padding:8px 15px; margin:5px; border:none; border-radius:20px; cursor:pointer; background:#A7D9C2; color:white; font-size:1em; }
+</style>
 </head>
 <body>
+
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Social Ease</h1>
+  <h1>Social Ease – Challenges</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
+<nav>
+  <a href="index.html">Home</a>
+  <a href="social-cues.html">Social Cues</a>
+  <a href="calm-corner.html">Calm Corner</a>
+  <a href="notes.html">Notes</a>
+  <a href="progress.html">Progress</a>
+  <a href="settings.html">Settings</a>
+</nav>
+
 <main>
-  <h2>Challenges</h2>
-  <p>This is the Challenges Page. Here you can explore social event challenges:</p>
+  <h2>Event Challenges</h2>
+  <p>Choose an event type to see challenges:</p>
 
-  <div class="event-section">
-    <h3>Daily Events</h3>
+  <div class="card">
+    <h3>Daily Life Events</h3>
     <ul>
-      <li>Grocery Shopping: Greet one staff member, maintain calm breathing.</li>
-      <li>Work Meeting: Ask one question, take notes on key points.</li>
-      <li>Social Call: Practice active listening, share one personal update.</li>
+      <li>Say hello to a neighbor</li>
+      <li>Practice ordering coffee</li>
+      <li>Smile when greeted</li>
     </ul>
+    <button onclick="completeChallenge('dailyCompleted')">Mark Daily Challenge Complete</button>
   </div>
 
-  <div class="event-section">
-    <h3>Professional Events</h3>
+  <div class="card">
+    <h3>Professional Settings</h3>
     <ul>
-      <li>Networking: Introduce yourself to one new person, ask about their work.</li>
-      <li>Team Lunch: Try one new conversation topic, monitor sensory comfort.</li>
-      <li>Presentation: Make eye contact with one person, speak clearly at your pace.</li>
+      <li>Start a conversation with a coworker</li>
+      <li>Answer a question in a meeting</li>
+      <li>Send a polite email follow-up</li>
     </ul>
+    <button onclick="completeChallenge('professionalCompleted')">Mark Professional Challenge Complete</button>
   </div>
 
-  <p>Use these challenges to practice structured social interactions. Click on each for voice guidance.</p>
+  <div class="card">
+    <h3>Social Gatherings</h3>
+    <ul>
+      <li>Introduce yourself to someone new</li>
+      <li>Ask someone about their hobbies</li>
+      <li>Practice active listening</li>
+    </ul>
+  </div>
 </main>
 
 <script src="script.js"></script>
 <script>
-voiceHint("Welcome to the Challenges Page. Select a challenge to get started.");
+voiceHint("Welcome to the Challenges Page. Choose an event type and complete challenges to improve your social skills.");
 </script>
 </body>
 </html>
