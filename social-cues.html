@@ -3,28 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Social Cues</title>
+<title>Social Ease – Social Cues</title>
 <link rel="stylesheet" href="style.css">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 </head>
 <body>
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
   <h1>Social Ease</h1>
-  <button id="settings-btn" aria-label="Settings">⚙️</button>
+  <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
 <main>
   <h2>Social Cues</h2>
-  <p>Learn key social principles with examples:</p>
-  <ul class="social-cues">
-    <li><strong>Eye Contact:</strong> Look at someone when speaking, but brief glances are okay. Example: greet colleague, look at eyes for 2 seconds.</li>
-    <li><strong>Small Talk:</strong> Ask neutral questions. Example: "Did you see the news today?"</li>
-    <li><strong>Turn-Taking:</strong> Wait for the other person to finish before responding.</li>
-    <li><strong>Body Language:</strong> Relaxed posture is friendly. Example: keep arms uncrossed.</li>
-    <li><strong>Boundaries:</strong> Respect personal space. Example: 1-2 arm lengths.</li>
-  </ul>
+  <p>This page helps you understand people’s behavior in different situations. Tap a cue to hear a voice hint.</p>
+
+  <input type="text" id="searchCues" placeholder="Search cues..." style="padding:10px; width:90%; margin-bottom:15px; border-radius:10px; border:1px solid #BFE3C0;">
+
+  <section class="cues-list">
+    <div class="cue" data-hint="Maintain a gentle smile and eye contact for about 2 seconds.">
+      <h3>Friendly Greeting</h3>
+      <p>Principle: Show warmth, but don’t overdo it. <br>Example: Say hi with a slight smile.</p>
+    </div>
+
+    <div class="cue" data-hint="Observe posture and tone of voice to gauge interest.">
+      <h3>Listening Signals</h3>
+      <p>Principle: Pay attention to body language. <br>Example: Leaning forward indicates attention.</p>
+    </div>
+
+    <div class="cue" data-hint="If someone looks away, don’t insist on prolonged eye contact.">
+      <h3>Eye Contact</h3>
+      <p>Principle: Short, comfortable glances are enough. <br>Example: Look at speaker, then glance away.</p>
+    </div>
+
+    <div class="cue" data-hint="Use calm voice and short sentences when responding.">
+      <h3>Responding Politely</h3>
+      <p>Principle: Keep responses simple and clear. <br>Example: 'Thank you, I appreciate that.'</p>
+    </div>
+
+    <div class="cue" data-hint="Excuse yourself politely if you feel overwhelmed.">
+      <h3>Handling Overwhelm</h3>
+      <p>Principle: Protect your comfort without offending. <br>Example: 'Excuse me, I need a short break.'</p>
+    </div>
+  </section>
 </main>
 
+<!-- Install App Modal -->
+<div id="installModal" class="modal">
+  <div class="modal-content">
+    <span id="closeModal" class="close">&times;</span>
+    <h2>Install Social Ease</h2>
+    <p>Add the app to your home screen for quick access!</p>
+    <button id="confirmInstall">Install</button>
+  </div>
+</div>
+
 <script src="script.js"></script>
+<script>
+// Voice hints on tap
+document.querySelectorAll('.cue').forEach(item => {
+  item.addEventListener('click', () => {
+    const hint = item.dataset.hint;
+    if('speechSynthesis' in window){
+      const utter = new SpeechSynthesisUtterance(hint);
+      utter.rate = 0.9;
+      utter.pitch = 1;
+      window.speechSynthesis.speak(utter);
+    } else {
+      alert(hint);
+    }
+  });
+});
+
+// Search filter
+document.getElementById('searchCues').addEventListener('input', function(){
+  const search = this.value.toLowerCase();
+  document.querySelectorAll('.cue').forEach(cue => {
+    cue.style.display = cue.innerText.toLowerCase().includes(search) ? 'block' : 'none';
+  });
+});
+</script>
 </body>
 </html>
