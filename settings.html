@@ -23,73 +23,87 @@ header {
 }
 .logo { width:80px; height:80px; }
 h1 { margin:0; color:white; }
-main {
-  padding:20px;
-  text-align:center;
+nav {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  background:#CDEEDD;
+  padding:10px;
 }
+nav a {
+  margin:5px 10px;
+  text-decoration:none;
+  color:#333;
+  font-weight:bold;
+  padding:8px 15px;
+  border-radius:15px;
+  background:#A7D9C2;
+  color:white;
+}
+nav a:hover { background:#6FB8A3; }
+main { padding:20px; text-align:center; }
 .setting {
   display:flex;
   justify-content:space-between;
   align-items:center;
   background:#CDEEDD;
-  border-radius:15px;
   padding:15px;
-  margin:15px auto;
+  border-radius:15px;
+  margin:10px auto;
   max-width:400px;
 }
-.toggle {
+.switch {
   position: relative;
   display: inline-block;
-  width:60px;
-  height:30px;
+  width: 50px;
+  height: 25px;
 }
-.toggle input {
-  opacity:0;
-  width:0;
-  height:0;
-}
+.switch input { display:none; }
 .slider {
-  position:absolute;
-  cursor:pointer;
-  top:0; left:0;
-  right:0; bottom:0;
+  position: absolute;
+  cursor: pointer;
+  top:0; left:0; right:0; bottom:0;
   background:#A7D9C2;
-  border-radius:34px;
   transition:.4s;
+  border-radius:25px;
 }
 .slider:before {
   position:absolute;
   content:"";
-  height:26px;
-  width:26px;
-  left:2px;
-  bottom:2px;
+  height:19px;
+  width:19px;
+  left:3px;
+  bottom:3px;
   background:white;
-  border-radius:50%;
   transition:.4s;
+  border-radius:50%;
 }
-input:checked + .slider {
-  background:#6FB8A3;
-}
-input:checked + .slider:before {
-  transform:translateX(30px);
-}
+input:checked + .slider { background:#6FB8A3; }
+input:checked + .slider:before { transform:translateX(25px); }
 </style>
 </head>
 <body>
+
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
   <h1>Social Ease – Settings</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
+<nav>
+  <a href="index.html">Home</a>
+  <a href="challenges.html">Challenges</a>
+  <a href="social-cues.html">Social Cues</a>
+  <a href="calm-corner.html">Calm Corner</a>
+  <a href="notes.html">Notes</a>
+  <a href="progress.html">Progress</a>
+</nav>
+
 <main>
   <h2>Settings</h2>
-  <p>Toggle features below:</p>
-
   <div class="setting">
     <span>Low Stim Mode</span>
-    <label class="toggle">
+    <label class="switch">
       <input type="checkbox" id="lowStimToggle">
       <span class="slider"></span>
     </label>
@@ -97,34 +111,35 @@ input:checked + .slider:before {
 
   <div class="setting">
     <span>Voice Hints</span>
-    <label class="toggle">
-      <input type="checkbox" id="voiceHintsToggle">
+    <label class="switch">
+      <input type="checkbox" id="voiceToggle">
       <span class="slider"></span>
     </label>
   </div>
-
 </main>
 
 <script src="script.js"></script>
 <script>
-voiceHint("Welcome to Settings Page. Toggle Low Stim Mode or Voice Hints.");
-
-const lowStimToggle = document.getElementById('lowStimToggle');
-const voiceHintsToggle = document.getElementById('voiceHintsToggle');
+voiceHint("Welcome to Settings. Toggle options to adjust your experience.");
 
 // Load saved settings
-lowStimToggle.checked = JSON.parse(localStorage.getItem('lowStim') || 'false');
-voiceHintsToggle.checked = JSON.parse(localStorage.getItem('voiceHints') || 'true');
+window.onload = function(){
+  const lowStim = localStorage.getItem("lowStim") === "true";
+  document.getElementById("lowStimToggle").checked = lowStim;
 
-// Update settings on toggle
-lowStimToggle.addEventListener('change', () => {
-  localStorage.setItem('lowStim', lowStimToggle.checked);
-  alert("Low Stim Mode is now " + (lowStimToggle.checked ? "ON" : "OFF"));
+  const voiceHints = localStorage.getItem("voiceHints") !== "false"; // default on
+  document.getElementById("voiceToggle").checked = voiceHints;
+};
+
+// Save settings on toggle
+document.getElementById("lowStimToggle").addEventListener("change", function(){
+  localStorage.setItem("lowStim", this.checked);
+  if(this.checked){ voiceHint("Low Stim Mode Enabled"); }
 });
 
-voiceHintsToggle.addEventListener('change', () => {
-  localStorage.setItem('voiceHints', voiceHintsToggle.checked);
-  alert("Voice Hints are now " + (voiceHintsToggle.checked ? "ON" : "OFF"));
+document.getElementById("voiceToggle").addEventListener("change", function(){
+  localStorage.setItem("voiceHints", this.checked);
+  if(this.checked){ voiceHint("Voice Hints Enabled"); }
 });
 </script>
 </body>
