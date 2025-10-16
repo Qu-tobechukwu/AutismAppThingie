@@ -1,23 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-page="calm-corner">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Social Ease - Calm Corner</title>
-<link rel="stylesheet" href="style.css">
-<script src="common.js" defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Social Ease — Calm Corner</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="common.js" defer></script>
 </head>
 <body>
+
 <header class="site-header">
   <div class="header-row">
     <div class="brand">
-      <img src="assets/logo.png" alt="Social Ease Logo" class="site-logo">
-      <div>
-        <h1>Social Ease</h1>
-        <small>Daily & professional settings — support for social ease</small>
-      </div>
+      <img src="assets/logo.png" alt="Social Ease logo" class="site-logo big-logo">
+      <div class="brand-text"><h1>Social Ease</h1><div class="tagline">Daily & professional settings — support for social ease</div></div>
     </div>
-    <nav class="main-nav">
+
+    <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+
+    <nav class="main-nav" role="navigation" aria-label="Main menu">
       <a href="index.html" class="nav-link">Home</a>
       <a href="challenges.html" class="nav-link">Challenges</a>
       <a href="social-cues.html" class="nav-link">Social Cues</a>
@@ -26,28 +27,56 @@
       <a href="progress.html" class="nav-link">Progress</a>
       <a href="settings.html" class="nav-link">Settings</a>
     </nav>
+
     <div class="header-controls">
-      <button id="low-stim-toggle" class="pill-btn">Low-Stim Mode</button>
-      <button id="voice-toggle" class="pill-btn">Voice Hints</button>
+      <button id="low-stim-toggle" class="icon-btn" aria-pressed="false" title="Toggle Low-Stim">🌓</button>
+      <button id="voice-toggle" class="icon-btn" aria-pressed="false" title="Toggle Voice Hints">🔈</button>
+      <a href="settings.html" class="icon-btn" title="Settings">⚙️</a>
     </div>
   </div>
 </header>
 
-<main class="centered">
-  <h2>🌀 Calm Corner</h2>
-  <p>Use this space to relax. Watch the gentle animations, practice breathing, or follow sensory tips:</p>
+<main class="centered calm-page">
+  <section class="card" aria-live="polite">
+    <h2>🌀 Calm Corner — Use this page to relax</h2>
+    <p>Instruction: Tap "Play affirmation" for a calming voice. Watch soft, slowly-moving circles (turn off in Settings if you prefer).</p>
 
-  <canvas id="calm-canvas"></canvas>
+    <div id="calm-wrap" class="calm-wrap">
+      <canvas id="calm-canvas" class="calm-canvas" aria-hidden="true"></canvas>
+    </div>
 
-  <div class="card">
-    <h3>Sensory Tips</h3>
-    <ul>
-      <li>Use noise-cancelling headphones</li>
-      <li>Try deep breathing exercises</li>
-      <li>Gently squeeze a fidget tool</li>
-      <li>Adjust lighting to comfort</li>
-    </ul>
-  </div>
+    <div style="margin-top:12px;">
+      <button id="play-affirm" class="pill-btn">Play affirmation</button>
+      <button id="pause-calm" class="pill-btn outline">Pause animation</button>
+      <button id="resume-calm" class="pill-btn outline">Resume animation</button>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <h3>Sensory supports</h3>
+      <ul>
+        <li>Noise-cancelling headphones or earplugs</li>
+        <li>Dim the lights or use a small lamp</li>
+        <li>Hold a fidget tool or small weighted item</li>
+        <li>Take slow breaths — 4 in, hold 2, 6 out</li>
+      </ul>
+    </div>
+
+  </section>
 </main>
+
+<script>
+/* calm canvas control will be handled by common.js startCalmAnimation/stopCalmAnimation */
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.getElementById('play-affirm').addEventListener('click', ()=> {
+    voiceHint('Take a slow breath in. Hold. Now breathe out slowly.');
+  });
+  document.getElementById('pause-calm').addEventListener('click', ()=> {
+    stopCalmAnimation();
+  });
+  document.getElementById('resume-calm').addEventListener('click', ()=> {
+    startCalmAnimation();
+  });
+});
+</script>
 </body>
 </html>
