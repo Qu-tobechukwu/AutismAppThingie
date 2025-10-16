@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Social Ease – Challenges</title>
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#A7D9C2">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 </head>
 <body>
@@ -16,64 +18,32 @@
 
 <main>
   <h2>Challenges</h2>
-  <p>Choose your type of event below. Click a challenge to see instructions and voice hints.</p>
+  <p>This is the Challenges Page. Here you can explore social event challenges:</p>
 
-  <section class="event-category">
-    <h3>Workplace</h3>
+  <div class="event-section">
+    <h3>Daily Events</h3>
     <ul>
-      <li data-hint="Greet your coworker with a small smile and a nod.">Greet Coworkers</li>
-      <li data-hint="If asked a question, repeat back to confirm understanding.">Clarify Questions</li>
-      <li data-hint="Take short breaks to reset if feeling overwhelmed.">Manage Overwhelm</li>
+      <li>Grocery Shopping: Greet one staff member, maintain calm breathing.</li>
+      <li>Work Meeting: Ask one question, take notes on key points.</li>
+      <li>Social Call: Practice active listening, share one personal update.</li>
     </ul>
-  </section>
+  </div>
 
-  <section class="event-category">
-    <h3>Daily Activities</h3>
-    <ul>
-      <li data-hint="Practice ordering your items with clear steps.">Grocery Store Interaction</li>
-      <li data-hint="Smile gently when receiving help.">Café Interaction</li>
-      <li data-hint="Make eye contact only if comfortable.">Public Transport</li>
-    </ul>
-  </section>
-
-  <section class="event-category">
+  <div class="event-section">
     <h3>Professional Events</h3>
     <ul>
-      <li data-hint="Introduce yourself briefly and clearly.">Networking Intro</li>
-      <li data-hint="Listen actively; take notes to remember points.">Active Listening</li>
-      <li data-hint="Politely excuse yourself if overwhelmed.">Exiting Socially</li>
+      <li>Networking: Introduce yourself to one new person, ask about their work.</li>
+      <li>Team Lunch: Try one new conversation topic, monitor sensory comfort.</li>
+      <li>Presentation: Make eye contact with one person, speak clearly at your pace.</li>
     </ul>
-  </section>
-
-  <p>Tap any challenge to hear a short voice hint.</p>
-</main>
-
-<!-- Install App Modal -->
-<div id="installModal" class="modal">
-  <div class="modal-content">
-    <span id="closeModal" class="close">&times;</span>
-    <h2>Install Social Ease</h2>
-    <p>Add the app to your home screen for quick access!</p>
-    <button id="confirmInstall">Install</button>
   </div>
-</div>
+
+  <p>Use these challenges to practice structured social interactions. Click on each for voice guidance.</p>
+</main>
 
 <script src="script.js"></script>
 <script>
-// Voice hint functionality
-document.querySelectorAll('.event-category li').forEach(item => {
-  item.addEventListener('click', () => {
-    const hint = item.dataset.hint;
-    if('speechSynthesis' in window){
-      const utter = new SpeechSynthesisUtterance(hint);
-      utter.rate = 0.9; // calm, slow pace
-      utter.pitch = 1;
-      window.speechSynthesis.speak(utter);
-    } else {
-      alert(hint);
-    }
-  });
-});
+voiceHint("Welcome to the Challenges Page. Select a challenge to get started.");
 </script>
 </body>
 </html>
