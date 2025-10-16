@@ -18,8 +18,6 @@ header {
   text-align:center;
   background:#A7D9C2;
   padding:10px;
-  position:relative;
-  z-index:10;
 }
 .logo { width:80px; height:80px; }
 h1 { margin:0; color:white; }
@@ -33,50 +31,47 @@ nav {
 nav a {
   margin:5px 10px;
   text-decoration:none;
-  color:#333;
+  color:white;
   font-weight:bold;
   padding:8px 15px;
   border-radius:15px;
   background:#A7D9C2;
-  color:white;
 }
 nav a:hover { background:#6FB8A3; }
 main { padding:20px; text-align:center; }
-.setting {
+.settingItem {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  background:#CDEEDD;
-  padding:15px;
+  margin:15px 20px;
+  padding:10px;
+  background:#B2E2D0;
   border-radius:15px;
-  margin:10px auto;
-  max-width:400px;
 }
+label { font-size:1.1em; color:#064635; }
 .switch {
   position: relative;
   display: inline-block;
-  width: 50px;
-  height: 25px;
+  width:50px;
+  height:25px;
 }
-.switch input { display:none; }
+.switch input {display:none;}
 .slider {
-  position: absolute;
-  cursor: pointer;
+  position:absolute;
+  cursor:pointer;
   top:0; left:0; right:0; bottom:0;
-  background:#A7D9C2;
-  transition:.4s;
+  background:#ccc;
   border-radius:25px;
+  transition:.4s;
 }
 .slider:before {
   position:absolute;
   content:"";
-  height:19px;
-  width:19px;
-  left:3px;
-  bottom:3px;
+  height:19px; width:19px;
+  left:3px; bottom:3px;
   background:white;
-  transition:.4s;
   border-radius:50%;
+  transition:.4s;
 }
 input:checked + .slider { background:#6FB8A3; }
 input:checked + .slider:before { transform:translateX(25px); }
@@ -84,10 +79,16 @@ input:checked + .slider:before { transform:translateX(25px); }
 </head>
 <body>
 
+<script>
+// Desktop redirect
+if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+    window.location.href = 'desktop.html';
+}
+</script>
+
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Social Ease – Settings</h1>
-  <button id="installBtn" style="display:none;">Install App</button>
+  <h1>Settings</h1>
 </header>
 
 <nav>
@@ -97,50 +98,53 @@ input:checked + .slider:before { transform:translateX(25px); }
   <a href="calm-corner.html">Calm Corner</a>
   <a href="notes.html">Notes</a>
   <a href="progress.html">Progress</a>
+  <a href="settings.html">Settings</a>
 </nav>
 
 <main>
-  <h2>Settings</h2>
-  <div class="setting">
-    <span>Low Stim Mode</span>
+  <p>This is the Settings page. Adjust your preferences below.</p>
+
+  <div class="settingItem">
+    <label for="lowStimToggle">Low-Stim Mode</label>
     <label class="switch">
       <input type="checkbox" id="lowStimToggle">
       <span class="slider"></span>
     </label>
   </div>
 
-  <div class="setting">
-    <span>Voice Hints</span>
+  <div class="settingItem">
+    <label for="voiceHintsToggle">Voice Hints</label>
     <label class="switch">
-      <input type="checkbox" id="voiceToggle">
+      <input type="checkbox" id="voiceHintsToggle" checked>
       <span class="slider"></span>
     </label>
   </div>
+
 </main>
 
 <script src="script.js"></script>
 <script>
-voiceHint("Welcome to Settings. Toggle options to adjust your experience.");
+// Voice hint
+voiceHint("This is the Settings page. Adjust Low-Stim mode and Voice Hints preferences here.");
 
 // Load saved settings
-window.onload = function(){
-  const lowStim = localStorage.getItem("lowStim") === "true";
-  document.getElementById("lowStimToggle").checked = lowStim;
+const lowStimCheckbox = document.getElementById('lowStimToggle');
+const voiceHintsCheckbox = document.getElementById('voiceHintsToggle');
 
-  const voiceHints = localStorage.getItem("voiceHints") !== "false"; // default on
-  document.getElementById("voiceToggle").checked = voiceHints;
-};
+lowStimCheckbox.checked = JSON.parse(localStorage.getItem('lowStim') || 'false');
+voiceHintsCheckbox.checked = JSON.parse(localStorage.getItem('voiceHints') || 'true');
 
-// Save settings on toggle
-document.getElementById("lowStimToggle").addEventListener("change", function(){
-  localStorage.setItem("lowStim", this.checked);
-  if(this.checked){ voiceHint("Low Stim Mode Enabled"); }
+// Save on change
+lowStimCheckbox.addEventListener('change', ()=> {
+  localStorage.setItem('lowStim', lowStimCheckbox.checked);
+  voiceHint(`Low-Stim mode ${lowStimCheckbox.checked ? 'enabled' : 'disabled'}`);
 });
 
-document.getElementById("voiceToggle").addEventListener("change", function(){
-  localStorage.setItem("voiceHints", this.checked);
-  if(this.checked){ voiceHint("Voice Hints Enabled"); }
+voiceHintsCheckbox.addEventListener('change', ()=> {
+  localStorage.setItem('voiceHints', voiceHintsCheckbox.checked);
+  voiceHint(`Voice Hints ${voiceHintsCheckbox.checked ? 'enabled' : 'disabled'}`);
 });
 </script>
+
 </body>
 </html>
