@@ -18,7 +18,6 @@ header {
   text-align:center;
   background:#A7D9C2;
   padding:10px;
-  position:relative;
 }
 .logo { width:80px; height:80px; }
 h1 { margin:0; color:white; }
@@ -40,20 +39,44 @@ nav a {
 }
 nav a:hover { background:#6FB8A3; }
 main { padding:20px; text-align:center; }
-.challenge-category {
-  margin:15px 0;
-  padding:10px;
-  background:#DDF0E8;
-  border-radius:20px;
+.event-category {
+  margin:20px 0;
 }
-.challenge-category h2 { margin:5px 0; color:#4C8C72; }
-.challenge-item { margin:5px 0; padding:8px; border-radius:15px; background:#B2E2D0; }
+.event-category h2 {
+  background:#B2E2D0;
+  padding:10px;
+  border-radius:15px;
+}
+.challenge-list {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-top:10px;
+}
+.challenge {
+  background:#A7D9C2;
+  color:white;
+  margin:5px;
+  padding:10px;
+  border-radius:50%;
+  width:80px;
+  height:80px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  cursor:pointer;
+  font-size:0.8em;
+}
+.challenge.completed {
+  background:#6FB8A3;
+}
 </style>
 </head>
 <body>
 
 <script>
-// Desktop redirect: if not mobile/tablet, redirect to desktop.html
+// Desktop redirect
 if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
     window.location.href = 'desktop.html';
 }
@@ -62,7 +85,6 @@ if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
   <h1>Challenges</h1>
-  <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
 <nav>
@@ -76,30 +98,60 @@ if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
 </nav>
 
 <main>
-  <p>This is the Challenges page. Select an event type below to view challenges.</p>
+  <p>This is the Challenges page. Click on a circle to mark a challenge complete.</p>
 
-  <div class="challenge-category">
-    <h2>Daily Events</h2>
-    <div class="challenge-item">Greet a neighbor</div>
-    <div class="challenge-item">Make small talk with a cashier</div>
-    <div class="challenge-item">Try a brief conversation with a colleague</div>
+  <div class="event-category">
+    <h2>Work Events</h2>
+    <div class="challenge-list">
+      <div class="challenge" data-id="work1">Say Hello</div>
+      <div class="challenge" data-id="work2">Ask a Question</div>
+      <div class="challenge" data-id="work3">Give Feedback</div>
+      <div class="challenge" data-id="work4">Take Notes</div>
+    </div>
   </div>
 
-  <div class="challenge-category">
-    <h2>Professional Settings</h2>
-    <div class="challenge-item">Introduce yourself in a meeting</div>
-    <div class="challenge-item">Ask a question in a safe way</div>
-    <div class="challenge-item">Give a compliment to a coworker</div>
-  </div>
-
-  <div class="challenge-category">
+  <div class="event-category">
     <h2>Social Events</h2>
-    <div class="challenge-item">Join a small group discussion</div>
-    <div class="challenge-item">Share a personal story briefly</div>
-    <div class="challenge-item">Use body language consciously</div>
+    <div class="challenge-list">
+      <div class="challenge" data-id="social1">Introduce Yourself</div>
+      <div class="challenge" data-id="social2">Compliment Someone</div>
+      <div class="challenge" data-id="social3">Ask a Fun Question</div>
+      <div class="challenge" data-id="social4">Share a Story</div>
+    </div>
+  </div>
+
+  <div class="event-category">
+    <h2>Daily Life</h2>
+    <div class="challenge-list">
+      <div class="challenge" data-id="daily1">Greet a Neighbor</div>
+      <div class="challenge" data-id="daily2">Make Eye Contact</div>
+      <div class="challenge" data-id="daily3">Thank Someone</div>
+      <div class="challenge" data-id="daily4">Smile</div>
+    </div>
   </div>
 </main>
 
 <script src="script.js"></script>
+<script>
+// Voice hint
+voiceHint("This is the Challenges page. Choose a challenge by clicking a circle. Completed challenges turn darker green.");
+
+// Load completed challenges from localStorage
+const completed = JSON.parse(localStorage.getItem('completedChallenges') || '[]');
+document.querySelectorAll('.challenge').forEach(ch => {
+  if(completed.includes(ch.dataset.id)) ch.classList.add('completed');
+  ch.addEventListener('click', ()=>{
+    ch.classList.toggle('completed');
+    let current = JSON.parse(localStorage.getItem('completedChallenges') || '[]');
+    if(ch.classList.contains('completed')){
+      current.push(ch.dataset.id);
+    } else {
+      current = current.filter(id=>id!==ch.dataset.id);
+    }
+    localStorage.setItem('completedChallenges', JSON.stringify(current));
+  });
+});
+</script>
+
 </body>
 </html>
