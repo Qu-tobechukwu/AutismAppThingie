@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Ease – Desktop Info</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#A7D9C2">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<style>
+body {
+  margin:0;
+  font-family:'Helvetica Neue', Arial, sans-serif;
+  background:#E0F7F4;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  text-align:center;
+}
+header {
+  margin-bottom:20px;
+}
+.logo { width:100px; height:100px; }
+h1 { color:#4C8C72; }
+p { max-width:500px; margin:10px auto; font-size:1rem; line-height:1.5; }
+button {
+  padding:12px 20px;
+  font-size:1rem;
+  background:#A7D9C2;
+  border:none;
+  border-radius:15px;
+  margin:10px;
+  cursor:pointer;
+  color:white;
+}
+button:hover { background:#6FB8A3; }
+a { color:#4C8C72; text-decoration:none; font-weight:bold; }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
+  <h1>Welcome to Social Ease</h1>
+</header>
+
+<p>This app is designed primarily for mobile and tablet devices to help people with autism navigate social events, daily routines, and professional settings.</p>
+
+<p>You can follow us on Threads to join the conversation or support us on Patreon:</p>
+<p><a href="https://www.threads.net" target="_blank">Follow on Threads</a> | <a href="https://www.patreon.com" target="_blank">Support on Patreon</a></p>
+
+<p>If you prefer, you can continue using the app here on your desktop anyway.</p>
+
+<button id="continueDesktopBtn">Continue to App</button>
+
+<script>
+voiceHint("Welcome to Social Ease for desktop users. You can continue to use the app or learn more on Threads and Patreon.");
+
+document.getElementById('continueDesktopBtn').addEventListener('click', ()=>{
+  window.location.href = 'index.html';
+});
+
+// Detect if mobile and redirect automatically to normal home page
+if(/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+  window.location.href = 'index.html';
+}
+</script>
+
+</body>
+</html>
