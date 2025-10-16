@@ -1,23 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-page="social-cues">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Social Ease - Social Cues</title>
-<link rel="stylesheet" href="style.css">
-<script src="common.js" defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Social Ease — Social Cues</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="common.js" defer></script>
 </head>
 <body>
+
 <header class="site-header">
   <div class="header-row">
     <div class="brand">
-      <img src="assets/logo.png" alt="Social Ease Logo" class="site-logo">
-      <div>
-        <h1>Social Ease</h1>
-        <small>Daily & professional settings — support for social ease</small>
-      </div>
+      <img src="assets/logo.png" alt="Social Ease logo" class="site-logo">
+      <div class="brand-text"><h1>Social Ease</h1><div class="tagline">Daily & professional settings — support for social ease</div></div>
     </div>
-    <nav class="main-nav">
+
+    <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+
+    <nav class="main-nav" role="navigation" aria-label="Main menu">
       <a href="index.html" class="nav-link">Home</a>
       <a href="challenges.html" class="nav-link">Challenges</a>
       <a href="social-cues.html" class="nav-link">Social Cues</a>
@@ -26,43 +27,69 @@
       <a href="progress.html" class="nav-link">Progress</a>
       <a href="settings.html" class="nav-link">Settings</a>
     </nav>
+
     <div class="header-controls">
-      <button id="low-stim-toggle" class="pill-btn">Low-Stim Mode</button>
-      <button id="voice-toggle" class="pill-btn">Voice Hints</button>
+      <button id="low-stim-toggle" class="icon-btn" aria-pressed="false" title="Toggle Low-Stim">🌓</button>
+      <button id="voice-toggle" class="icon-btn" aria-pressed="false" title="Toggle Voice Hints">🔈</button>
+      <a href="settings.html" class="icon-btn" title="Settings">⚙️</a>
     </div>
   </div>
 </header>
 
 <main class="centered">
-  <h2>💬 Social Cues Page</h2>
-  <p>Here are key social principles with examples. Use the search bar to quickly find the cue you need:</p>
-  
-  <input type="text" id="cue-search" placeholder="Search social cues..." oninput="filterCues()">
+  <section class="card">
+    <h2>💬 Social Cues — Key Principles</h2>
+    <p>Use the search box to find cues. Matches highlight the matching words.</p>
+    <input id="cue-search" type="search" placeholder="Search cues (e.g., eye, listen, workplace)" oninput="filterCues()" aria-label="Search social cues">
 
-  <div class="card cue-card" data-title="Eye Contact">
-    <h3>👁 Eye Contact</h3>
-    <p>Try short glances instead of staring. Example: smile at a colleague and glance away.</p>
-  </div>
+    <div id="cues-list" class="cues-list">
+      <!-- Each card has data-title and initial HTML saved by script for highlighting -->
+      <div class="cue-card" data-title="Eye Contact">
+        <h3>Eye Contact</h3>
+        <p>Principle: Short glances are less intense than prolonged staring. Example: smile at a colleague and glance away when you feel comfortable.</p>
+      </div>
 
-  <div class="card cue-card" data-title="Conversation Openers">
-    <h3>💬 Conversation Openers</h3>
-    <p>Ask factual questions. Example: “What project are you working on today?”</p>
-  </div>
+      <div class="cue-card" data-title="Conversation Openers">
+        <h3>Conversation Openers</h3>
+        <p>Principle: Use factual questions. Example: "What project are you working on today?" - simple and safe.</p>
+      </div>
 
-  <div class="card cue-card" data-title="Small Talk Exit">
-    <h3>🚪 Small Talk Exit</h3>
-    <p>Use body language to politely finish. Example: “Excuse me, I need a break.”</p>
-  </div>
+      <div class="cue-card" data-title="Small Talk Exit">
+        <h3>Small Talk Exit</h3>
+        <p>Principle: Use body language and short phrases to end politely. Example: "Excuse me, I need a quick break."</p>
+      </div>
 
-  <div class="card cue-card" data-title="Active Listening">
-    <h3>📝 Active Listening</h3>
-    <p>Nod or repeat key words. Example: “So you’re saying the meeting is at 3?”</p>
-  </div>
+      <div class="cue-card" data-title="Active Listening">
+        <h3>Active Listening</h3>
+        <p>Principle: Reflect back a short phrase. Example: "So the meeting is at three?" — this shows attention.</p>
+      </div>
 
-  <div class="card cue-card" data-title="Non-Verbal Cues">
-    <h3>👋 Non-Verbal Cues</h3>
-    <p>Smile, nod, or use gestures to show attention.</p>
-  </div>
+      <div class="cue-card" data-title="Workplace Overwhelm">
+        <h3>Workplace Overwhelm</h3>
+        <p>Principle: Prioritize & break tasks into single steps. Example: "I'll do X first, then Y next." Ask for clarification on priorities.</p>
+      </div>
+
+      <div class="cue-card" data-title="Sensory Triggers">
+        <h3>Sensory Triggers</h3>
+        <p>Principle: Control environment where possible. Example: wear headphones, choose seat away from noise sources.</p>
+      </div>
+
+      <div class="cue-card" data-title="Masking & Adaptation">
+        <h3>Masking & Adaptation</h3>
+        <p>Principle: Use minimal social behaviours that feel safe. Example: small nods or neutral phrases to blend without exhausting yourself.</p>
+      </div>
+
+      <div class="cue-card" data-title="Relationship Communication">
+        <h3>Relationship Communication</h3>
+        <p>Principle: Be direct about needs. Example: "I need some quiet time after social events to recharge."</p>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;">
+      <button class="pill-btn" onclick="voiceHint('Search for cues, or tap a card to read an example. Use small steps and practice.')" aria-label="Play instruction">🔊 Play voice hint</button>
+    </div>
+  </section>
 </main>
+
 </body>
 </html>
