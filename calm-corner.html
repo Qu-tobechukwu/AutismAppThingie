@@ -8,75 +8,62 @@
   <script src="common.js" defer></script>
 </head>
 <body>
-
+<div class="app">
 <header class="site-header">
-  <div class="header-row">
-    <div class="brand">
-      <img src="assets/logo.png" alt="Social Ease logo" class="site-logo big-logo">
-      <div class="brand-text"><h1>Social Ease</h1><div class="tagline">Daily & professional settings — support for social ease</div></div>
-    </div>
-
-    <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
-
-    <nav class="main-nav" role="navigation" aria-label="Main menu">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="challenges.html" class="nav-link">Challenges</a>
-      <a href="social-cues.html" class="nav-link">Social Cues</a>
-      <a href="calm-corner.html" class="nav-link">Calm Corner</a>
-      <a href="reflections.html" class="nav-link">Reflections</a>
-      <a href="progress.html" class="nav-link">Progress</a>
-      <a href="settings.html" class="nav-link">Settings</a>
-    </nav>
-
-    <div class="header-controls">
-      <button id="low-stim-toggle" class="icon-btn" aria-pressed="false" title="Toggle Low-Stim">🌓</button>
-      <button id="voice-toggle" class="icon-btn" aria-pressed="false" title="Toggle Voice Hints">🔈</button>
-      <a href="settings.html" class="icon-btn" title="Settings">⚙️</a>
-    </div>
+  <div class="brand">
+    <img src="assets/logo.svg" class="site-logo big-logo" alt="Social Ease logo">
+    <div class="brand-text"><h1>Social Ease</h1><div class="tagline">Use this page to relax</div></div>
+  </div>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+  <nav class="main-nav" role="navigation">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="challenges.html" class="nav-link">Challenges</a>
+    <a href="social-cues.html" class="nav-link">Social Cues</a>
+    <a href="calm-corner.html" class="nav-link">Calm Corner</a>
+    <a href="reflections.html" class="nav-link">Reflections</a>
+    <a href="progress.html" class="nav-link">Progress</a>
+    <a href="settings.html" class="nav-link">Settings</a>
+  </nav>
+  <div class="header-controls">
+    <button id="low-stim-toggle" class="icon-btn">🌓</button>
+    <button id="voice-toggle" class="icon-btn">🔈</button>
+    <a href="settings.html" class="icon-btn">⚙️</a>
   </div>
 </header>
 
 <main class="centered calm-page">
-  <section class="card" aria-live="polite">
+  <section class="card">
     <h2>🌀 Calm Corner — Use this page to relax</h2>
-    <p>Instruction: Tap "Play affirmation" for a calming voice. Watch soft, slowly-moving circles (turn off in Settings if you prefer).</p>
+    <p class="muted">Instruction: Tap "Play affirmation" for a calming voice. Press Pause/Resume to control the animation.</p>
 
-    <div id="calm-wrap" class="calm-wrap">
-      <canvas id="calm-canvas" class="calm-canvas" aria-hidden="true"></canvas>
-    </div>
+    <div class="calm-wrap"><canvas id="calm-canvas" class="calm-canvas" aria-hidden="true"></canvas></div>
 
-    <div style="margin-top:12px;">
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
       <button id="play-affirm" class="pill-btn">Play affirmation</button>
       <button id="pause-calm" class="pill-btn outline">Pause animation</button>
       <button id="resume-calm" class="pill-btn outline">Resume animation</button>
+      <button class="pill-btn outline" onclick="voiceHint('Slow breathing: In for four, hold two, out for six')">🔊 Breath hint</button>
     </div>
 
     <div class="card" style="margin-top:12px">
       <h3>Sensory supports</h3>
       <ul>
-        <li>Noise-cancelling headphones or earplugs</li>
+        <li>Noise-cancelling headphones</li>
         <li>Dim the lights or use a small lamp</li>
         <li>Hold a fidget tool or small weighted item</li>
-        <li>Take slow breaths — 4 in, hold 2, 6 out</li>
+        <li>Breathing: 4 in, 2 hold, 6 out</li>
       </ul>
     </div>
-
   </section>
 </main>
 
 <script>
-/* calm canvas control will be handled by common.js startCalmAnimation/stopCalmAnimation */
 document.addEventListener('DOMContentLoaded', ()=>{
-  document.getElementById('play-affirm').addEventListener('click', ()=> {
-    voiceHint('Take a slow breath in. Hold. Now breathe out slowly.');
-  });
-  document.getElementById('pause-calm').addEventListener('click', ()=> {
-    stopCalmAnimation();
-  });
-  document.getElementById('resume-calm').addEventListener('click', ()=> {
-    startCalmAnimation();
-  });
+  document.getElementById('play-affirm')?.addEventListener('click', ()=> voiceHint('Take a slow breath in. Hold briefly. Now breathe out slowly.'));
+  document.getElementById('pause-calm')?.addEventListener('click', ()=> stopCalmAnimation());
+  document.getElementById('resume-calm')?.addEventListener('click', ()=> startCalmAnimation());
 });
 </script>
+</div>
 </body>
 </html>
