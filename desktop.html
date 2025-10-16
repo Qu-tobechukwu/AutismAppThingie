@@ -19,54 +19,65 @@ body {
   justify-content:center;
   min-height:100vh;
   text-align:center;
+  padding:20px;
 }
 header {
-  margin-bottom:20px;
-}
-.logo { width:100px; height:100px; }
-h1 { color:#4C8C72; }
-p { max-width:500px; margin:10px auto; font-size:1rem; line-height:1.5; }
-button {
-  padding:12px 20px;
-  font-size:1rem;
+  text-align:center;
   background:#A7D9C2;
+  padding:10px;
+  width:100%;
+}
+.logo { width:80px; height:80px; }
+h1 { margin:0; color:white; }
+main {
+  margin-top:20px;
+  max-width:500px;
+  width:90%;
+}
+button {
+  margin:10px;
+  padding:12px 20px;
   border:none;
   border-radius:15px;
-  margin:10px;
-  cursor:pointer;
+  background:#6FB8A3;
   color:white;
+  font-weight:bold;
+  cursor:pointer;
 }
-button:hover { background:#6FB8A3; }
-a { color:#4C8C72; text-decoration:none; font-weight:bold; }
+button:hover { background:#4F8F73; }
+a.button-link {
+  text-decoration:none;
+}
 </style>
 </head>
 <body>
 
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Welcome to Social Ease</h1>
+  <h1>Social Ease</h1>
 </header>
 
-<p>This app is designed primarily for mobile and tablet devices to help people with autism navigate social events, daily routines, and professional settings.</p>
-
-<p>You can follow us on Threads to join the conversation or support us on Patreon:</p>
-<p><a href="https://www.threads.net" target="_blank">Follow on Threads</a> | <a href="https://www.patreon.com" target="_blank">Support on Patreon</a></p>
-
-<p>If you prefer, you can continue using the app here on your desktop anyway.</p>
-
-<button id="continueDesktopBtn">Continue to App</button>
+<main>
+  <h2>Desktop Version</h2>
+  <p>This app is designed primarily for <strong>mobile and tablet devices</strong> for the best experience.</p>
+  <p>It helps people with autism navigate social events, track reflections, and manage sensory challenges.</p>
+  
+  <button id="continueDesktopBtn">Continue Using on Desktop</button>
+  
+  <h3>Follow & Support</h3>
+  <a href="https://www.threads.net" target="_blank" class="button-link"><button>Follow us on Threads</button></a>
+  <a href="https://www.patreon.com" target="_blank" class="button-link"><button>Join our Patreon</button></a>
+</main>
 
 <script>
-voiceHint("Welcome to Social Ease for desktop users. You can continue to use the app or learn more on Threads and Patreon.");
+// Voice hint
+voiceHint("You are on the desktop info page. This app is optimized for mobile and tablet devices. You can continue using it on desktop by clicking the button.");
 
+// Continue using app on desktop
 document.getElementById('continueDesktopBtn').addEventListener('click', ()=>{
+  // Redirect to home page
   window.location.href = 'index.html';
 });
-
-// Detect if mobile and redirect automatically to normal home page
-if(/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
-  window.location.href = 'index.html';
-}
 </script>
 
 </body>
