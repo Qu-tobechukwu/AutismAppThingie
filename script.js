@@ -1,158 +1,121 @@
-/* ===============================
-  Voice Hints
-=============================== */
+// ---------- Voice Hints ----------
 function voiceHint(text){
-  const voiceEnabled = JSON.parse(localStorage.getItem('voiceHints') || 'true');
-  if(!voiceEnabled) return;
-  const utterance = new SpeechSynthesisUtterance(text);
-  window.speechSynthesis.speak(utterance);
-}
-
-/* ===============================
-  Service Worker & PWA Install
-=============================== */
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js')
-    .then(() => console.log("Service Worker Registered"))
-    .catch(err => console.log("SW registration failed: ", err));
-}
-
-let deferredPrompt;
-const installBtn = document.getElementById('installBtn');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  if(installBtn) installBtn.style.display = 'inline-block';
-});
-
-if(installBtn){
-  installBtn.addEventListener('click', async () => {
-    installBtn.style.display = 'none';
-    if(deferredPrompt){
-      deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      deferredPrompt = null;
+    const voiceEnabled = localStorage.getItem("voiceHints") !== "false"; // default on
+    if(!voiceEnabled) return;
+    if('speechSynthesis' in window){
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'en-US';
+        window.speechSynthesis.speak(msg);
     }
-  });
 }
 
-/* ===============================
-  Desktop Fallback
-=============================== */
-if(window.innerWidth > 900){
-  document.body.innerHTML = `
-    <div style="text-align:center;padding:50px;">
-      <h1>Social Ease is Mobile Friendly</h1>
-      <p>This app is designed for mobile and tablet devices.</p>
-      <p>Follow us on <a href="https://www.threads.net" target="_blank">Threads</a> or support us via <a href="https://www.patreon.com" target="_blank">Patreon</a>.</p>
-    </div>
-  `;
-}
-
-/* ===============================
-  Low Stim & Voice Hints Toggles
-=============================== */
-const lowStimToggle = document.getElementById('lowStimToggle');
-const voiceHintsToggle = document.getElementById('voiceHintsToggle');
-
-if(lowStimToggle){
-  lowStimToggle.checked = JSON.parse(localStorage.getItem('lowStim') || 'false');
-  lowStimToggle.addEventListener('change', () => {
-    localStorage.setItem('lowStim', lowStimToggle.checked);
-    alert("Low Stim Mode is now " + (lowStimToggle.checked ? "ON" : "OFF"));
-  });
-}
-
-if(voiceHintsToggle){
-  voiceHintsToggle.checked = JSON.parse(localStorage.getItem('voiceHints') || 'true');
-  voiceHintsToggle.addEventListener('change', () => {
-    localStorage.setItem('voiceHints', voiceHintsToggle.checked);
-    alert("Voice Hints are now " + (voiceHintsToggle.checked ? "ON" : "OFF"));
-  });
-}
-
-/* ===============================
-  Notes Page
-=============================== */
+// ---------- Notes ----------
 function saveNotes(){
-  const notes = document.getElementById('userNotes').value;
-  localStorage.setItem('userNotes', notes);
-  alert("Notes saved!");
+    const notes = document.getElementById("userNotes");
+    if(notes){
+        localStorage.setItem("userNotes", notes.value);
+        alert("Notes saved!");
+        voiceHint("Notes saved.");
+    }
 }
 
 function clearNotes(){
-  if(confirm("Are you sure you want to clear all notes?")){
-    document.getElementById('userNotes').value = "";
-    localStorage.removeItem('userNotes');
-  }
+    const notes = document.getElementById("userNotes");
+    if(notes){
+        if(confirm("Clear all notes?")){
+            notes.value = "";
+            localStorage.removeItem("userNotes");
+            voiceHint("Notes cleared.");
+        }
+    }
 }
 
-if(document.getElementById('userNotes')){
-  document.getElementById('userNotes').value = localStorage.getItem('userNotes') || "";
+// ---------- Progress ----------
+function updateProgress(){
+    const daily = localStorage.getItem('dailyCompleted') || 0;
+    const professional = localStorage.getItem('professionalCompleted') || 0;
+    const social = localStorage.getItem('socialCompleted') || 0;
+
+    const dp = document.getElementById('dailyProgress');
+    if(dp) dp.innerText = daily + " / 3 completed";
+
+    const pp = document.getElementById('professionalProgress');
+    if(pp) pp.innerText = professional + " / 3 completed";
+
+    const sp = document.getElementById('socialProgress');
+    if(sp) sp.innerText = social + " / 3 completed";
 }
 
-/* ===============================
-  Progress Page
-=============================== */
-function loadProgress(){
-  const daily = localStorage.getItem('dailyCompleted') || 0;
-  const professional = localStorage.getItem('professionalCompleted') || 0;
-  if(document.getElementById('dailyCompleted')) document.getElementById('dailyCompleted').textContent = daily;
-  if(document.getElementById('professionalCompleted')) document.getElementById('professionalCompleted').textContent = professional;
+// ---------- Calm Corner Animation ----------
+function calmCornerAnimation(){
+    const canvas = document.getElementById('calmCanvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const circles = [];
+    const colors = ['#A7D9C2','#CDEEDD','#DDF0E8','#B2E2D0'];
+
+    for(let i=0;i<15;i++){
+        circles.push({
+            x:Math.random()*canvas.width,
+            y:Math.random()*canvas.height,
+            r:Math.random()*25+10,
+            dx:(Math.random()-0.5)*1,
+            dy:(Math.random()-0.5)*1,
+            color: colors[Math.floor(Math.random()*colors.length)]
+        });
+    }
+
+    function animate(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        circles.forEach(c=>{
+            ctx.beginPath();
+            ctx.arc(c.x,c.y,c.r,0,Math.PI*2);
+            ctx.fillStyle = c.color;
+            ctx.fill();
+            c.x += c.dx;
+            c.y += c.dy;
+            if(c.x<0||c.x>canvas.width) c.dx*=-1;
+            if(c.y<0||c.y>canvas.height) c.dy*=-1;
+        });
+        requestAnimationFrame(animate);
+    }
+    animate();
 }
 
-function resetProgress(){
-  if(confirm("Are you sure you want to reset all progress?")){
-    localStorage.setItem('dailyCompleted', 0);
-    localStorage.setItem('professionalCompleted', 0);
-    loadProgress();
-  }
-}
+// ---------- App Installation ----------
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
 
-// Example: function to mark a challenge complete
-function completeChallenge(type){
-  let current = parseInt(localStorage.getItem(type) || 0);
-  localStorage.setItem(type, current+1);
-  loadProgress();
-}
+window.addEventListener('beforeinstallprompt', (e)=>{
+    e.preventDefault();
+    deferredPrompt = e;
+    if(installBtn) installBtn.style.display = 'inline-block';
+});
 
-loadProgress();
-
-/* ===============================
-  Calm Corner Animation
-=============================== */
-if(document.getElementById('calmCanvas')){
-  const canvas = document.getElementById('calmCanvas');
-  const ctx = canvas.getContext('2d');
-  let circles = [];
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  for(let i=0;i<30;i++){
-    circles.push({
-      x: Math.random()*canvas.width,
-      y: Math.random()*canvas.height,
-      radius: 10+Math.random()*20,
-      dx: (Math.random()-0.5)*1,
-      dy: (Math.random()-0.5)*1,
-      color: `rgba(167, 217, 194, ${0.2+Math.random()*0.3})`
+if(installBtn){
+    installBtn.addEventListener('click', async ()=>{
+        installBtn.style.display = 'none';
+        if(deferredPrompt){
+            deferredPrompt.prompt();
+            const choice = await deferredPrompt.userChoice;
+            if(choice.outcome==='accepted') console.log('User installed app');
+            deferredPrompt = null;
+        }
     });
-  }
-
-  function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    circles.forEach(c => {
-      c.x += c.dx;
-      c.y += c.dy;
-      if(c.x<0 || c.x>canvas.width) c.dx*=-1;
-      if(c.y<0 || c.y>canvas.height) c.dy*=-1;
-      ctx.beginPath();
-      ctx.arc(c.x,c.y,c.radius,0,Math.PI*2);
-      ctx.fillStyle=c.color;
-      ctx.fill();
-    });
-    requestAnimationFrame(animate);
-  }
-  animate();
 }
+
+// ---------- Load Settings on all pages ----------
+window.addEventListener('DOMContentLoaded', ()=>{
+    // Update progress if progress page
+    updateProgress();
+
+    // Load saved notes if notes page
+    const notes = document.getElementById("userNotes");
+    if(notes){
+        const saved = localStorage.getItem("userNotes");
+        if(saved) notes.value = saved;
+    }
+
+    // Start calm corner animation if on that page
+    if(document.getElementById('calmCanvas')) calmCornerAnimation();
+});
