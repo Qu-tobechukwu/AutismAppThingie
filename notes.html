@@ -18,7 +18,6 @@ header {
   text-align:center;
   background:#A7D9C2;
   padding:10px;
-  position:relative;
 }
 .logo { width:80px; height:80px; }
 h1 { margin:0; color:white; }
@@ -39,33 +38,45 @@ nav a {
   background:#A7D9C2;
 }
 nav a:hover { background:#6FB8A3; }
-main {
-  text-align:center;
-  padding:20px;
-}
+main { padding:20px; text-align:center; }
 textarea {
   width:90%;
+  max-width:350px;
   height:150px;
   border-radius:15px;
   border:1px solid #A7D9C2;
   padding:10px;
-  margin:10px 0;
+  font-size:1em;
   resize:none;
 }
-button.saveBtn {
-  padding:10px 20px;
+.saveBtn {
+  margin-top:15px;
   background:#A7D9C2;
   color:white;
   border:none;
-  border-radius:15px;
-  font-weight:bold;
+  padding:15px;
+  border-radius:50%;
+  width:80px;
+  height:80px;
+  font-size:0.9em;
+  cursor:pointer;
 }
-.saved-note {
+.saveBtn:hover { background:#6FB8A3; }
+.noteList {
+  margin-top:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.noteItem {
   background:#B2E2D0;
-  border-radius:15px;
-  padding:10px;
-  margin:10px auto;
+  color:#064635;
   width:90%;
+  max-width:350px;
+  padding:10px;
+  margin:5px 0;
+  border-radius:15px;
+  word-wrap:break-word;
   text-align:left;
 }
 </style>
@@ -82,7 +93,6 @@ if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
   <h1>Notes</h1>
-  <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
 <nav>
@@ -96,42 +106,44 @@ if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
 </nav>
 
 <main>
-  <p>This is the Notes page. Write your reflections here and save them.</p>
-  <textarea id="noteInput" placeholder="Write your reflection here..."></textarea><br>
-  <button class="saveBtn" id="saveBtn">Save Note</button>
+  <p>This is the Notes page. Write your reflections below and tap the circle to save.</p>
+  <textarea id="noteInput" placeholder="Write your note here..."></textarea>
+  <br>
+  <button class="saveBtn" id="saveNoteBtn">Save</button>
 
-  <h2>Saved Notes</h2>
-  <div id="savedNotes"></div>
+  <div class="noteList" id="noteList"></div>
 </main>
 
 <script src="script.js"></script>
 <script>
 // Voice hint
-voiceHint("This is your Notes page. Write and save reflections here.");
+voiceHint("This is the Notes page. Write your thoughts and reflections, then press the circle button to save them.");
 
 // Load saved notes
-const savedNotesContainer = document.getElementById('savedNotes');
-function loadNotes() {
-  savedNotesContainer.innerHTML = '';
+const noteList = document.getElementById('noteList');
+function renderNotes(){
+  noteList.innerHTML='';
   const notes = JSON.parse(localStorage.getItem('notes') || '[]');
-  notes.forEach((note, i) => {
+  notes.forEach((note, idx)=>{
     const div = document.createElement('div');
-    div.className = 'saved-note';
-    div.textContent = note;
-    savedNotesContainer.appendChild(div);
+    div.className='noteItem';
+    div.textContent=note;
+    noteList.appendChild(div);
   });
 }
-loadNotes();
+renderNotes();
 
-// Save new note
-document.getElementById('saveBtn').addEventListener('click', ()=>{
-  const input = document.getElementById('noteInput');
-  if(input.value.trim() === '') return;
+// Save note
+document.getElementById('saveNoteBtn').addEventListener('click', function(){
+  const noteInput = document.getElementById('noteInput');
+  const noteText = noteInput.value.trim();
+  if(noteText==='') return;
   const notes = JSON.parse(localStorage.getItem('notes') || '[]');
-  notes.push(input.value.trim());
+  notes.push(noteText);
   localStorage.setItem('notes', JSON.stringify(notes));
-  input.value = '';
-  loadNotes();
+  noteInput.value='';
+  renderNotes();
+  voiceHint("Note saved successfully.");
 });
 </script>
 
