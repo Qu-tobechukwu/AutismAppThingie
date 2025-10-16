@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Social Ease – Progress</title>
+<title>Social Ease – Settings</title>
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#A7D9C2">
@@ -39,24 +39,49 @@ nav a {
 }
 nav a:hover { background:#6FB8A3; }
 main { padding:20px; text-align:center; }
-.progress-container {
+.toggle-label {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:20px auto;
+  width:90%;
+  max-width:300px;
+  font-weight:bold;
   background:#B2E2D0;
   border-radius:15px;
   padding:10px;
-  margin:15px auto;
-  width:90%;
-  text-align:left;
 }
-.progress-bar {
+.switch {
+  position: relative;
+  display: inline-block;
+  width:50px;
+  height:28px;
+}
+.switch input { display:none; }
+.slider {
+  position:absolute;
+  cursor:pointer;
+  top:0; left:0; right:0; bottom:0;
+  background:#CDEEDD;
+  transition:.4s;
+  border-radius:28px;
+}
+.slider:before {
+  position:absolute;
+  content:"";
+  height:22px;
+  width:22px;
+  left:3px;
+  bottom:3px;
+  background:white;
+  transition:.4s;
+  border-radius:50%;
+}
+input:checked + .slider {
   background:#6FB8A3;
-  height:20px;
-  border-radius:15px;
-  width:0%;
-  transition: width 0.5s;
-  text-align:right;
-  color:white;
-  padding-right:5px;
-  font-size:12px;
+}
+input:checked + .slider:before {
+  transform: translateX(22px);
 }
 </style>
 </head>
@@ -71,7 +96,7 @@ if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
 
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Progress</h1>
+  <h1>Settings</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
@@ -86,50 +111,53 @@ if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
 </nav>
 
 <main>
-  <p>This is the Progress page. See how many challenges you have completed per event.</p>
-  
-  <div class="progress-container">
-    <h2>Daily Events</h2>
-    <div class="progress-bar" id="dailyBar">0%</div>
-  </div>
+  <p>This is the Settings page. Customize your preferences here.</p>
 
-  <div class="progress-container">
-    <h2>Professional Events</h2>
-    <div class="progress-bar" id="professionalBar">0%</div>
-  </div>
+  <label class="toggle-label">
+    Low-Stim Mode
+    <div class="switch">
+      <input type="checkbox" id="lowStimSetting">
+      <span class="slider"></span>
+    </div>
+  </label>
 
-  <div class="progress-container">
-    <h2>Social Events</h2>
-    <div class="progress-bar" id="socialBar">0%</div>
-  </div>
+  <label class="toggle-label">
+    Voice Hints
+    <div class="switch">
+      <input type="checkbox" id="voiceHintSetting">
+      <span class="slider"></span>
+    </div>
+  </label>
 </main>
 
 <script src="script.js"></script>
 <script>
 // Voice hint
-voiceHint("This is your Progress page. Track your completed challenges here.");
+voiceHint("This is the Settings page. Turn on or off Low-Stim mode and Voice Hints.");
 
-// Example: Load progress from local storage
-const dailyBar = document.getElementById('dailyBar');
-const professionalBar = document.getElementById('professionalBar');
-const socialBar = document.getElementById('socialBar');
+// Load saved preferences
+const lowStimCheckbox = document.getElementById('lowStimSetting');
+const voiceHintCheckbox = document.getElementById('voiceHintSetting');
 
-function loadProgress(){
-  const progress = JSON.parse(localStorage.getItem('progress') || '{}');
-  const daily = progress.daily || 0;
-  const professional = progress.professional || 0;
-  const social = progress.social || 0;
-
-  dailyBar.style.width = daily + '%';
-  dailyBar.textContent = daily + '%';
-
-  professionalBar.style.width = professional + '%';
-  professionalBar.textContent = professional + '%';
-
-  socialBar.style.width = social + '%';
-  socialBar.textContent = social + '%';
+function loadSettings() {
+  const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+  lowStimCheckbox.checked = settings.lowStim || false;
+  voiceHintCheckbox.checked = settings.voiceHints || true;
 }
-loadProgress();
+loadSettings();
+
+// Save preferences on toggle
+lowStimCheckbox.addEventListener('change', ()=>{
+  const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+  settings.lowStim = lowStimCheckbox.checked;
+  localStorage.setItem('settings', JSON.stringify(settings));
+});
+
+voiceHintCheckbox.addEventListener('change', ()=>{
+  const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+  settings.voiceHints = voiceHintCheckbox.checked;
+  localStorage.setItem('settings', JSON.stringify(settings));
+});
 </script>
 
 </body>
