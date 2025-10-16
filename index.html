@@ -3,29 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Social Ease - Home</title>
+<title>Social Ease – Home</title>
 <link rel="stylesheet" href="style.css">
-<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 </head>
 <body>
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
   <h1>Social Ease</h1>
-  <button id="settings-btn" aria-label="Settings">⚙️</button>
+  <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
 <main>
-  <h2>Home Page</h2>
-  <p>Welcome to Social Ease! Navigate to your event challenges, calm corner, or notes.</p>
-  <div class="home-buttons">
-    <button onclick="showPage('challenges')">Challenges</button>
-    <button onclick="showPage('social-cues')">Social Cues</button>
-    <button onclick="showPage('calm-corner')">Calm Corner</button>
-    <button onclick="showPage('notes')">Notes</button>
-    <button onclick="showPage('progress')">Progress</button>
-    <button onclick="showPage('settings')">Settings</button>
-  </div>
+  <h2>Welcome to Social Ease!</h2>
+  <p>This is the home page. From here, you can navigate to:</p>
+  <ul>
+    <li><a href="challenges.html">Challenges</a> – Social events guidance</li>
+    <li><a href="social-cues.html">Social Cues</a> – Tips for reading people & situations</li>
+    <li><a href="calm-corner.html">Calm Corner</a> – Relaxing space with gentle animation</li>
+    <li><a href="notes.html">Notes</a> – Save your reflections</li>
+    <li><a href="progress.html">Progress</a> – See how many challenges you’ve completed</li>
+    <li><a href="settings.html">Settings</a> – Change voice hints, low stim mode, and install app</li>
+  </ul>
 </main>
+
+<!-- Install App Modal -->
+<div id="installModal" class="modal">
+  <div class="modal-content">
+    <span id="closeModal" class="close">&times;</span>
+    <h2>Install Social Ease</h2>
+    <p>Add the app to your home screen for quick access!</p>
+    <button id="confirmInstall">Install</button>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
