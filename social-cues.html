@@ -19,7 +19,6 @@ header {
   background:#A7D9C2;
   padding:10px;
   position:relative;
-  z-index:10;
 }
 .logo { width:80px; height:80px; }
 h1 { margin:0; color:white; }
@@ -33,44 +32,45 @@ nav {
 nav a {
   margin:5px 10px;
   text-decoration:none;
-  color:#333;
+  color:white;
   font-weight:bold;
   padding:8px 15px;
   border-radius:15px;
   background:#A7D9C2;
-  color:white;
 }
 nav a:hover { background:#6FB8A3; }
 main { padding:20px; text-align:center; }
-.card {
-  background:#CDEEDD;
-  border-radius:15px;
-  padding:15px;
-  margin:10px auto;
-  max-width:400px;
+.cue-category {
+  margin:15px 0;
+  padding:10px;
+  background:#DDF0E8;
+  border-radius:20px;
   text-align:left;
 }
-input[type="text"] {
-  width:80%;
-  padding:8px;
-  border-radius:10px;
-  border:1px solid #A7D9C2;
-  margin-bottom:10px;
-}
-ul { margin-left:20px; }
+.cue-category h2 { margin:5px 0; color:#4C8C72; }
+.cue-item { margin:5px 0; padding:8px; border-radius:15px; background:#B2E2D0; }
+.search-input { width:80%; padding:10px; margin:15px 0; border-radius:15px; border:1px solid #A7D9C2; }
 </style>
 </head>
 <body>
 
+<script>
+// Desktop redirect: if not mobile/tablet, redirect to desktop.html
+if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+    window.location.href = 'desktop.html';
+}
+</script>
+
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Social Ease – Social Cues</h1>
+  <h1>Social Cues</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
 <nav>
   <a href="index.html">Home</a>
   <a href="challenges.html">Challenges</a>
+  <a href="social-cues.html">Social Cues</a>
   <a href="calm-corner.html">Calm Corner</a>
   <a href="notes.html">Notes</a>
   <a href="progress.html">Progress</a>
@@ -78,60 +78,42 @@ ul { margin-left:20px; }
 </nav>
 
 <main>
-  <h2>Social Cues Guide</h2>
-  <p>Use the search below to find social situations and tips:</p>
-  <input type="text" id="searchInput" placeholder="Search social cues..." onkeyup="filterCues()">
+  <p>This is the Social Cues page. Use the search bar to find cues quickly.</p>
+  <input type="text" id="searchInput" class="search-input" placeholder="Search for a cue..." />
 
-  <div id="cueContainer">
-    <div class="card" data-keywords="greeting hello handshake eye contact">
-      <h3>Greeting Someone</h3>
-      <p>Principle: Smile and use a polite greeting.</p>
-      <p>Example: "Hi, how are you?" with a gentle smile.</p>
-    </div>
+  <div class="cue-category" data-category="daily">
+    <h2>Daily Situations</h2>
+    <div class="cue-item">Principle: Maintain friendly eye contact.<br>Example: Smile at your neighbor when passing by.</div>
+    <div class="cue-item">Principle: Use simple greetings.<br>Example: Say "Hi, how are you?" to a cashier.</div>
+    <div class="cue-item">Principle: Wait your turn in conversation.<br>Example: Listen before replying to a colleague.</div>
+  </div>
 
-    <div class="card" data-keywords="conversation small talk listen">
-      <h3>Starting Small Talk</h3>
-      <p>Principle: Ask open questions and listen actively.</p>
-      <p>Example: "What hobbies do you enjoy?" and show interest in their answer.</p>
-    </div>
+  <div class="cue-category" data-category="professional">
+    <h2>Professional Settings</h2>
+    <div class="cue-item">Principle: Keep responses concise.<br>Example: Answer questions in meetings clearly and briefly.</div>
+    <div class="cue-item">Principle: Ask for clarification politely.<br>Example: "Could you explain that part again?"</div>
+    <div class="cue-item">Principle: Observe body language.<br>Example: Nod to show engagement without interrupting.</div>
+  </div>
 
-    <div class="card" data-keywords="workplace meeting feedback">
-      <h3>Professional Meetings</h3>
-      <p>Principle: Stay polite, concise, and acknowledge others' points.</p>
-      <p>Example: "I appreciate that insight. Here’s my perspective…"</p>
-    </div>
-
-    <div class="card" data-keywords="social event party">
-      <h3>Social Gatherings</h3>
-      <p>Principle: Take breaks if overwhelmed, observe others for cues.</p>
-      <p>Example: Step aside to calm corner if feeling overstimulated.</p>
-    </div>
-
-    <div class="card" data-keywords="online chat message">
-      <h3>Online Communication</h3>
-      <p>Principle: Use clear, kind messages; avoid ambiguity.</p>
-      <p>Example: "Could you clarify this part? Thanks!"</p>
-    </div>
+  <div class="cue-category" data-category="social">
+    <h2>Social Events</h2>
+    <div class="cue-item">Principle: Match the energy of the room.<br>Example: If others are quiet, speak softly.</div>
+    <div class="cue-item">Principle: Offer compliments thoughtfully.<br>Example: "I like your jacket, it’s very colorful!"</div>
+    <div class="cue-item">Principle: Step back if overwhelmed.<br>Example: Move to a quiet corner to regulate before joining again.</div>
   </div>
 </main>
 
 <script src="script.js"></script>
 <script>
-voiceHint("Welcome to the Social Cues Page. Search or browse for tips on social situations.");
-
-// Filter function for searchable social cues
-function filterCues(){
-  const input = document.getElementById('searchInput').value.toLowerCase();
-  const cards = document.querySelectorAll('#cueContainer .card');
-  cards.forEach(card => {
-    const keywords = card.getAttribute('data-keywords');
-    if(keywords.includes(input)){
-      card.style.display = 'block';
-    } else {
-      card.style.display = 'none';
-    }
+// Search functionality
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', function(){
+  const term = this.value.toLowerCase();
+  document.querySelectorAll('.cue-item').forEach(item => {
+    item.style.display = item.textContent.toLowerCase().includes(term) ? 'block' : 'none';
   });
-}
+});
 </script>
+
 </body>
 </html>
