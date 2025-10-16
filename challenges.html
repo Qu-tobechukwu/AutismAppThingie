@@ -19,7 +19,6 @@ header {
   background:#A7D9C2;
   padding:10px;
   position:relative;
-  z-index:10;
 }
 .logo { width:80px; height:80px; }
 h1 { margin:0; color:white; }
@@ -33,36 +32,42 @@ nav {
 nav a {
   margin:5px 10px;
   text-decoration:none;
-  color:#333;
+  color:white;
   font-weight:bold;
   padding:8px 15px;
   border-radius:15px;
   background:#A7D9C2;
-  color:white;
 }
 nav a:hover { background:#6FB8A3; }
 main { padding:20px; text-align:center; }
-.card {
-  background:#CDEEDD;
-  border-radius:15px;
-  padding:15px;
-  margin:10px auto;
-  max-width:400px;
-  text-align:left;
+.challenge-category {
+  margin:15px 0;
+  padding:10px;
+  background:#DDF0E8;
+  border-radius:20px;
 }
-button { padding:8px 15px; margin:5px; border:none; border-radius:20px; cursor:pointer; background:#A7D9C2; color:white; font-size:1em; }
+.challenge-category h2 { margin:5px 0; color:#4C8C72; }
+.challenge-item { margin:5px 0; padding:8px; border-radius:15px; background:#B2E2D0; }
 </style>
 </head>
 <body>
 
+<script>
+// Desktop redirect: if not mobile/tablet, redirect to desktop.html
+if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+    window.location.href = 'desktop.html';
+}
+</script>
+
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Social Ease – Challenges</h1>
+  <h1>Challenges</h1>
   <button id="installBtn" style="display:none;">Install App</button>
 </header>
 
 <nav>
   <a href="index.html">Home</a>
+  <a href="challenges.html">Challenges</a>
   <a href="social-cues.html">Social Cues</a>
   <a href="calm-corner.html">Calm Corner</a>
   <a href="notes.html">Notes</a>
@@ -71,42 +76,30 @@ button { padding:8px 15px; margin:5px; border:none; border-radius:20px; cursor:p
 </nav>
 
 <main>
-  <h2>Event Challenges</h2>
-  <p>Choose an event type to see challenges:</p>
+  <p>This is the Challenges page. Select an event type below to view challenges.</p>
 
-  <div class="card">
-    <h3>Daily Life Events</h3>
-    <ul>
-      <li>Say hello to a neighbor</li>
-      <li>Practice ordering coffee</li>
-      <li>Smile when greeted</li>
-    </ul>
-    <button onclick="completeChallenge('dailyCompleted')">Mark Daily Challenge Complete</button>
+  <div class="challenge-category">
+    <h2>Daily Events</h2>
+    <div class="challenge-item">Greet a neighbor</div>
+    <div class="challenge-item">Make small talk with a cashier</div>
+    <div class="challenge-item">Try a brief conversation with a colleague</div>
   </div>
 
-  <div class="card">
-    <h3>Professional Settings</h3>
-    <ul>
-      <li>Start a conversation with a coworker</li>
-      <li>Answer a question in a meeting</li>
-      <li>Send a polite email follow-up</li>
-    </ul>
-    <button onclick="completeChallenge('professionalCompleted')">Mark Professional Challenge Complete</button>
+  <div class="challenge-category">
+    <h2>Professional Settings</h2>
+    <div class="challenge-item">Introduce yourself in a meeting</div>
+    <div class="challenge-item">Ask a question in a safe way</div>
+    <div class="challenge-item">Give a compliment to a coworker</div>
   </div>
 
-  <div class="card">
-    <h3>Social Gatherings</h3>
-    <ul>
-      <li>Introduce yourself to someone new</li>
-      <li>Ask someone about their hobbies</li>
-      <li>Practice active listening</li>
-    </ul>
+  <div class="challenge-category">
+    <h2>Social Events</h2>
+    <div class="challenge-item">Join a small group discussion</div>
+    <div class="challenge-item">Share a personal story briefly</div>
+    <div class="challenge-item">Use body language consciously</div>
   </div>
 </main>
 
 <script src="script.js"></script>
-<script>
-voiceHint("Welcome to the Challenges Page. Choose an event type and complete challenges to improve your social skills.");
-</script>
 </body>
 </html>
