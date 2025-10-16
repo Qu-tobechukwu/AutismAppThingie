@@ -1,91 +1,30 @@
-<!doctype html>
-<html lang="en" data-page="challenges">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Social Ease — Challenges</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="common.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Challenges</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="app">
-<header class="site-header">
-  <div class="brand">
-    <img src="assets/logo.svg" class="site-logo" alt="Social Ease logo">
-    <div class="brand-text"><h1>Social Ease</h1><div class="tagline">Daily & Professional Settings</div></div>
-  </div>
-  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
-  <nav class="main-nav" role="navigation">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="challenges.html" class="nav-link">Challenges</a>
-    <a href="social-cues.html" class="nav-link">Social Cues</a>
-    <a href="calm-corner.html" class="nav-link">Calm Corner</a>
-    <a href="reflections.html" class="nav-link">Reflections</a>
-    <a href="progress.html" class="nav-link">Progress</a>
-    <a href="settings.html" class="nav-link">Settings</a>
-  </nav>
-  <div class="header-controls">
-    <button id="low-stim-toggle" class="icon-btn" title="Toggle low-stim">🌓</button>
-    <button id="voice-toggle" class="icon-btn" title="Toggle voice hints">🔈</button>
-    <a href="settings.html" class="icon-btn" title="Settings">⚙️</a>
-  </div>
+<header>
+  <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
+  <h1>Social Ease</h1>
+  <button id="settings-btn" aria-label="Settings">⚙️</button>
 </header>
 
-<main class="centered">
-  <section class="card">
-    <h2>🎯 Challenges — pick an event type</h2>
-    <p class="muted">Instruction: Tap an event, then tap challenges to mark them done. Click "Sensory Tips" to get environment-specific supports.</p>
-
-    <div class="events-grid" id="events-grid">
-      <!-- event cards -->
-    </div>
-
-    <div id="event-challenges" class="card" aria-live="polite" style="margin-top:12px">
-      <div class="muted">Instruction: Select an event to see challenges here.</div>
-    </div>
-  </section>
+<main>
+  <h2>Event Challenges</h2>
+  <p>Select an event type and complete small challenges to help you engage comfortably.</p>
+  <div class="challenge-list">
+    <button>Workplace</button>
+    <button>Family Gathering</button>
+    <button>Party</button>
+    <button>Shopping</button>
+    <button>Other Events</button>
+  </div>
 </main>
 
-<!-- modal container (created by JS if missing) -->
-<div id="modal" class="modal" aria-hidden="true"></div>
-
-<script>
-// render event cards
-const events = ['workplace','family','party','public','new'];
-const eventNames = {workplace:'Work / Office', family:'Family Gatherings', party:'Parties / Social Events', public:'Public Places', new:'New / Stressful Environments'};
-const grid = document.getElementById('events-grid');
-events.forEach(ev=>{
-  const d = document.createElement('div'); d.className='event-card';
-  d.innerHTML = `<h3>${escapeHtml(eventNames[ev])}</h3>
-    <p class="muted">Instruction: tap "Show" to view step-by-step challenges. Tap a challenge to mark done.</p>
-    <div style="display:flex;gap:8px;margin-top:8px">
-      <button class="pill-btn small" onclick="renderEvent('${ev}')">Show</button>
-      <button class="pill-btn small outline" onclick="showSensoryTips('${ev}')">Sensory Tips</button>
-    </div>`;
-  grid.appendChild(d);
-});
-
-function renderEvent(key){
-  const container = document.getElementById('event-challenges');
-  container.innerHTML = `<h3>${escapeHtml(eventNames[key])} — Challenges</h3>`;
-  const ul = document.createElement('ul');
-  (defaultChallenges[key]||[]).forEach((c, idx)=> {
-    const li = document.createElement('li'); li.textContent = c;
-    li.tabIndex = 0;
-    const doneSet = JSON.parse(localStorage.getItem(`completed-${key}`) || '[]');
-    if(doneSet.includes(idx)) li.classList.add('done');
-    li.addEventListener('click', ()=> {
-      const isDone = li.classList.toggle('done');
-      storeCompleted(key, idx, isDone);
-      if(isVoiceOn()) speak('Challenge updated.');
-    });
-    ul.appendChild(li);
-  });
-  container.appendChild(ul);
-  const p = document.createElement('p'); p.className='muted'; p.textContent='Instruction: Click a challenge to mark it done (persists on this device).';
-  container.appendChild(p);
-}
-</script>
-</div>
+<script src="script.js"></script>
 </body>
 </html>
