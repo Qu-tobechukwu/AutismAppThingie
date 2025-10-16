@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Social Ease – Social Cues</title>
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#A7D9C2">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 </head>
 <body>
@@ -16,72 +18,41 @@
 
 <main>
   <h2>Social Cues</h2>
-  <p>This page helps you understand people’s behavior in different situations. Tap a cue to hear a voice hint.</p>
+  <p>This is the Social Cues Page. Select a situation type to see tips and examples.</p>
 
-  <input type="text" id="searchCues" placeholder="Search cues..." style="padding:10px; width:90%; margin-bottom:15px; border-radius:10px; border:1px solid #BFE3C0;">
-
-  <section class="cues-list">
-    <div class="cue" data-hint="Maintain a gentle smile and eye contact for about 2 seconds.">
-      <h3>Friendly Greeting</h3>
-      <p>Principle: Show warmth, but don’t overdo it. <br>Example: Say hi with a slight smile.</p>
-    </div>
-
-    <div class="cue" data-hint="Observe posture and tone of voice to gauge interest.">
-      <h3>Listening Signals</h3>
-      <p>Principle: Pay attention to body language. <br>Example: Leaning forward indicates attention.</p>
-    </div>
-
-    <div class="cue" data-hint="If someone looks away, don’t insist on prolonged eye contact.">
-      <h3>Eye Contact</h3>
-      <p>Principle: Short, comfortable glances are enough. <br>Example: Look at speaker, then glance away.</p>
-    </div>
-
-    <div class="cue" data-hint="Use calm voice and short sentences when responding.">
-      <h3>Responding Politely</h3>
-      <p>Principle: Keep responses simple and clear. <br>Example: 'Thank you, I appreciate that.'</p>
-    </div>
-
-    <div class="cue" data-hint="Excuse yourself politely if you feel overwhelmed.">
-      <h3>Handling Overwhelm</h3>
-      <p>Principle: Protect your comfort without offending. <br>Example: 'Excuse me, I need a short break.'</p>
-    </div>
-  </section>
-</main>
-
-<!-- Install App Modal -->
-<div id="installModal" class="modal">
-  <div class="modal-content">
-    <span id="closeModal" class="close">&times;</span>
-    <h2>Install Social Ease</h2>
-    <p>Add the app to your home screen for quick access!</p>
-    <button id="confirmInstall">Install</button>
+  <div class="cue-section">
+    <h3>Workplace</h3>
+    <ul>
+      <li>Small Talk: Keep it short; comment on the weather or shared task. <em>Example: "Good morning! How was your weekend?"</em></li>
+      <li>Requests: Ask politely and clearly; avoid overexplaining. <em>Example: "Could you clarify the deadline for this task?"</em></li>
+      <li>Feedback: Listen actively, thank the person, avoid defensive responses.</li>
+    </ul>
   </div>
-</div>
+
+  <div class="cue-section">
+    <h3>Daily Life</h3>
+    <ul>
+      <li>Greeting People: Smile lightly, say hello. <em>Example: "Hi! How are you?"</em></li>
+      <li>Waiting in Line: Keep body relaxed, avoid fidgeting excessively.</li>
+      <li>Small Talk in Stores: Comment on product or environment briefly.</li>
+    </ul>
+  </div>
+
+  <div class="cue-section">
+    <h3>Events / Social Gatherings</h3>
+    <ul>
+      <li>Introductions: Offer name, handshake optional. <em>Example: "Hi, I’m [Name]. Nice to meet you."</em></li>
+      <li>Joining Conversations: Listen first, then contribute small, relevant comment.</li>
+      <li>Exiting Conversations: Use polite exit phrases. <em>Example: "Excuse me, I need to get some water."</em></li>
+    </ul>
+  </div>
+
+  <p>Click any tip for voice guidance or to practice it aloud.</p>
+</main>
 
 <script src="script.js"></script>
 <script>
-// Voice hints on tap
-document.querySelectorAll('.cue').forEach(item => {
-  item.addEventListener('click', () => {
-    const hint = item.dataset.hint;
-    if('speechSynthesis' in window){
-      const utter = new SpeechSynthesisUtterance(hint);
-      utter.rate = 0.9;
-      utter.pitch = 1;
-      window.speechSynthesis.speak(utter);
-    } else {
-      alert(hint);
-    }
-  });
-});
-
-// Search filter
-document.getElementById('searchCues').addEventListener('input', function(){
-  const search = this.value.toLowerCase();
-  document.querySelectorAll('.cue').forEach(cue => {
-    cue.style.display = cue.innerText.toLowerCase().includes(search) ? 'block' : 'none';
-  });
-});
+voiceHint("Welcome to Social Cues Page. Select a situation to see tips and examples.");
 </script>
 </body>
 </html>
