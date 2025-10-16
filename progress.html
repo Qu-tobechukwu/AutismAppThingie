@@ -8,48 +8,40 @@
   <script src="common.js" defer></script>
 </head>
 <body>
-
+<div class="app">
 <header class="site-header">
-  <div class="header-row">
-    <div class="brand">
-      <img src="assets/logo.png" alt="Social Ease logo" class="site-logo">
-      <div class="brand-text"><h1>Social Ease</h1><div class="tagline">Daily & professional settings — support for social ease</div></div>
-    </div>
-
-    <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
-
-    <nav class="main-nav" role="navigation" aria-label="Main menu">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="challenges.html" class="nav-link">Challenges</a>
-      <a href="social-cues.html" class="nav-link">Social Cues</a>
-      <a href="calm-corner.html" class="nav-link">Calm Corner</a>
-      <a href="reflections.html" class="nav-link">Reflections</a>
-      <a href="progress.html" class="nav-link">Progress</a>
-      <a href="settings.html" class="nav-link">Settings</a>
-    </nav>
-
-    <div class="header-controls">
-      <button id="low-stim-toggle" class="icon-btn" aria-pressed="false" title="Toggle Low-Stim">🌓</button>
-      <button id="voice-toggle" class="icon-btn" aria-pressed="false" title="Toggle Voice Hints">🔈</button>
-      <a href="settings.html" class="icon-btn" title="Settings">⚙️</a>
-    </div>
+  <div class="brand">
+    <img src="assets/logo.svg" class="site-logo" alt="Social Ease logo">
+    <div class="brand-text"><h1>Social Ease</h1><div class="tagline">Progress summary</div></div>
+  </div>
+  <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+  <nav class="main-nav" role="navigation">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="challenges.html" class="nav-link">Challenges</a>
+    <a href="social-cues.html" class="nav-link">Social Cues</a>
+    <a href="calm-corner.html" class="nav-link">Calm Corner</a>
+    <a href="reflections.html" class="nav-link">Reflections</a>
+    <a href="progress.html" class="nav-link">Progress</a>
+    <a href="settings.html" class="nav-link">Settings</a>
+  </nav>
+  <div class="header-controls">
+    <button id="low-stim-toggle" class="icon-btn">🌓</button>
+    <button id="voice-toggle" class="icon-btn">🔈</button>
+    <a href="settings.html" class="icon-btn">⚙️</a>
   </div>
 </header>
 
 <main class="centered">
   <section class="card">
     <h2>📊 Progress Summary</h2>
-    <p>Instruction: This page shows how many challenges you completed per event. It updates automatically when you mark challenges as done.</p>
-
-    <div id="progress-grid" class="progress-grid">
-      <!-- JS fills this -->
-    </div>
-
-    <div style="margin-top:12px">
+    <p class="muted">Instruction: This page updates when you mark challenges done. Tap Refresh if you want to update now.</p>
+    <div id="progress-grid" class="progress-grid" style="margin-top:12px"></div>
+    <div style="margin-top:12px;display:flex;gap:8px">
       <button class="pill-btn" onclick="updateProgressUI()">Refresh now</button>
       <button class="pill-btn outline" onclick="clearAllProgress()">Clear progress</button>
     </div>
   </section>
 </main>
+</div>
 </body>
 </html>
