@@ -1,49 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Social Ease — About</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Ease – About</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#A7D9C2">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<style>
+body {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  min-height:100vh;
+  margin:0;
+  font-family:'Helvetica Neue', Arial, sans-serif;
+  background:#E0F7F4;
+  color:#333;
+  padding:20px;
+}
+
+.logo {
+  width:120px;
+  height:120px;
+  margin-bottom:20px;
+}
+
+h1 { font-size:2em; margin-bottom:10px; }
+p { font-size:1em; margin:10px 0; line-height:1.5; }
+button {
+  background:#A7D9C2;
+  color:white;
+  padding:10px 20px;
+  border:none;
+  border-radius:25px;
+  font-size:1em;
+  margin:10px 5px;
+  cursor:pointer;
+  text-decoration:none;
+}
+</style>
 </head>
-<body data-page="about">
+<body>
+<img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
+<h1>Welcome to Social Ease</h1>
+<p>This app is designed specifically for **mobile and tablet devices** to help people with autism navigate social events comfortably.</p>
+<p>It provides structured challenges, social cues, calming exercises, and notes for reflection to make events more enjoyable.</p>
+<p>Support our work and join the conversation:</p>
+<div>
+  <a href="https://www.threads.net" target="_blank"><button>Follow us on Threads</button></a>
+  <a href="https://www.patreon.com" target="_blank"><button>Support on Patreon</button></a>
+</div>
 
-<header class="site-header">
-  <div class="header-row">
-    <div class="brand">
-      <a href="index.html" class="logo-link" aria-label="Social Ease home">
-        <img src="assets/logo.svg" alt="Social Ease logo" class="site-logo" />
-      </a>
-    </div>
-
-    <nav class="main-nav" role="navigation" aria-label="Main">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="challenges.html" class="nav-link">Challenges</a>
-      <a href="cues.html" class="nav-link">Social Cues</a>
-      <a href="calm.html" class="nav-link">Calm Corner</a>
-      <a href="reflection.html" class="nav-link">Reflections</a>
-      <a href="progress.html" class="nav-link">Progress</a>
-      <a href="about.html" class="nav-link">About</a>
-    </nav>
-
-    <div class="header-controls">
-      <button id="low-stim-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle low stimulation mode">🌓</button>
-      <button id="voice-toggle" class="small-toggle" aria-pressed="false" aria-label="Toggle voice hints">🔈</button>
-      <a href="settings.html" class="small-toggle" aria-label="Settings">⚙️</a>
-    </div>
-  </div>
-</header>
-
-<main class="centered">
-  <section class="card">
-    <h2>About Social Ease 🌸</h2>
-    <p>Social Ease is designed to help people with autism navigate social situations with calm and confidence.</p>
-    <p>Features include guided challenges, social cues coaching, reflection journals, progress tracking, and a calm corner with gentle animations.</p>
-    <p>Created with care using a calming pastel palette, accessible fonts, circle-based UI, and voice hints for accessibility.</p>
-  </section>
-</main>
-
-<script src="common.js"></script>
+<script>
+  // Redirect mobile/tablet users to Home page
+  if(window.innerWidth <= 1024){ 
+    window.location.href = 'index.html';
+  }
+</script>
 </body>
 </html>
