@@ -13,13 +13,13 @@ body {
   margin:0;
   font-family:'Helvetica Neue', Arial, sans-serif;
   background:#E0F7F4;
-  overflow-x:hidden;
+  overflow:hidden;
 }
 header {
   text-align:center;
   background:#A7D9C2;
   padding:10px;
-  z-index:2;
+  z-index:10;
   position:relative;
 }
 .logo { width:80px; height:80px; }
@@ -30,7 +30,7 @@ nav {
   flex-wrap:wrap;
   background:#CDEEDD;
   padding:10px;
-  z-index:2;
+  z-index:10;
   position:relative;
 }
 nav a {
@@ -44,58 +44,33 @@ nav a {
 }
 nav a:hover { background:#6FB8A3; }
 main {
-  padding:20px;
+  margin-top:20px;
   text-align:center;
   position:relative;
-  z-index:2;
+  z-index:10;
 }
-#canvasContainer {
+canvas {
   position:fixed;
-  top:0; left:0; width:100%; height:100%; z-index:1; pointer-events:none;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:0;
 }
-#lowStimToggle {
-  margin-top:15px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.switch {
-  position: relative;
-  display: inline-block;
-  width:50px;
-  height:25px;
-  margin-left:10px;
-}
-.switch input {display:none;}
-.slider {
-  position:absolute;
+button {
+  background:#A7D9C2;
+  color:white;
+  border:none;
+  padding:15px 25px;
+  font-size:1em;
+  border-radius:15px;
   cursor:pointer;
-  top:0; left:0; right:0; bottom:0;
-  background:#ccc;
-  border-radius:25px;
-  transition:.4s;
+  margin-top:20px;
 }
-.slider:before {
-  position:absolute;
-  content:"";
-  height:19px; width:19px;
-  left:3px; bottom:3px;
-  background:white;
-  border-radius:50%;
-  transition:.4s;
-}
-input:checked + .slider { background:#6FB8A3; }
-input:checked + .slider:before { transform:translateX(25px); }
+button:hover { background:#6FB8A3; }
 </style>
 </head>
 <body>
-
-<script>
-// Desktop redirect
-if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
-    window.location.href = 'desktop.html';
-}
-</script>
 
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
@@ -112,32 +87,23 @@ if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
   <a href="settings.html">Settings</a>
 </nav>
 
-<div id="canvasContainer">
-  <canvas id="calmCanvas"></canvas>
-</div>
+<canvas id="calmCanvas"></canvas>
 
 <main>
-  <p>This is the Calm Corner page. Watch the circles move to help you relax. Use Low-Stim mode if you prefer slower, smaller movements.</p>
-
-  <div id="lowStimToggle">
-    <label>Low-Stim Mode</label>
-    <label class="switch">
-      <input type="checkbox" id="lowStimCheckbox">
-      <span class="slider"></span>
-    </label>
-  </div>
+  <p>This is the Calm Corner page. Watch the gentle circles and take a moment to breathe.</p>
+  <button onclick="startReflection()">Add Reflection Note</button>
 </main>
 
 <script src="script.js"></script>
 <script>
 // Voice hint
-voiceHint("This is the Calm Corner page. Watch the moving circles to relax. You can enable Low-Stim mode below.");
+voiceHint("This is the Calm Corner page. Relax and watch the moving circles. You can also add your reflection notes.");
 
-// Canvas setup
+// Canvas animation
 const canvas = document.getElementById('calmCanvas');
 const ctx = canvas.getContext('2d');
 let circles = [];
-let lowStim = false;
+let numCircles = 25;
 
 function resizeCanvas(){
   canvas.width = window.innerWidth;
@@ -146,44 +112,55 @@ function resizeCanvas(){
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Create circles
-function initCircles(num=30){
-  circles=[];
-  for(let i=0;i<num;i++){
-    circles.push({
-      x:Math.random()*canvas.width,
-      y:Math.random()*canvas.height,
-      radius: 10 + Math.random()*20,
-      dx: (Math.random()-0.5)*2,
-      dy: (Math.random()-0.5)*2,
-      color: `rgba(${150+Math.random()*50},${200+Math.random()*55},${180+Math.random()*75},0.5)`
-    });
+// Load Low-Stim preference
+const lowStim = JSON.parse(localStorage.getItem('lowStim') || 'false');
+if(lowStim) numCircles = 10;
+
+function random(min,max){ return Math.random()*(max-min)+min; }
+
+class Circle{
+  constructor(){
+    this.x = random(0,canvas.width);
+    this.y = random(0,canvas.height);
+    this.radius = random(10,40);
+    this.dx = random(-0.5,0.5);
+    this.dy = random(-0.5,0.5);
+    this.color = `rgba(${random(100,180)},${random(150,220)},${random(150,220)},0.5)`;
+  }
+  draw(){ 
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+  }
+  update(){
+    this.x += this.dx;
+    this.y += this.dy;
+    if(this.x<0||this.x>canvas.width) this.dx*=-1;
+    if(this.y<0||this.y>canvas.height) this.dy*=-1;
+    this.draw();
   }
 }
-initCircles();
 
-// Animation
+for(let i=0;i<numCircles;i++) circles.push(new Circle());
+
 function animate(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  circles.forEach(c=>{
-    ctx.beginPath();
-    ctx.arc(c.x,c.y,c.radius,0,Math.PI*2);
-    ctx.fillStyle=c.color;
-    ctx.fill();
-    c.x += lowStim ? c.dx*0.3 : c.dx;
-    c.y += lowStim ? c.dy*0.3 : c.dy;
-    // Bounce edges
-    if(c.x+c.radius>canvas.width || c.x-c.radius<0) c.dx*=-1;
-    if(c.y+c.radius>canvas.height || c.y-c.radius<0) c.dy*=-1;
-  });
+  circles.forEach(c=>c.update());
   requestAnimationFrame(animate);
 }
 animate();
 
-// Low-Stim toggle
-document.getElementById('lowStimCheckbox').addEventListener('change', function(){
-  lowStim = this.checked;
-});
+// Reflection notes
+function startReflection(){
+  let note = prompt("Write your reflection here:");
+  if(note){
+    let notes = JSON.parse(localStorage.getItem('reflections')||'[]');
+    notes.push({text:note, date:new Date().toISOString()});
+    localStorage.setItem('reflections',JSON.stringify(notes));
+    alert("Reflection saved!");
+  }
+}
 </script>
 
 </body>
