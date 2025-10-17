@@ -13,6 +13,8 @@ body {
   margin:0;
   font-family:'Helvetica Neue', Arial, sans-serif;
   background:#E0F7F4;
+  text-align:center;
+  padding:20px;
 }
 header {
   text-align:center;
@@ -20,7 +22,7 @@ header {
   padding:10px;
 }
 .logo { width:100px; height:100px; }
-h1 { margin:0; color:white; font-size:1.8em; }
+h1 { margin:0; color:white; }
 nav {
   display:flex;
   justify-content:center;
@@ -38,33 +40,35 @@ nav a {
   background:#A7D9C2;
 }
 nav a:hover { background:#6FB8A3; }
-main { padding:20px; text-align:center; }
-button#installBtn {
-  margin-top:15px;
-  padding:10px 20px;
-  border:none;
-  border-radius:15px;
-  background:#6FB8A3;
+main { margin-top:20px; }
+button {
+  background:#A7D9C2;
   color:white;
-  font-weight:bold;
+  border:none;
+  padding:15px 25px;
+  font-size:1em;
+  border-radius:15px;
   cursor:pointer;
+  margin-top:20px;
 }
-button#installBtn:hover { background:#4F8F73; }
+button:hover { background:#6FB8A3; }
 </style>
 </head>
 <body>
 
 <script>
-// Desktop redirect
-if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+// Desktop redirect (skip if ?desktop=true)
+const urlParams = new URLSearchParams(window.location.search);
+const skipDesktopRedirect = urlParams.get('desktop');
+
+if(!skipDesktopRedirect && !/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
     window.location.href = 'desktop.html';
 }
 </script>
 
 <header>
   <img src="assets/logo.svg" alt="Social Ease Logo" class="logo">
-  <h1>Social Ease</h1>
-  <button id="installBtn" style="display:none;">Install App</button>
+  <h1>Home</h1>
 </header>
 
 <nav>
@@ -78,32 +82,18 @@ if(!/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
 </nav>
 
 <main>
-  <h2>Welcome to Social Ease</h2>
-  <p>This is the Home page. From here, you can navigate to challenges, social cues, calm corner, notes, progress, and settings.</p>
-  <p>The app helps people with autism navigate social events, track reflections, and manage sensory challenges.</p>
+  <p>This is the Home page. Welcome to Social Ease!</p>
+  <p>Use the menu above to navigate to Challenges, Social Cues, Calm Corner, Notes, Progress, and Settings.</p>
+
+  <p>Tap the buttons below to get started:</p>
+  <button onclick="window.location.href='challenges.html'">Start Challenges</button>
+  <button onclick="window.location.href='calm-corner.html'">Calm Corner</button>
 </main>
 
 <script src="script.js"></script>
 <script>
 // Voice hint
-voiceHint("Welcome to Social Ease. This is the Home page. Use the menu to navigate to other pages.");
-
-// Install PWA
-let deferredPrompt;
-const installBtn = document.getElementById('installBtn');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = 'block';
-});
-
-installBtn.addEventListener('click', async () => {
-  installBtn.style.display = 'none';
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  deferredPrompt = null;
-});
+voiceHint("This is the Home page. Use the menu to navigate through Social Ease features.");
 </script>
 
 </body>
